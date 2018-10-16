@@ -13,7 +13,7 @@ public class DatabankServerMain {
 	
 	private Connection connect() {
 	        // SQLite connection string
-	        String url = "jdbc:sqlite:C:\\Users\\thoma\\Desktop\\MASTER\\sem1\\gedistrbueerde systemen\\OPDRACHT\\opdracht_distributedSystems\\database\\mijnDatabase.db";
+	        String url = "jdbc:sqlite:C:\\Users\\thoma\\OneDrive\\Documents\\GitHub\\opdracht_DS\\opdracht_distributedSystems\\database\\mijnDatabase.db";
 	        Connection conn = null;
 	        try {
 	            conn = DriverManager.getConnection(url);
