@@ -24,20 +24,46 @@ public class DatabankServerMain {
 	 }
 	
 	public void spelerToevoegen(String naam, String pwd) {
-		
-        String sql = "INSERT INTO Speler(naam,pwd) VALUES(?,?)";
- 
+		String sql = "INSERT INTO Speler(naam,pwd) VALUES(?,?)";
 		try (Connection conn = this.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, naam);
-            pstmt.setString(2, pwd);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, naam);
+	           pstmt.setString(2, pwd);
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	
+
     }
 	
 	
+	public boolean controleerUniekeNaam(String naam) {
+		 String sql = "SELECT naam FROM Speler WHERE naam=?";
+		 try (Connection conn = this.connect();
+					PreparedStatement pstmt  = conn.prepareStatement(sql)){
+					// set the value
+					pstmt.setString(1,naam);
+						
+					ResultSet rs  = pstmt.executeQuery();
+					String s = null;
+					// loop through the result set
+					while (rs.next()) {
+						s=rs.getString("naam");
+					}
+					if(s==null){
+						return true;
+					}
+					else {
+						return false;
+					}
+				}catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+		return false;
+	        
+	}
+
 	public void selectAll(){
         String sql = "SELECT naam, pwd FROM Speler";
         
@@ -69,11 +95,11 @@ public class DatabankServerMain {
 			while (rs.next()) {
 				pwd=rs.getString("pwd");
 			}
-			if(pwd.equals(userPwd)){
-				return true;
-			}
-			else{
+			if(pwd==null){
 				return false;
+			}
+			else if(pwd.equals(userPwd)){
+				return true;
 			}
 		}catch (SQLException e) {
 			System.out.println(e.getMessage());
