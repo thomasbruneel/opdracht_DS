@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 
 public class DatabankServerMain {
+	BCrypt bcrypt;
 	
 	
 	private Connection connect() {
@@ -24,11 +25,13 @@ public class DatabankServerMain {
 	 }
 	
 	public void spelerToevoegen(String naam, String pwd) {
-		String sql = "INSERT INTO Speler(naam,pwd) VALUES(?,?)";
+		String salt=bcrypt.gensalt();
+		String sql = "INSERT INTO Speler(naam,pwd,salt) VALUES(?,?,?)";
 		try (Connection conn = this.connect();
 	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	           pstmt.setString(1, naam);
-	           pstmt.setString(2, pwd);
+	           pstmt.setString(2, bcrypt.hashpw(pwd, salt));
+	           pstmt.setString(3, salt);
 	           pstmt.executeUpdate();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -98,7 +101,7 @@ public class DatabankServerMain {
 			if(pwd==null){
 				return false;
 			}
-			else if(pwd.equals(userPwd)){
+			else if(bcrypt.checkpw(userPwd, pwd)){
 				return true;
 			}
 		}catch (SQLException e) {
