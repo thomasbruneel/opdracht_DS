@@ -18,6 +18,9 @@ public class RegistratieController {
     PasswordField uiWachtwoord;
     
     @FXML
+    PasswordField uiHerhaalWachtwoord;
+    
+    @FXML
     Hyperlink loginLink;
     
     @FXML
@@ -39,19 +42,32 @@ public class RegistratieController {
     public void registreren(){
         String gebruikersNaam=uiGebruikersnaam.getText();
         String wachtwoord= uiWachtwoord.getText();
+        String herhaalwachtwoord= uiHerhaalWachtwoord.getText();
         
         boolean check=dsm.controleerUniekeNaam(gebruikersNaam);
         if(check){
-        	dsm.spelerToevoegen(gebruikersNaam, wachtwoord);
-            uiGebruikersnaam.clear();
-            uiWachtwoord.clear();
-            errorMessage.setText("registratie voltooid");
-            errorMessage.setVisible(true);
+        	if(wachtwoord.equals(herhaalwachtwoord)){
+        		dsm.spelerToevoegen(gebruikersNaam, wachtwoord);
+                uiGebruikersnaam.clear();
+                uiWachtwoord.clear();
+                uiHerhaalWachtwoord.clear();
+                errorMessage.setText("registratie voltooid");
+                errorMessage.setVisible(true);
+        	}
+        	
+        	else{
+                uiWachtwoord.clear();
+                uiHerhaalWachtwoord.clear();
+                errorMessage.setText("wachtwoord komt niet overeen");
+                errorMessage.setVisible(true);
+        	}
+        	
 
         }
         else{
         	uiGebruikersnaam.clear();
             uiWachtwoord.clear();
+            uiHerhaalWachtwoord.clear();
             errorMessage.setText("username is al gebruikt ");
             errorMessage.setVisible(true);
 
