@@ -2,3 +2,5 @@
 /applicationServer/
 /client/
 /databankServer/
+/interfaces/
+/dispatcher/
