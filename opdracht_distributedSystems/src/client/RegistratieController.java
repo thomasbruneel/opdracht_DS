@@ -3,7 +3,9 @@ package client;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import databankServer.DatabankServerMain;
+import java.rmi.RemoteException;
+
+import databankServer.DatabankServerImpl;
 
 
 public class RegistratieController {
@@ -28,26 +30,24 @@ public class RegistratieController {
     
 
     
-    DatabankServerMain dsm;
     
 
     @FXML
-    public void initialize(){
-        dsm=new DatabankServerMain();
+    public void initialize() throws RemoteException{
         errorMessage.setVisible(false);
 
 
     }
     
-    public void registreren(){
+    public void registreren() throws RemoteException{
         String gebruikersNaam=uiGebruikersnaam.getText();
         String wachtwoord= uiWachtwoord.getText();
         String herhaalwachtwoord= uiHerhaalWachtwoord.getText();
         
-        boolean check=dsm.controleerUniekeNaam(gebruikersNaam);
+        boolean check=Main.dsi.controleerUniekeNaam(gebruikersNaam);
         if(check){
         	if(wachtwoord.equals(herhaalwachtwoord)){
-        		dsm.spelerToevoegen(gebruikersNaam, wachtwoord);
+        		Main.dsi.spelerToevoegen(gebruikersNaam, wachtwoord);
                 uiGebruikersnaam.clear();
                 uiWachtwoord.clear();
                 uiHerhaalWachtwoord.clear();

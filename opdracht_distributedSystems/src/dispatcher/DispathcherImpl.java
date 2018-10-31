@@ -9,35 +9,28 @@ import java.rmi.server.UnicastRemoteObject;
 import interfaces.DatabankServerInterface;
 
 public class DispathcherImpl extends UnicastRemoteObject implements DatabankServerInterface {
-	DatabankServerInterface dsi;
+	
 	public DispathcherImpl() throws RemoteException{
-		Registry registry=LocateRegistry.getRegistry("localhost",1001);
-		try {
-			dsi=(DatabankServerInterface) registry.lookup("DatabankService");
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
 		
 		
-
-    }
+	}
 
 	@Override
 	public void spelerToevoegen(String naam, String pwd) throws RemoteException {
-		dsi.spelerToevoegen(naam, pwd);
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean checkPwd(String userName, String userPwd) throws RemoteException {
-		
-		return dsi.checkPwd(userName, userPwd);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean controleerUniekeNaam(String naam) throws RemoteException {
-		
-		return dsi.controleerUniekeNaam(naam);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

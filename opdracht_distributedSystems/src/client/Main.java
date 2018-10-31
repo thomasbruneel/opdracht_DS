@@ -1,7 +1,11 @@
 package client;
 	
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
+import interfaces.DatabankServerInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -11,6 +15,9 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	
+	 static DatabankServerInterface dsi;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -68,6 +75,14 @@ public class Main extends Application {
     }
 	
 	public static void main(String[] args) {
+		
+    	try {
+    		Registry dataBankRegistry=LocateRegistry.getRegistry("localhost",1001);
+			dsi=(DatabankServerInterface) dataBankRegistry.lookup("DataBankService");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		launch(args);
 	}
 }

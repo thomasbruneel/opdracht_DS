@@ -1,6 +1,8 @@
 package client;
 
-import databankServer.DatabankServerMain;
+import java.rmi.RemoteException;
+
+import databankServer.DatabankServerImpl;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,21 +30,20 @@ public class LoginController {
     @FXML
     Label uiFailLogin;
     
-    DatabankServerMain dsm;
+
 
     @FXML
-    public void initialize(){
-        dsm=new DatabankServerMain();
+    public void initialize() throws RemoteException{
         uiFailLogin.setVisible(false);
         
 
     }
     
-    public void inloggen(){
+    public void inloggen() throws RemoteException{
         String gebruikersNaam=uiGebruikersnaam.getText();
         String wachtwoord= uiWachtwoord.getText();
         boolean check=false;
-        check=dsm.checkPwd(gebruikersNaam, wachtwoord);
+        check=Main.dsi.checkPwd(gebruikersNaam, wachtwoord);
         System.out.println(gebruikersNaam);
         System.out.println(wachtwoord);
         System.out.println(check);
