@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	
-	 static DatabankServerInterface dsi;
+	public static AppServerInterface asi;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -77,8 +78,8 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
     	try {
-    		Registry dataBankRegistry=LocateRegistry.getRegistry("localhost",1001);
-			dsi=(DatabankServerInterface) dataBankRegistry.lookup("DataBankService");
+    		Registry registry=LocateRegistry.getRegistry("localhost",1001);
+			asi=(AppServerInterface) registry.lookup("AppService");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

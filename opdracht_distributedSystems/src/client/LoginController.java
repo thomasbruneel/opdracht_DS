@@ -43,7 +43,7 @@ public class LoginController {
         String gebruikersNaam=uiGebruikersnaam.getText();
         String wachtwoord= uiWachtwoord.getText();
         boolean check=false;
-        check=Main.dsi.checkPwd(gebruikersNaam, wachtwoord);
+        check=Main.asi.checkPwd(gebruikersNaam, wachtwoord);
         System.out.println(gebruikersNaam);
         System.out.println(wachtwoord);
         System.out.println(check);

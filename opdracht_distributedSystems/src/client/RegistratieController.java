@@ -44,10 +44,10 @@ public class RegistratieController {
         String wachtwoord= uiWachtwoord.getText();
         String herhaalwachtwoord= uiHerhaalWachtwoord.getText();
         
-        boolean check=Main.dsi.controleerUniekeNaam(gebruikersNaam);
+        boolean check=Main.asi.controleerUniekeNaam(gebruikersNaam);
         if(check){
         	if(wachtwoord.equals(herhaalwachtwoord)){
-        		Main.dsi.spelerToevoegen(gebruikersNaam, wachtwoord);
+        		Main.asi.spelerToevoegen(gebruikersNaam, wachtwoord);
                 uiGebruikersnaam.clear();
                 uiWachtwoord.clear();
                 uiHerhaalWachtwoord.clear();

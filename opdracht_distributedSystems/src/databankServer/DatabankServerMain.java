@@ -9,7 +9,7 @@ public class DatabankServerMain {
 		
 		try{
 			System.out.println("dataserver started...");
-			Registry dataBankRegistry=LocateRegistry.createRegistry(1001);
+			Registry dataBankRegistry=LocateRegistry.createRegistry(1003);
 			dataBankRegistry.rebind("DataBankService", new DatabankServerImpl());
 		}
 		catch(Exception e){
