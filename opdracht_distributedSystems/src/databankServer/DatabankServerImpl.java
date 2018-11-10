@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import interfaces.DatabankServerInterface;
 
@@ -33,13 +34,16 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	
 	@Override
 	public void register(String naam, String pwd) {
+		String time=new Date().toString();
 		String salt=bcrypt.gensalt();
-		String sql = "INSERT INTO Speler(naam,pwd,salt) VALUES(?,?,?)";
+		String sql = "INSERT INTO Speler(naam,pwd,salt,token,time) VALUES(?,?,?,?,?)";
 		try (Connection conn = this.connect();
 	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	           pstmt.setString(1, naam);
 	           pstmt.setString(2, bcrypt.hashpw(pwd, salt));
 	           pstmt.setString(3, salt);
+	           pstmt.setString(4, "tmp token");
+	           pstmt.setString(5, time);
 	           pstmt.executeUpdate();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());

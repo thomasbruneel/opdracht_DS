@@ -1,6 +1,7 @@
 package client;
 
 import java.rmi.RemoteException;
+import java.util.Observable;
 
 import databankServer.DatabankServerImpl;
 import javafx.fxml.FXML;
@@ -13,7 +14,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginController {
+import static client.Main.*;// aan attributen asi geraken
+
+public class LoginController{
 	
     @FXML
     Button uiButton;
@@ -43,7 +46,7 @@ public class LoginController {
         String gebruikersNaam=uiGebruikersnaam.getText();
         String wachtwoord= uiWachtwoord.getText();
         boolean check=false;
-        check=Main.asi.login(gebruikersNaam, wachtwoord);
+        check=asi.login(gebruikersNaam, wachtwoord);
         System.out.println(gebruikersNaam);
         System.out.println(wachtwoord);
         System.out.println(check);
