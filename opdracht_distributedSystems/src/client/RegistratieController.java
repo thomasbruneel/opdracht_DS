@@ -47,7 +47,7 @@ public class RegistratieController {
         boolean check=Main.asi.controleerUniekeNaam(gebruikersNaam);
         if(check){
         	if(wachtwoord.equals(herhaalwachtwoord)){
-        		Main.asi.spelerToevoegen(gebruikersNaam, wachtwoord);
+        		Main.asi.register(gebruikersNaam, wachtwoord);
                 uiGebruikersnaam.clear();
                 uiWachtwoord.clear();
                 uiHerhaalWachtwoord.clear();

@@ -78,7 +78,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
     	try {
-    		Registry registry=LocateRegistry.getRegistry("localhost",1001);
+    		Registry registry=LocateRegistry.getRegistry("localhost",1111);
 			asi=(AppServerInterface) registry.lookup("AppService");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

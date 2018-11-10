@@ -32,7 +32,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	 }
 	
 	@Override
-	public void spelerToevoegen(String naam, String pwd) {
+	public void register(String naam, String pwd) {
 		String salt=bcrypt.gensalt();
 		String sql = "INSERT INTO Speler(naam,pwd,salt) VALUES(?,?,?)";
 		try (Connection conn = this.connect();
@@ -93,7 +93,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
         }
     }
 	@Override
-	public boolean checkPwd(String userName,String userPwd){
+	public boolean login(String userName,String userPwd){
 		String sql="SELECT pwd FROM Speler WHERE naam=?";
 		try (Connection conn = this.connect();
 			PreparedStatement pstmt  = conn.prepareStatement(sql)){

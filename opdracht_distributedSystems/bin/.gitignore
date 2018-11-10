@@ -1,7 +1,5 @@
-/application/
 /applicationServer/
-/client/
 /databankServer/
-/interfaces/
+/client/
 /dispatcher/
-/memoryGame/
+/interfaces/

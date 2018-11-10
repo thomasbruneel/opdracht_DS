@@ -14,7 +14,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	private DatabankServerInterface dsi;
 	
 	public AppServerImpl() throws RemoteException{
-		Registry registry=LocateRegistry.getRegistry("localhost",1003);
+		Registry registry=LocateRegistry.getRegistry("localhost",2222);
 		try {
 			dsi=(DatabankServerInterface) registry.lookup("DataBankService");
 		} catch (NotBoundException e) {
@@ -24,15 +24,15 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	}
 
 	@Override
-	public void spelerToevoegen(String naam, String pwd) throws RemoteException {
-		dsi.spelerToevoegen(naam, pwd);
+	public void register(String naam, String pwd) throws RemoteException {
+		dsi.register(naam, pwd);
 		
 	}
 
 	@Override
-	public boolean checkPwd(String userName, String userPwd) throws RemoteException {
+	public boolean login(String userName, String userPwd) throws RemoteException {
 		
-		return dsi.checkPwd(userName, userPwd);
+		return dsi.login(userName, userPwd);
 	}
 
 	@Override

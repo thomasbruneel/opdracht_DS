@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 
 public interface AppServerInterface extends Remote{
 	
-	void spelerToevoegen(String naam, String pwd) throws RemoteException;
+	void register(String naam, String pwd) throws RemoteException;
 	
-	boolean checkPwd(String userName,String userPwd) throws RemoteException;
+	boolean login(String userName,String userPwd) throws RemoteException;
 	
 	boolean controleerUniekeNaam(String naam) throws RemoteException;
 }
