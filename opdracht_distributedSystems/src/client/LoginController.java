@@ -14,7 +14,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import static client.Main.*;// aan attributen asi geraken
+import static client.ClientMain.*;// aan attributen asi geraken
 
 public class LoginController{
 	
@@ -45,13 +45,12 @@ public class LoginController{
     public void inloggen() throws RemoteException{
         String gebruikersNaam=uiGebruikersnaam.getText();
         String wachtwoord= uiWachtwoord.getText();
-        boolean check=false;
-        check=asi.login(gebruikersNaam, wachtwoord);
+        String t;
+        t=asi.login(gebruikersNaam, wachtwoord);
         System.out.println(gebruikersNaam);
         System.out.println(wachtwoord);
-        System.out.println(check);
-        if(check){
-        	Main.openMenuUI();
+        if(t!=null){
+        	ClientMain.openMenuUI();
         	uiButton.getScene().getWindow().hide();
         }
         else{
@@ -65,7 +64,7 @@ public class LoginController{
     
     public void registreerHier(){
     	System.out.println("word ik uitgevoerd");
-        Main.openRegistratieUI();
+        ClientMain.openRegistratieUI();
         registratieLink.getScene().getWindow().hide();
 
     }

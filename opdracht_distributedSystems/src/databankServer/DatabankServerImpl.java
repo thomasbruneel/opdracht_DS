@@ -78,24 +78,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 		return false;
 	        
 	}
-
-	public void selectAll(){
-        String sql = "SELECT naam, pwd FROM Speler";
-        
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
-            
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getString("naam") + "\t"+rs.getString("pwd")); 
-                                   
-                                   
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+	
 	@Override
 	public boolean login(String userName,String userPwd){
 		String sql="SELECT pwd FROM Speler WHERE naam=?";
@@ -123,16 +106,40 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 		return false;
 	}
 	
+	@Override
+	public void updateToken(String userName,String token){
+		System.out.println("token???????????");
+		String sql="UPDATE Speler SET token= ? WHERE naam = ?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, token);
+	           pstmt.setString(2, userName);
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		
+		
+	}
 
-	 /*
-	public static void main(String[] args) {
-		DatabankServerImpl db = new DatabankServerImpl();
-		db.selectAll();
-		boolean oke=db.checkPwd("thomas","bruneel");
-		System.out.println(oke);
-		boolean noke=db.checkPwd("thomas","thththtrerer");
-		System.out.println(noke);
+	public void selectAll(){
+        String sql = "SELECT naam, pwd FROM Speler";
+        
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getString("naam") + "\t"+rs.getString("pwd")); 
+                                   
+                                   
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
-    */
+
+	
 	
 }

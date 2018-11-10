@@ -30,9 +30,17 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	}
 
 	@Override
-	public boolean login(String userName, String userPwd) throws RemoteException {
+	public String login(String userName, String userPwd) throws RemoteException {	//geeft token terug als username en pass overeenkomt
+		if(dsi.login(userName, userPwd)){
+			String token=TokenGenerator.generate(userName);
+			dsi.updateToken(userName,token);
+			return token;
+			
+		}
+		else{
+			return null;
+		}
 		
-		return dsi.login(userName, userPwd);
 	}
 
 	@Override

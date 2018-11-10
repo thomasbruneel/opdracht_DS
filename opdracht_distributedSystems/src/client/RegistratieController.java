@@ -44,10 +44,10 @@ public class RegistratieController {
         String wachtwoord= uiWachtwoord.getText();
         String herhaalwachtwoord= uiHerhaalWachtwoord.getText();
         
-        boolean check=Main.asi.controleerUniekeNaam(gebruikersNaam);
+        boolean check=ClientMain.asi.controleerUniekeNaam(gebruikersNaam);
         if(check){
         	if(wachtwoord.equals(herhaalwachtwoord)){
-        		Main.asi.register(gebruikersNaam, wachtwoord);
+        		ClientMain.asi.register(gebruikersNaam, wachtwoord);
                 uiGebruikersnaam.clear();
                 uiWachtwoord.clear();
                 uiHerhaalWachtwoord.clear();
@@ -77,7 +77,7 @@ public class RegistratieController {
     }
     
     public void terugNaarLogin(){
-        Main.openLoginUI();
+        ClientMain.openLoginUI();
         loginLink.getScene().getWindow().hide();
 
     }

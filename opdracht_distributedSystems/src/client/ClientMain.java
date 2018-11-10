@@ -15,7 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 
-public class Main extends Application {
+public class ClientMain extends Application {
 	
 	public static AppServerInterface asi;
 	public static String token;
@@ -36,7 +36,7 @@ public class Main extends Application {
 	public static void openRegistratieUI(){
 		AnchorPane root = null;
         try {
-            root = FXMLLoader.load(Main.class.getResource("registratieUI.fxml"));
+            root = FXMLLoader.load(ClientMain.class.getResource("registratieUI.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class Main extends Application {
 	public static void openLoginUI(){
 		AnchorPane root = null;
         try {
-            root = FXMLLoader.load(Main.class.getResource("loginUI.fxml"));
+            root = FXMLLoader.load(ClientMain.class.getResource("loginUI.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class Main extends Application {
 	public static void openMenuUI(){
 		AnchorPane root = null;
         try {
-            root = FXMLLoader.load(Main.class.getResource("menuUI.fxml"));
+            root = FXMLLoader.load(ClientMain.class.getResource("menuUI.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

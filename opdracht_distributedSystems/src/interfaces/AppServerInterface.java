@@ -7,7 +7,7 @@ public interface AppServerInterface extends Remote{
 	
 	void register(String naam, String pwd) throws RemoteException;
 	
-	boolean login(String userName,String userPwd) throws RemoteException;
+	String login(String userName,String userPwd) throws RemoteException;
 	
 	boolean controleerUniekeNaam(String naam) throws RemoteException;
 }
