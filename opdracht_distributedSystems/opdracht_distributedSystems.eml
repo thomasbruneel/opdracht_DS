@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="sqlite-jdbc-3.23.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.23.1.jar!/"/>
+	</lib>
+	<lib name="jackson-annotations-2.9.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jackson-annotations-2.9.0.jar!/"/>
+	</lib>
+	<lib name="jackson-core-2.9.6.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jackson-core-2.9.6.jar!/"/>
+	</lib>
+	<lib name="jackson-databind-2.9.6.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jackson-databind-2.9.6.jar!/"/>
+	</lib>
+	<lib name="jjwt-0.9.1.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jjwt-0.9.1.jar!/"/>
+	</lib>
+</component>

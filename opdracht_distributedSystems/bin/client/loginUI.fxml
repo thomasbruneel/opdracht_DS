@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LoginController">
+   <children>
+      <Label layoutX="214.0" layoutY="27.0" prefHeight="17.0" prefWidth="172.0" text="inloggen" />
+      <Label layoutX="215.0" layoutY="57.0" prefHeight="17.0" prefWidth="144.0" text="gebruikersnaam:" />
+      <TextField fx:id="uiGebruikersnaam" layoutX="211.0" layoutY="89.0" onAction="#inloggen" />
+      <Label layoutX="216.0" layoutY="136.0" text="wachtwoord" />
+      <Button fx:id="uiButton" layoutX="254.0" layoutY="206.0" mnemonicParsing="false" onAction="#inloggen" text="inloggen" />
+      <Label layoutX="198.0" layoutY="271.0" text="nog geen account?" />
+      <Hyperlink fx:id="registratieLink" layoutX="321.0" layoutY="269.0" onAction="#registreerHier" text="registreer hier" />
+      <PasswordField fx:id="uiWachtwoord" layoutX="211.0" layoutY="164.0" />
+      <Label fx:id="uiFailLogin" layoutX="234.0" layoutY="309.0" text="geen geldige login" textFill="RED" />
+   </children>
+</AnchorPane>
