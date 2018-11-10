@@ -19,6 +19,7 @@ public class ClientMain extends Application {
 	
 	public static AppServerInterface asi;
 	public static String token;
+	public static String userName;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -62,10 +63,24 @@ public class ClientMain extends Application {
     }
 	
 	
-	public static void openMenuUI(){
+	public static void openLobbyUI(){
 		AnchorPane root = null;
         try {
-            root = FXMLLoader.load(ClientMain.class.getResource("menuUI.fxml"));
+            root = FXMLLoader.load(ClientMain.class.getResource("lobbyUI.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage= new Stage();
+        Scene scene= new Scene(root,600 , 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+	
+	public static void openNewGameUI(){
+		AnchorPane root = null;
+        try {
+            root = FXMLLoader.load(ClientMain.class.getResource("newGameUI.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,6 +94,7 @@ public class ClientMain extends Application {
 	public static void main(String[] args) {
 		
     	try {
+    		System.out.println("client started...");
     		Registry registry=LocateRegistry.getRegistry("localhost",1111);
 			asi=(AppServerInterface) registry.lookup("AppService");
 		} catch (Exception e) {

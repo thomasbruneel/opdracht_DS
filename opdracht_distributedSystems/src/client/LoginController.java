@@ -50,7 +50,9 @@ public class LoginController{
         System.out.println(gebruikersNaam);
         System.out.println(wachtwoord);
         if(t!=null){
-        	ClientMain.openMenuUI();
+        	token=t;
+        	userName=gebruikersNaam;
+        	openLobbyUI();
         	uiButton.getScene().getWindow().hide();
         }
         else{
