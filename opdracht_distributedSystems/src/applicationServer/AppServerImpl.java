@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
@@ -13,7 +14,10 @@ import interfaces.DatabankServerInterface;
 public class AppServerImpl extends UnicastRemoteObject implements AppServerInterface{
 	private DatabankServerInterface dsi;
 	
+	private ArrayList<ActiveGame>activeGames;
+	
 	public AppServerImpl() throws RemoteException{
+		activeGames=new ArrayList<ActiveGame>();
 		Registry registry=LocateRegistry.getRegistry("localhost",2222);
 		try {
 			dsi=(DatabankServerInterface) registry.lookup("DataBankService");
@@ -48,6 +52,23 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		// TODO Auto-generated method stub
 		return dsi.controleerUniekeNaam(naam);
 	}
+
+	@Override
+	public void addActiveGame(ActiveGame activeGame) throws RemoteException {
+		System.out.println("kip  "+activeGame.getSize());
+		activeGames.add(activeGame);
+		
+	}
+	@Override
+	public  ArrayList<ActiveGame> getActiveGames() throws RemoteException {
+		return activeGames;
+	}
+
+	
+	
+	
+	
+	
 
 
 
