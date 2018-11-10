@@ -15,15 +15,23 @@ public class DispathcherImpl extends UnicastRemoteObject implements DatabankServ
 		
 	}
 
-	@Override
 	public void spelerToevoegen(String naam, String pwd) throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public boolean checkPwd(String userName, String userPwd) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
-	public boolean checkPwd(String userName, String userPwd) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void register(String naam, String pwd) throws RemoteException {
+
+	}
+
+	@Override
+	public boolean login(String userName, String userPwd) throws RemoteException {
 		return false;
 	}
 
@@ -31,6 +39,11 @@ public class DispathcherImpl extends UnicastRemoteObject implements DatabankServ
 	public boolean controleerUniekeNaam(String naam) throws RemoteException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void updateToken(String userName, String token) throws RemoteException {
+
 	}
 
 }
