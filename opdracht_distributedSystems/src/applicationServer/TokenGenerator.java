@@ -25,9 +25,42 @@ public class TokenGenerator {
 		calendar.setTime(date);
 		calendar.add(Calendar.HOUR, 24); //token is 24 uur geldig
 		
-		token=Jwts.builder().setId(username).setIssuedAt(date).setExpiration(calendar.getTime()).signWith(SignatureAlgorithm.HS256, signingKey).compact();
+		token=Jwts.builder()
+				.setId(username)
+				.setIssuedAt(date)
+				.setExpiration(calendar.getTime())
+				.signWith(SignatureAlgorithm.HS256, signingKey)
+				.compact();
 		
 		return token;
+		
+		
+	}
+	
+	public static void CheckExpiration(String token){
+		Jws<Claims> claims = Jwts.parser()
+				  .setSigningKey(signingKey)
+				  .parseClaimsJws(token);
+		
+		Date expirationDate=claims.getBody().getExpiration();
+		Date date=new Date();
+		
+		System.out.println("date now: "+date.toString());
+		System.out.println("expiration date: "+expirationDate.toString());
+		
+		if(date.compareTo(expirationDate)>0){
+
+			System.out.println("Date is after expirationdate");
+			
+		}
+		
+		else{
+
+			System.out.println("Date is before expirationdate");
+			
+		}
+		
+		
 		
 		
 	}

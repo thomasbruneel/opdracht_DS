@@ -6,13 +6,15 @@ public class ActiveGame implements Serializable {
 	
 	private String creator;
 	private int numberPlayers;
-	private int size;
+	private int maxPlayers;
+	private String size;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers, int size) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
+		this.maxPlayers=maxPlayers;
 		this.size = size;
 	}
 	
@@ -29,10 +31,19 @@ public class ActiveGame implements Serializable {
 	public void setNumberPlayers(int numberPlayers) {
 		this.numberPlayers = numberPlayers;
 	}
-	public int getSize() {
+	
+	public int getMaxPlayers() {
+		return maxPlayers;
+	}
+
+	public void setMaxPlayers(int maxPlayers) {
+		this.maxPlayers = maxPlayers;
+	}
+
+	public String getSize() {
 		return size;
 	}
-	public void setSize(int size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 	

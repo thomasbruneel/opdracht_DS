@@ -39,7 +39,7 @@ public class NewGameController {
     }
     
     public void createNewGame() throws RemoteException{
-    	ActiveGame activeGame=new ActiveGame(userName,Integer.parseInt(uiNumberplayers.getText()),Integer.parseInt(uiSizeBoard.getText()));
+    	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),uiSizeBoard.getText()+" x "+uiSizeBoard.getText());
     	asi.addActiveGame(activeGame);
     }
     

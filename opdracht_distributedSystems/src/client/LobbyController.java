@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import applicationServer.ActiveGame;
+import applicationServer.TokenGenerator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,9 +34,12 @@ public class LobbyController {
 
     @FXML
     private TableColumn<ActiveGame, Integer> uiTabelPlayers;
+    
+    @FXML
+    private TableColumn<ActiveGame, Integer> uiTabelMaxPlayers;
 
     @FXML
-    private TableColumn<ActiveGame, Integer> uiTabelSize;
+    private TableColumn<ActiveGame, String> uiTabelSize;
     
     
     @FXML
@@ -50,10 +54,15 @@ public class LobbyController {
         }
         uiTabelUser.setCellValueFactory(new PropertyValueFactory<>("creator"));
         uiTabelPlayers.setCellValueFactory(new PropertyValueFactory<>("numberPlayers"));
+        uiTabelMaxPlayers.setCellValueFactory(new PropertyValueFactory<>("maxPlayers"));
         uiTabelSize.setCellValueFactory(new PropertyValueFactory<>("size"));
         
         
 
+    }
+    
+    public void chacktoken(){
+    	TokenGenerator.CheckExpiration(token);
     }
     
     public void createNewGame(){
