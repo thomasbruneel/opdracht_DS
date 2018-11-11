@@ -1,5 +1,6 @@
 package memoryGame;
 
+import java.io.Serializable;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Random;
 
 import interfaces.DatabankServerInterface;
 
-public class Bord {
+public class Bord implements Serializable {
 	
 	private Kaart [][] matrix;
 	private int grootte;
@@ -36,7 +37,6 @@ public class Bord {
 		}
 		
 		Collections.shuffle(getallen);
-		System.out.println(getallen);
 		int index=0;
 		for(int i=0;i<grootte;i++){
 			for(int j=0;j<grootte;j++){
@@ -48,14 +48,7 @@ public class Bord {
 			}
 		}
 		
-	
-	}
-	//tijdelijk --> testen of alles goed verloopt
-	public static void main(String[] args) {
-		
-		Bord bord=new Bord(4);
-		bord.print();
-    	
+		print();
 	}
 
 

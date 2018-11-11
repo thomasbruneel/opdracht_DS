@@ -1,6 +1,8 @@
 package memoryGame;
 
-public class Kaart {
+import java.io.Serializable;
+
+public class Kaart implements Serializable{
 	
 	private boolean omgedraaid;
 	private int waarde;

@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import memoryGame.Game;
 
 public class NewGameController {
     @FXML
@@ -39,8 +40,12 @@ public class NewGameController {
     }
     
     public void createNewGame() throws RemoteException{
-    	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),uiSizeBoard.getText()+" x "+uiSizeBoard.getText());
+    	Game game=new Game(Integer.parseInt(uiSizeBoard.getText()));
+    	String size=uiSizeBoard.getText()+" x "+uiSizeBoard.getText();
+    	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
     	asi.addActiveGame(activeGame);
+    	openGameUI();
+    	uiBackToLobby.getScene().getWindow().hide();
     }
     
     public void backToLobby(){

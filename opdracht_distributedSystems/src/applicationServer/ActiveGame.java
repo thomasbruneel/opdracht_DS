@@ -2,20 +2,24 @@ package applicationServer;
 
 import java.io.Serializable;
 
+import memoryGame.Game;
+
 public class ActiveGame implements Serializable {
 	
 	private String creator;
 	private int numberPlayers;
 	private int maxPlayers;
 	private String size;
+	private Game game;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size,Game game) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
 		this.size = size;
+		this.game=game;
 	}
 	
 	// getters en setters
@@ -46,6 +50,16 @@ public class ActiveGame implements Serializable {
 	public void setSize(String size) {
 		this.size = size;
 	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	
+	
 	
 	
 	

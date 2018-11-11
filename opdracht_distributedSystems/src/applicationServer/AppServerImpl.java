@@ -49,13 +49,11 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	@Override
 	public boolean controleerUniekeNaam(String naam) throws RemoteException {
-		// TODO Auto-generated method stub
 		return dsi.controleerUniekeNaam(naam);
 	}
 
 	@Override
 	public void addActiveGame(ActiveGame activeGame) throws RemoteException {
-		System.out.println("kip  "+activeGame.getSize());
 		activeGames.add(activeGame);
 		
 	}

@@ -91,6 +91,20 @@ public class ClientMain extends Application {
         stage.show();
     }
 	
+	public static void openGameUI(){
+		AnchorPane root = null;
+        try {
+            root = FXMLLoader.load(ClientMain.class.getResource("gameUI.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage= new Stage();
+        Scene scene= new Scene(root,600 , 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+	
 	public static void main(String[] args) {
 		
     	try {
