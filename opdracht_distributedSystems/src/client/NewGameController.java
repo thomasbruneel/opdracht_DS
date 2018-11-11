@@ -44,12 +44,12 @@ public class NewGameController {
     	String size=uiSizeBoard.getText()+" x "+uiSizeBoard.getText();
     	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
     	asi.addActiveGame(activeGame);
-    	openGameUI();
+    	openUIScreen("gameUI.fxml");
     	uiBackToLobby.getScene().getWindow().hide();
     }
     
     public void backToLobby(){
-    	openLobbyUI();
+    	openUIScreen("lobbyUI.fxml");
     	uiBackToLobby.getScene().getWindow().hide();
     	 
     }

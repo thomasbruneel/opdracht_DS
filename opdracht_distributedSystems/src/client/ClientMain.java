@@ -34,24 +34,10 @@ public class ClientMain extends Application {
 		}
 	}
 	
-	public static void openRegistratieUI(){
+	public static void openUIScreen(String screen){
 		AnchorPane root = null;
         try {
-            root = FXMLLoader.load(ClientMain.class.getResource("registratieUI.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage= new Stage();
-        Scene scene= new Scene(root,600 , 600);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-	
-	public static void openLoginUI(){
-		AnchorPane root = null;
-        try {
-            root = FXMLLoader.load(ClientMain.class.getResource("loginUI.fxml"));
+            root = FXMLLoader.load(ClientMain.class.getResource(screen));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,47 +49,6 @@ public class ClientMain extends Application {
     }
 	
 	
-	public static void openLobbyUI(){
-		AnchorPane root = null;
-        try {
-            root = FXMLLoader.load(ClientMain.class.getResource("lobbyUI.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage= new Stage();
-        Scene scene= new Scene(root,600 , 600);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-	
-	public static void openNewGameUI(){
-		AnchorPane root = null;
-        try {
-            root = FXMLLoader.load(ClientMain.class.getResource("newGameUI.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage= new Stage();
-        Scene scene= new Scene(root,600 , 600);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-	
-	public static void openGameUI(){
-		AnchorPane root = null;
-        try {
-            root = FXMLLoader.load(ClientMain.class.getResource("gameUI.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage= new Stage();
-        Scene scene= new Scene(root,600 , 600);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
 	
 	public static void main(String[] args) {
 		

@@ -66,7 +66,7 @@ public class LobbyController {
     }
     
     public void createNewGame(){
-    	openNewGameUI();
+    	openUIScreen("newGameUI.fxml");
     	uiLogoutButton.getScene().getWindow().hide();
     }
 

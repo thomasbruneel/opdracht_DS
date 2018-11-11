@@ -52,7 +52,7 @@ public class LoginController{
         if(t!=null){
         	token=t;
         	userName=gebruikersNaam;
-        	openLobbyUI();
+        	openUIScreen("lobbyUI.fxml");
         	uiButton.getScene().getWindow().hide();
         }
         else{
@@ -66,7 +66,7 @@ public class LoginController{
     
     public void registreerHier(){
     	System.out.println("word ik uitgevoerd");
-        ClientMain.openRegistratieUI();
+    	openUIScreen("registratieUI.fxml");
         registratieLink.getScene().getWindow().hide();
 
     }
