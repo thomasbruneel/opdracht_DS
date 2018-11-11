@@ -1,10 +1,13 @@
 package client;
 	
+import static client.ClientMain.token;
+
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import applicationServer.TokenGenerator;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import javafx.application.Application;
@@ -38,16 +41,36 @@ public class ClientMain extends Application {
 	
 	public static void openUIScreen(String screen){
 		AnchorPane root = null;
-        try {
-            root = FXMLLoader.load(ClientMain.class.getResource(screen));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage= new Stage();
-        Scene scene= new Scene(root,600 , 600);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+		boolean checkToken=TokenGenerator.CheckExpiration(token);
+		if(checkToken){
+	        try {
+	            root = FXMLLoader.load(ClientMain.class.getResource(screen));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        Stage stage= new Stage();
+	        Scene scene= new Scene(root,600 , 600);
+	        stage.setScene(scene);
+	        stage.setResizable(false);
+	        stage.show();
+			
+		}
+		
+		else{
+			userName=token=null;
+			try {
+	            root = FXMLLoader.load(ClientMain.class.getResource("loginUI.fxml"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        Stage stage= new Stage();
+	        Scene scene= new Scene(root,600 , 600);
+	        stage.setScene(scene);
+	        stage.setResizable(false);
+	        stage.show();
+			
+		}
+
     }
 	
 	

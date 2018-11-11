@@ -37,7 +37,7 @@ public class TokenGenerator {
 		
 	}
 	
-	public static void CheckExpiration(String token){
+	public static boolean CheckExpiration(String token){
 		Jws<Claims> claims = Jwts.parser()
 				  .setSigningKey(signingKey)
 				  .parseClaimsJws(token);
@@ -51,12 +51,14 @@ public class TokenGenerator {
 		if(date.compareTo(expirationDate)>0){
 
 			System.out.println("Date is after expirationdate");
+			return false;
 			
 		}
 		
 		else{
 
 			System.out.println("Date is before expirationdate");
+			return true;
 			
 		}
 		
