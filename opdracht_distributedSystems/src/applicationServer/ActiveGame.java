@@ -5,7 +5,7 @@ import java.io.Serializable;
 import memoryGame.Game;
 
 public class ActiveGame implements Serializable {
-	
+	private int gameId;
 	private String creator;
 	private int numberPlayers;
 	private int maxPlayers;
@@ -14,7 +14,8 @@ public class ActiveGame implements Serializable {
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size,Game game) {
+	public ActiveGame(int gameId,String creator, int numberPlayers,int maxPlayers, String size,Game game) {
+		this.gameId=gameId;
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
@@ -58,6 +59,19 @@ public class ActiveGame implements Serializable {
 	public void setGame(Game game) {
 		this.game = game;
 	}
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+
+
+
+	
+	
 	
 	
 	

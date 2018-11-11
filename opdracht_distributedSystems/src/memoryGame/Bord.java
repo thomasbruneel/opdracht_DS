@@ -48,11 +48,10 @@ public class Bord implements Serializable {
 			}
 		}
 		
-		print();
 	}
 
 
-	private void print() {
+	public void print() {
 		for(int i=0;i<grootte;i++){
 			for(int j=0;j<grootte;j++){
 				

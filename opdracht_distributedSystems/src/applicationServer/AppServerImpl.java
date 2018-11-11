@@ -57,6 +57,19 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		activeGames.add(activeGame);
 		
 	}
+	
+	@Override
+	public void removeActiveGame(ActiveGame activeGame) throws RemoteException {
+		ActiveGame tmp = null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(activeGame.getCreator())){
+				tmp=ag;
+			}
+		}
+		activeGames.remove(tmp);
+		System.out.println(activeGames.size());
+		
+	}
 	@Override
 	public  ArrayList<ActiveGame> getActiveGames() throws RemoteException {
 		return activeGames;
