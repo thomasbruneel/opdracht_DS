@@ -111,8 +111,8 @@ public class ClientMain extends Application {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	        Stage stage= new Stage();
-	        Scene scene= new Scene(root,600 , 600);
+	        stage= new Stage();
+	        scene= new Scene(root,600 , 600);
 	        stage.setScene(scene);
 	        stage.setResizable(false);
 	        stage.show();
@@ -126,8 +126,8 @@ public class ClientMain extends Application {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	        Stage stage= new Stage();
-	        Scene scene= new Scene(root,600 , 600);
+	        stage = new Stage();
+	        scene = new Scene(root,600 , 600);
 	        stage.setScene(scene);
 	        stage.setResizable(false);
 	        stage.show();
