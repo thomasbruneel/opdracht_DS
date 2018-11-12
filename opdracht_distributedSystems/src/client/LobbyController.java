@@ -73,8 +73,8 @@ public class LobbyController {
     public void Join(){
     	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
     	if(activeGame!=null){
-    		System.out.println(activeGame.getCreator()+ "   "+activeGame.getGameId());
-    		gameId=activeGame.getGameId();
+    		System.out.println(activeGame.getCreator());
+    		gameId=activeGame.getCreator();
         	openUIScreen("gameUI.fxml");
         	uiLogoutButton.getScene().getWindow().hide();
     	}

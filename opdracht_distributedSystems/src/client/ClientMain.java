@@ -24,7 +24,7 @@ public class ClientMain extends Application {
 	public static String token;
 	public static String userName;
 	
-	public static int gameId;
+	public static String gameId;
 	
 	@Override
 	public void start(Stage primaryStage) {

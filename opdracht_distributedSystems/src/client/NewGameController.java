@@ -44,11 +44,10 @@ public class NewGameController {
     	Game game=new Game(Integer.parseInt(uiSizeBoard.getText()));
     	
     	String size=uiSizeBoard.getText()+" x "+uiSizeBoard.getText();
-    	int id=rand.nextInt(1000)+1;
-    	ActiveGame activeGame=new ActiveGame(id,userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
+    	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
     	asi.addActiveGame(activeGame);
     	
-    	gameId=id;
+    	gameId=userName;
     	openUIScreen("gameUI.fxml");
     	uiBackToLobby.getScene().getWindow().hide();
     }
