@@ -58,7 +58,13 @@ public class GameController {
         int height = (int)(uiGamePane.getPrefWidth());
         System.out.println("gamepane size:  "+width+ "   "+height);
 
-        
+        int tile_size = width/game.getBord().getGrootte();
+
+        for (int i=0; i < game.getBord().getGrootte(); i++){
+            for(int j=0; j < game.getBord().getGrootte(); j++){
+                game.getBord().getMatrix()[i][i].constructRectangle(tile_size);
+            }
+        }
 
 
 
