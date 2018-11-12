@@ -4,17 +4,17 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GameController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GameController">
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" layoutX="180.0" layoutY="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.14589235127478753" layoutX="180.0" layoutY="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <Button fx:id="uiButton" mnemonicParsing="false" onAction="#backToLobby" text="Exit" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button mnemonicParsing="false" onAction="#setupGame" text="Start Game" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#setupGame" text="Start Game" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" />
                </children>
             </AnchorPane>
-          <AnchorPane fx:id="uiGamePane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="600.0" />
+          <AnchorPane fx:id="uiGamePane" maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" />
         </items>
       </SplitPane>
    </children>

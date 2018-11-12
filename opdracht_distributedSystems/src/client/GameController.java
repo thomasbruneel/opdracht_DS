@@ -23,9 +23,6 @@ public class GameController {
 	@FXML
     Button uiButton;
 
-	@FXML
-    Button startGameButton;
-
     
     Game game = null;
     ActiveGame activeGame=null;
@@ -41,7 +38,7 @@ public class GameController {
     		game.getBord().print();
     	}
     	
-
+        setupGame();
 
     }
     
@@ -57,9 +54,14 @@ public class GameController {
     }
 
     public void setupGame() throws RemoteException{
-        int width = (int)uiGamePane.getWidth();
-        int height = (int)uiGamePane.getHeight();
+        int width = (int)uiGamePane.getPrefWidth();
+        int height = (int)(uiGamePane.getPrefWidth());
         System.out.println("gamepane size:  "+width+ "   "+height);
+
+        
+
+
+
     }
 
 
