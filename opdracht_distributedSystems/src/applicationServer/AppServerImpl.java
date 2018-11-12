@@ -1,5 +1,8 @@
 package applicationServer;
 
+import static client.ClientMain.asi;
+import static client.ClientMain.gameId;
+
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -73,6 +76,18 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public  ArrayList<ActiveGame> getActiveGames() throws RemoteException {
 		return activeGames;
+	}
+	
+	@Override
+	public ActiveGame getActiveGame(String id)throws RemoteException {
+		ActiveGame activeGame=null;
+    	for(ActiveGame ag:activeGames){
+    		if(ag.getCreator().equals(id)){
+    			activeGame=ag;
+    		}
+    	}
+		return activeGame;
+		
 	}
 
 	

@@ -31,13 +31,8 @@ public class GameController {
     public void initialize() throws RemoteException{
     	
     	
-    	ArrayList<ActiveGame> list=asi.getActiveGames();
-    	for(ActiveGame ag:list){
-    		if(ag.getGameId()==gameId){
-    			activeGame=ag;
-    			game=ag.getGame();
-    		}
-    	}
+    	ActiveGame activeGame=asi.getActiveGame(gameId);
+    	game=activeGame.getGame();
     	if(game!=null){
     		game.getBord().print();
     	}
