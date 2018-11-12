@@ -49,7 +49,7 @@ public class ClientMain extends Application {
 	            e.printStackTrace();
 	        }
 	        Stage stage= new Stage();
-	        Scene scene= new Scene(root,600 , 600);
+	        Scene scene= new Scene(root);
 	        stage.setScene(scene);
 	        stage.setResizable(false);
 	        stage.show();
