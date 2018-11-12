@@ -4,15 +4,11 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Objects;
 
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -24,30 +20,12 @@ public class ClientMain extends Application {
 	public static AppServerInterface asi;
 	public static String token;
 	public static String userName;
-
-    private Parent createGame() {
-        AnchorPane root = null;
-        try {
-            root =(AnchorPane)FXMLLoader.load(getClass().getResource("gameUI.fxml"));
-            Pane gamePane = (Pane)root.lookup("gamePane");
-            Text text = new Text();
-            text.setText("TestText");
-            gamePane.getChildren().add(text);
-            getNe
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return root;
-    }
-
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = createGame();
-
-                    //
-
-			Scene scene = new Scene(root);
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("loginUI.fxml"));
+			Scene scene = new Scene(root,600,600);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
@@ -55,9 +33,8 @@ public class ClientMain extends Application {
 			e.printStackTrace();
 		}
 	}
-
-
-    public static void openRegistratieUI(){
+	
+	public static void openRegistratieUI(){
 		AnchorPane root = null;
         try {
             root = FXMLLoader.load(ClientMain.class.getResource("registratieUI.fxml"));
