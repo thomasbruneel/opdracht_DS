@@ -1,5 +1,6 @@
 package databankServer;
 
+import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
@@ -22,8 +23,15 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	
 	public Connection connect() {
 	    // SQLite connection string
-	    String url = "jdbc:sqlite:C:\\Users\\thoma\\OneDrive\\Documents\\GitHub\\database\\mijnDatabase.db";
-	    Connection conn = null;
+		File file = new File("databasepath.txt");
+		String url = null;
+		try {
+			 BufferedReader br = new BufferedReader(new FileReader(file));
+			url = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Connection conn = null;
 	    try {
 	         conn = DriverManager.getConnection(url);
 	    } catch (SQLException e) {
