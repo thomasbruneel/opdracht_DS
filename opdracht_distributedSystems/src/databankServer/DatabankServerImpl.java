@@ -22,7 +22,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	
 	public Connection connect() {
 	    // SQLite connection string
-	    String url = "jdbc:sqlite:C:\\Users\\thoma\\OneDrive\\Documents\\GitHub\\opdracht_DS\\opdracht_distributedSystems\\database\\mijnDatabase.db";
+	    String url = "jdbc:sqlite:C:\\Users\\thoma\\OneDrive\\Documents\\GitHub\\database\\mijnDatabase.db";
 	    Connection conn = null;
 	    try {
 	         conn = DriverManager.getConnection(url);
