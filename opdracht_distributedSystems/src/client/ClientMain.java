@@ -1,11 +1,14 @@
 package client;
 	
+import static client.ClientMain.token;
+
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Objects;
 
+import applicationServer.TokenGenerator;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import javafx.application.Application;
@@ -33,13 +36,15 @@ public class ClientMain extends Application {
             Text text = new Text();
             text.setText("TestText");
             gamePane.getChildren().add(text);
-            getNe
         } catch (IOException e) {
             e.printStackTrace();
         }
         return root;
     }
 
+	
+	public static int gameId;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -86,7 +91,8 @@ public class ClientMain extends Application {
     }
 	
 	
-	public static void openLobbyUI(){
+
+	public static void openUIScreen(String screen){
 		AnchorPane root = null;
         try {
             root = FXMLLoader.load(ClientMain.class.getResource("lobbyUI.fxml"));
@@ -98,6 +104,36 @@ public class ClientMain extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+		boolean checkToken=TokenGenerator.CheckExpiration(token);
+		if(checkToken){
+	        try {
+	            root = FXMLLoader.load(ClientMain.class.getResource(screen));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        Stage stage= new Stage();
+	        Scene scene= new Scene(root,600 , 600);
+	        stage.setScene(scene);
+	        stage.setResizable(false);
+	        stage.show();
+			
+		}
+		
+		else{
+			userName=token=null;
+			try {
+	            root = FXMLLoader.load(ClientMain.class.getResource("loginUI.fxml"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        Stage stage= new Stage();
+	        Scene scene= new Scene(root,600 , 600);
+	        stage.setScene(scene);
+	        stage.setResizable(false);
+	        stage.show();
+			
+		}
+
     }
 	
 	public static void openNewGameUI(){
