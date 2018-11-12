@@ -2,6 +2,7 @@ package client;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import applicationServer.ActiveGame;
 import applicationServer.TokenGenerator;
@@ -42,31 +43,55 @@ public class LobbyController {
     private TableColumn<ActiveGame, String> uiTabelSize;
     
     
+    private ArrayList<ActiveGame> listActiveGames;
+    
+    private boolean running;
+    
     @FXML
     public void initialize() throws RemoteException{
+    	running=true;
     	uiTabel.getItems().remove(true);
         uiWelcomeUser.setText(userName);
-        ArrayList<ActiveGame> lijst=asi.getActiveGames();
-        if(lijst!=null){
-        	for(ActiveGame ag:lijst){
-        		uiTabel.getItems().add(ag);
-        	}
-        }
+        listActiveGames=asi.getActiveGames();
+        uiTabel.getItems().setAll(listActiveGames);
         uiTabelUser.setCellValueFactory(new PropertyValueFactory<>("creator"));
         uiTabelPlayers.setCellValueFactory(new PropertyValueFactory<>("numberPlayers"));
         uiTabelMaxPlayers.setCellValueFactory(new PropertyValueFactory<>("maxPlayers"));
         uiTabelSize.setCellValueFactory(new PropertyValueFactory<>("size"));
-        
-        
+        startCheckThread();
 
     }
     
-    public void chacktoken(){
+    private void startCheckThread() {
+    		new Thread(){
+    			public synchronized void run(){
+    				while (running){
+    					List<ActiveGame> newList=null;
+						try {
+							newList = asi.getActiveGames();
+							if(newList!=null){
+								uiTabel.getItems().setAll(newList);
+	    						
+	    					}
+						} catch (RemoteException e) {
+							e.printStackTrace();
+						}
+    					
+    				}
+    			}
+
+
+    		}.start();
+		
+	}
+
+	public void chacktoken(){
     	TokenGenerator.CheckExpiration(token);
     }
     
     public void createNewGame(){
     	openUIScreen("newGameUI.fxml");
+    	running=false;
     	uiLogoutButton.getScene().getWindow().hide();
     }
     
@@ -79,5 +104,19 @@ public class LobbyController {
         	uiLogoutButton.getScene().getWindow().hide();
     	}
     }
+    
+	private void removeTabel() {
+		uiTabel.getItems().removeAll();
+		
+	}
+	public ArrayList<ActiveGame> getListActiveGames() {
+		return listActiveGames;
+	}
+
+	public void setListActiveGames(ArrayList<ActiveGame> listActiveGames) {
+		this.listActiveGames = listActiveGames;
+	}
+    
+    
 
 }

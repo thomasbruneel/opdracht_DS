@@ -70,7 +70,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			}
 		}
 		activeGames.remove(tmp);
-		System.out.println(activeGames.size());
+
 		
 	}
 	@Override

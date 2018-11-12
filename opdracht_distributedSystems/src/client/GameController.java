@@ -32,7 +32,7 @@ public class GameController {
     public void initialize() throws RemoteException{
     	
     	
-    	ActiveGame activeGame=asi.getActiveGame(gameId);
+    	activeGame=asi.getActiveGame(gameId);
     	game=activeGame.getGame();
     	if(game!=null){
     		game.getBord().print();
@@ -45,7 +45,6 @@ public class GameController {
     public void backToLobby() throws RemoteException{
     	//als de creator het spel verlaat, wordt het spel beeindigd
     	if(activeGame.getCreator().equals(userName)){
-    		System.out.println("hallohaalloffjzkfkzkfkf");
     		asi.removeActiveGame(activeGame);
     	}
     	openUIScreen("lobbyUI.fxml");
