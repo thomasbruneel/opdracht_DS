@@ -26,9 +26,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="uiTabel" layoutX="173.0" layoutY="262.0" prefHeight="200.0" prefWidth="356.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <TableView fx:id="uiTabel" layoutX="123.0" layoutY="261.0" prefHeight="200.0" prefWidth="357.0" style="-fx-alignment: CENTER;" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0">
-      <TableView fx:id="uiTabel" layoutX="173.0" layoutY="262.0" prefHeight="200.0" prefWidth="356.0">
         <columns>
           <TableColumn fx:id="uiTabelUser" prefWidth="75.0" style="-fx-alignment: CENTER;" text="creator" />
           <TableColumn fx:id="uiTabelPlayers" prefWidth="129.0" style="-fx-alignment: CENTER;" text="number of players" />
@@ -39,9 +37,7 @@
             <Glow />
          </effect>
       </TableView>
-      <Label layoutX="173.0" layoutY="234.0" prefHeight="17.0" prefWidth="100.0" text="active games:" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" />
       <Label layoutX="124.0" layoutY="238.0" prefHeight="17.0" prefWidth="100.0" text="active games:" />
       <Button layoutX="124.0" layoutY="494.0" mnemonicParsing="false" onAction="#Join" text="JOIN" />
-      <Label layoutX="173.0" layoutY="234.0" prefHeight="17.0" prefWidth="100.0" text="active games:" />
    </children>
 </AnchorPane>
