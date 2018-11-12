@@ -10,18 +10,18 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import memoryGame.Game;
 
 import static client.ClientMain.*;
 
 public class GameController {
-	
-    @FXML
-    Button uiButton;
 
-    
-    @FXML
-    Label uiFailLogin;
+	@FXML
+	AnchorPane GamePane;
+
+	@FXML
+    Button uiButton;
     
     Game game = null;
     ActiveGame activeGame=null;
@@ -57,7 +57,11 @@ public class GameController {
     	uiButton.getScene().getWindow().hide();
     	
     }
-    
+
+    void setupGame(){
+        int width = (int)GamePane.getWidth();
+        int height = (int)GamePane.getHeight();
+    }
 
     
     
