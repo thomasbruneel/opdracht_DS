@@ -18,7 +18,7 @@ import static client.ClientMain.*;
 public class GameController {
 
 	@FXML
-	AnchorPane GamePane;
+	AnchorPane uiGamePane;
 
 	@FXML
     Button uiButton;
@@ -37,7 +37,7 @@ public class GameController {
     		game.getBord().print();
     	}
     	
-        
+    	setupGame();
         
 
     }
@@ -54,8 +54,9 @@ public class GameController {
     }
 
     void setupGame(){
-        int width = (int)GamePane.getWidth();
-        int height = (int)GamePane.getHeight();
+        int width = (int)uiGamePane.getWidth();
+        int height = (int)uiGamePane.getHeight();
+        System.out.println("gamepane size:  "+width+ "   "+height);
     }
 
     
