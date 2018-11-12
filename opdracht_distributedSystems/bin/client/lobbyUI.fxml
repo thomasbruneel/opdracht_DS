@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LobbyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LobbyController">
    <children>
       <Label layoutX="198.0" layoutY="26.0" prefHeight="67.0" prefWidth="176.0" text="WELCOME" textFill="#ffb200">
          <font>
@@ -25,14 +25,14 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="uiTabel" layoutX="173.0" layoutY="262.0" prefHeight="200.0" prefWidth="356.0">
+      <TableView fx:id="uiTabel" layoutX="173.0" layoutY="262.0" prefHeight="200.0" prefWidth="356.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columns>
-          <TableColumn fx:id="uiTabelUser" prefWidth="75.0" style="-fx-alignment: CENTER;" text="creator" />
-          <TableColumn fx:id="uiTabelPlayers" prefWidth="129.0" style="-fx-alignment: CENTER;" text="number of players" />
-            <TableColumn fx:id="uiTabelMaxPlayers" prefWidth="75.0" style="-fx-alignment: CENTER;" text="max players" />
-            <TableColumn fx:id="uiTabelSize" prefWidth="75.0" style="-fx-alignment: CENTER;" text="size" />
+          <TableColumn fx:id="uiTabelUser" prefWidth="150.0" style="-fx-alignment: CENTER;" text="creator" />
+          <TableColumn fx:id="uiTabelPlayers" prefWidth="150.0" style="-fx-alignment: CENTER;" text="number of players" />
+            <TableColumn fx:id="uiTabelMaxPlayers" prefWidth="150.0" style="-fx-alignment: CENTER;" text="max players" />
+            <TableColumn fx:id="uiTabelSize" prefWidth="150.0" style="-fx-alignment: CENTER;" text="size" />
         </columns>
       </TableView>
-      <Label layoutX="173.0" layoutY="234.0" prefHeight="17.0" prefWidth="100.0" text="active games:" />
+      <Label layoutX="173.0" layoutY="234.0" prefHeight="17.0" prefWidth="100.0" text="active games:" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" />
    </children>
 </AnchorPane>
