@@ -3,6 +3,7 @@ package client;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import static client.ClientMain.NoTokenCheck;
 import static client.ClientMain.openUIScreen;
 
 import java.rmi.RemoteException;
@@ -79,7 +80,7 @@ public class RegistratieController {
     }
     
     public void terugNaarLogin(){
-    	openUIScreen("loginUI.fxml");
+    	NoTokenCheck("loginUI.fxml");
         loginLink.getScene().getWindow().hide();
 
     }

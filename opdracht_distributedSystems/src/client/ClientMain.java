@@ -72,6 +72,19 @@ public class ClientMain extends Application {
 		}
 
     }
+	public static void NoTokenCheck(String s){
+		AnchorPane root = null;
+	    try {
+	    	root = FXMLLoader.load(ClientMain.class.getResource(s));
+	    	} catch (IOException e) {
+	    		e.printStackTrace();
+	    	}
+	    Stage stage= new Stage();
+	    Scene scene= new Scene(root);
+	    stage.setScene(scene);
+	    stage.setResizable(false);
+	    stage.show();
+	}
 	
 	
 	

@@ -66,7 +66,7 @@ public class LoginController{
     
     public void registreerHier(){
     	System.out.println("word ik uitgevoerd");
-    	openUIScreen("registratieUI.fxml");
+    	NoTokenCheck("registratieUI.fxml");
         registratieLink.getScene().getWindow().hide();
 
     }

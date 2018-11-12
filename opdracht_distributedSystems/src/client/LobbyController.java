@@ -50,7 +50,7 @@ public class LobbyController {
     @FXML
     public void initialize() throws RemoteException{
     	running=true;
-    	uiTabel.getItems().remove(true);
+    	//uiTabel.getItems().remove(true);
         uiWelcomeUser.setText(userName);
         listActiveGames=asi.getActiveGames();
         uiTabel.getItems().setAll(listActiveGames);
@@ -69,7 +69,8 @@ public class LobbyController {
     					List<ActiveGame> newList=null;
 						try {
 							newList = asi.getActiveGames();
-							if(newList!=null){
+							if(newList!=null&&newList.size()!=listActiveGames.size()){
+								listActiveGames=(ArrayList<ActiveGame>) newList;
 								uiTabel.getItems().setAll(newList);
 	    						
 	    					}
@@ -105,10 +106,6 @@ public class LobbyController {
     	}
     }
     
-	private void removeTabel() {
-		uiTabel.getItems().removeAll();
-		
-	}
 	public ArrayList<ActiveGame> getListActiveGames() {
 		return listActiveGames;
 	}
