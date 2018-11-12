@@ -3,6 +3,7 @@ package client;
 import static client.ClientMain.*;
 
 import java.rmi.RemoteException;
+import java.util.Random;
 
 import applicationServer.ActiveGame;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class NewGameController {
     @FXML
     Button uiBackToLobby;
     
-
+    Random rand = new Random();
     
     
     @FXML
@@ -41,15 +42,19 @@ public class NewGameController {
     
     public void createNewGame() throws RemoteException{
     	Game game=new Game(Integer.parseInt(uiSizeBoard.getText()));
+    	
     	String size=uiSizeBoard.getText()+" x "+uiSizeBoard.getText();
-    	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
+    	int id=rand.nextInt(1000)+1;
+    	ActiveGame activeGame=new ActiveGame(id,userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
     	asi.addActiveGame(activeGame);
-    	openGameUI();
+    	
+    	gameId=id;
+    	openUIScreen("gameUI.fxml");
     	uiBackToLobby.getScene().getWindow().hide();
     }
     
     public void backToLobby(){
-    	openLobbyUI();
+    	openUIScreen("lobbyUI.fxml");
     	uiBackToLobby.getScene().getWindow().hide();
     	 
     }

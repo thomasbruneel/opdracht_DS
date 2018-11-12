@@ -44,7 +44,7 @@ public class LobbyController {
     
     @FXML
     public void initialize() throws RemoteException{
-    	System.out.println("username "+userName);
+    	uiTabel.getItems().remove(true);
         uiWelcomeUser.setText(userName);
         ArrayList<ActiveGame> lijst=asi.getActiveGames();
         if(lijst!=null){
@@ -66,8 +66,18 @@ public class LobbyController {
     }
     
     public void createNewGame(){
-    	openNewGameUI();
+    	openUIScreen("newGameUI.fxml");
     	uiLogoutButton.getScene().getWindow().hide();
+    }
+    
+    public void Join(){
+    	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
+    	if(activeGame!=null){
+    		System.out.println(activeGame.getCreator()+ "   "+activeGame.getGameId());
+    		gameId=activeGame.getGameId();
+        	openUIScreen("gameUI.fxml");
+        	uiLogoutButton.getScene().getWindow().hide();
+    	}
     }
 
 }

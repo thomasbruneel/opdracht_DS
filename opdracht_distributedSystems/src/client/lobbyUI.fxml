@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -20,19 +21,25 @@
          </font>
       </Label>
       <Button fx:id="uiLogoutButton" layoutX="512.0" layoutY="2.0" mnemonicParsing="false" onAction="#chacktoken" prefHeight="25.0" prefWidth="88.0" text="LOGOUT" />
-      <Button fx:id="uiCreateNewGameButton" layoutX="241.0" layoutY="117.0" mnemonicParsing="false" onAction="#createNewGame" text="CREATE NEW GAME">
+      <Button fx:id="uiCreateNewGameButton" layoutX="185.0" layoutY="116.0" mnemonicParsing="false" onAction="#createNewGame" prefHeight="39.0" prefWidth="235.0" style="-fx-alignment: CENTER;" text="CREATE NEW GAME" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="184.0">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <TableView fx:id="uiTabel" layoutX="173.0" layoutY="262.0" prefHeight="200.0" prefWidth="356.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TableView fx:id="uiTabel" layoutX="123.0" layoutY="261.0" prefHeight="200.0" prefWidth="357.0" style="-fx-alignment: CENTER;" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0">
         <columns>
           <TableColumn fx:id="uiTabelUser" prefWidth="150.0" style="-fx-alignment: CENTER;" text="creator" />
           <TableColumn fx:id="uiTabelPlayers" prefWidth="150.0" style="-fx-alignment: CENTER;" text="number of players" />
             <TableColumn fx:id="uiTabelMaxPlayers" prefWidth="150.0" style="-fx-alignment: CENTER;" text="max players" />
             <TableColumn fx:id="uiTabelSize" prefWidth="150.0" style="-fx-alignment: CENTER;" text="size" />
         </columns>
+         <effect>
+            <Glow />
+         </effect>
       </TableView>
       <Label layoutX="173.0" layoutY="234.0" prefHeight="17.0" prefWidth="100.0" text="active games:" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" />
+      <Label layoutX="124.0" layoutY="238.0" prefHeight="17.0" prefWidth="100.0" text="active games:" />
+      <Button layoutX="124.0" layoutY="494.0" mnemonicParsing="false" onAction="#Join" text="JOIN" />
    </children>
 </AnchorPane>

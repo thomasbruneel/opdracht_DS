@@ -3,6 +3,8 @@ package client;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import static client.ClientMain.openUIScreen;
+
 import java.rmi.RemoteException;
 
 import databankServer.DatabankServerImpl;
@@ -77,7 +79,7 @@ public class RegistratieController {
     }
     
     public void terugNaarLogin(){
-        ClientMain.openLoginUI();
+    	openUIScreen("loginUI.fxml");
         loginLink.getScene().getWindow().hide();
 
     }
