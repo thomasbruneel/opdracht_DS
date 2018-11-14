@@ -6,6 +6,7 @@ import java.util.List;
 
 import applicationServer.ActiveGame;
 import applicationServer.TokenGenerator;
+import client.Tasks.LobbyRefreshTask;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -118,8 +119,11 @@ public class LobbyController {
 		this.listActiveGames = listActiveGames;
 	}
 
-	public void refresh(List<ActiveGame> newList) {
-		uiTabel.getItems().setAll(newList);
+	public void refresh(ArrayList<ActiveGame> newList) {
+		if(newList!=null&&newList.size()!=listActiveGames.size()){
+			listActiveGames=newList;
+			uiTabel.getItems().setAll(listActiveGames);
+		}
 		
 	}
     
