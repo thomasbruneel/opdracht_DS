@@ -44,7 +44,7 @@ public class NewGameController {
     	Game game=new Game(Integer.parseInt(uiSizeBoard.getText()));
     	
     	String size=uiSizeBoard.getText()+" x "+uiSizeBoard.getText();
-    	ActiveGame activeGame=new ActiveGame(userName,1,Integer.parseInt(uiNumberplayers.getText()),size,game);
+    	ActiveGame activeGame=new ActiveGame(userName,0,Integer.parseInt(uiNumberplayers.getText()),size,game);
     	asi.addActiveGame(activeGame);
     	
     	gameId=userName;

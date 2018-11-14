@@ -21,10 +21,11 @@ public class LobbyRefreshTask extends Task {
 	}
 
 	@Override
-	protected Object call() throws Exception {
+	protected synchronized Object call() throws Exception {
 
 		while(!isCancelled()){
 			ArrayList<ActiveGame> newList = asi.getActiveGames();
+			
 			lc.refresh(newList);
 			
 		}

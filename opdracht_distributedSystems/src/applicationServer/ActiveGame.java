@@ -21,6 +21,7 @@ public class ActiveGame implements Serializable {
 		this.game=game;
 	}
 	
+	
 	// getters en setters
 	public String getCreator() {
 		return creator;
@@ -59,6 +60,16 @@ public class ActiveGame implements Serializable {
 	}
 
 
-	
+	public void increasePlayerCount(boolean bit) {
+		if(bit==true){
+			numberPlayers++;
+		}
+		else{
+			numberPlayers--;
+		}
+		
+		
+	}
+
 
 }

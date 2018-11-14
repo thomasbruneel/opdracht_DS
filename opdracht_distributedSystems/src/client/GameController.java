@@ -40,9 +40,8 @@ public class GameController {
     
     @FXML
     public void initialize() throws RemoteException{
-    	
-    	
     	activeGame=asi.getActiveGame(gameId);
+    	asi.increasePlayerCount(gameId,true);
     	game=activeGame.getGame();
     	if(game!=null){
     		game.getBord().print();
@@ -57,6 +56,7 @@ public class GameController {
     	if(activeGame.getCreator().equals(userName)){
     		asi.removeActiveGame(activeGame);
     	}
+    	asi.increasePlayerCount(gameId,false);
     	openUIScreen("lobbyUI.fxml");
     	uiButton.getScene().getWindow().hide();
     	

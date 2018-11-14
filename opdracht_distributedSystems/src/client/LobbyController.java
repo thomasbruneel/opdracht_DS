@@ -27,6 +27,9 @@ public class LobbyController {
     @FXML
     Button uiCreateNewGameButton;
     
+    @FXML
+    Label uiErrorMessage;
+    
     
 	//activegames tabel view
     @FXML
@@ -47,12 +50,12 @@ public class LobbyController {
     
     private ArrayList<ActiveGame> listActiveGames;
     
-    private boolean running;
+    //private boolean running;
     
     @FXML
     public void initialize() throws RemoteException{
-    	running=true;
     	//uiTabel.getItems().remove(true);
+    	uiErrorMessage.setVisible(false);
         uiWelcomeUser.setText(userName);
         listActiveGames=asi.getActiveGames();
         uiTabel.getItems().setAll(listActiveGames);
@@ -97,17 +100,20 @@ public class LobbyController {
     
     public void createNewGame(){
     	openUIScreen("newGameUI.fxml");
-    	running=false;
     	uiLogoutButton.getScene().getWindow().hide();
     }
     
     public void Join(){
     	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
-    	if(activeGame!=null){
+    	if(activeGame!=null&&activeGame.getNumberPlayers()<activeGame.getMaxPlayers()){
     		System.out.println(activeGame.getCreator());
     		gameId=activeGame.getCreator();
         	openUIScreen("gameUI.fxml");
         	uiLogoutButton.getScene().getWindow().hide();
+    	}
+    	else{
+    		uiErrorMessage.setText("LOBBY ZIT VOL");
+    		uiErrorMessage.setVisible(true);
     	}
     }
     
@@ -119,14 +125,15 @@ public class LobbyController {
 		this.listActiveGames = listActiveGames;
 	}
 
-	public void refresh(ArrayList<ActiveGame> newList) {
-		if(newList!=null&&newList.size()!=listActiveGames.size()){
+	public synchronized void refresh(ArrayList<ActiveGame> newList) {
+		if( (newList!=null) && (newList.size()!=listActiveGames.size())){
+			System.out.println("xxxxxxx");
 			listActiveGames=newList;
 			uiTabel.getItems().setAll(listActiveGames);
 		}
 		
 	}
-    
+	
     
 
 }
