@@ -41,7 +41,7 @@ public class Bord implements Serializable {
 		for(int i=0;i<grootte;i++){
 			for(int j=0;j<grootte;j++){
 				
-				matrix[i][j]=new Kaart(i,j,getallen.get(index));
+				matrix[i][j]=new Kaart(getallen.get(index));
 				index++;
 				
 				
@@ -83,15 +83,5 @@ public class Bord implements Serializable {
 	public void setGrootte(int grootte) {
 		this.grootte = grootte;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
