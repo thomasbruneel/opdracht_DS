@@ -11,7 +11,7 @@ public class Kaart extends StackPane implements Serializable{
     private int x,y;
 	private boolean omgedraaid;
 
-	private Text text = new Text();
+	private SText text = new SText();
 	private Rectangle border;
 	
 	public Kaart(){
@@ -32,7 +32,35 @@ public class Kaart extends StackPane implements Serializable{
 	public void setOmgedraaid(boolean omgedraaid) {
 		this.omgedraaid = omgedraaid;
 	}
-	
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public SText getText() {
+		return text;
+	}
+
+	public void setText(SText text) {
+		this.text = text;
+	}
+
+	public void setBorder(Rectangle border) {
+		this.border = border;
+	}
+
 	public void constructRectangle(int size){
 	    border = new Rectangle(size-1,size-1);
 	    getChildren().addAll(border,text);
@@ -42,6 +70,10 @@ public class Kaart extends StackPane implements Serializable{
 
 
     public int getWaarde() {
-	    return Integer.parseInt(text.getText());
+	    if (text != null) {
+	        if (!text.getText().equals(""))
+            return Integer.parseInt(text.getText());
+        }
+        return -666;
     }
 }
