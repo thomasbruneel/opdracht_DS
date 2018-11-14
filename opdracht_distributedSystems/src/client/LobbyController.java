@@ -6,6 +6,7 @@ import java.util.List;
 
 import applicationServer.ActiveGame;
 import applicationServer.TokenGenerator;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -58,10 +59,12 @@ public class LobbyController {
         uiTabelPlayers.setCellValueFactory(new PropertyValueFactory<>("numberPlayers"));
         uiTabelMaxPlayers.setCellValueFactory(new PropertyValueFactory<>("maxPlayers"));
         uiTabelSize.setCellValueFactory(new PropertyValueFactory<>("size"));
-        startCheckThread();
+        //startCheckThread();
+        Task task=new LobbyRefreshTask(uiTabel,this);
+        new Thread(task).start();
 
     }
-    
+    /*
     private void startCheckThread() {
     		new Thread(){
     			public synchronized void run(){
@@ -85,6 +88,7 @@ public class LobbyController {
     		}.start();
 		
 	}
+	*/
 
 	public void chacktoken(){
     	TokenGenerator.CheckExpiration(token);
@@ -112,6 +116,11 @@ public class LobbyController {
 
 	public void setListActiveGames(ArrayList<ActiveGame> listActiveGames) {
 		this.listActiveGames = listActiveGames;
+	}
+
+	public void refresh(List<ActiveGame> newList) {
+		uiTabel.getItems().setAll(newList);
+		
 	}
     
     
