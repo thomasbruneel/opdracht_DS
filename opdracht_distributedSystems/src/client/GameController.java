@@ -12,6 +12,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -36,6 +37,8 @@ public class GameController {
     Bord bord=null;
     Kaart[][] matrix=null;
     ActiveGame activeGame=null;
+    Text firstpress=null;
+    Text secondpress=null;
     
     private GridPane gridpane;
     
@@ -77,7 +80,9 @@ public class GameController {
         	for(int j=0;j<game.getBord().getGrootte();j++){
         		Text text=new Text();
         		text.setText(" x ");
-        		text.setOnMouseClicked(this::click);
+        		//text.setOnMouseClicked(this::click);
+        		text.setOnMousePressed(this::onPressed);
+        		text.setOnMouseReleased(this::onRelease);
         		gridpane.add(text, j, i);
         	}
         }
@@ -92,13 +97,65 @@ public class GameController {
             gridpane.getColumnConstraints().add(column);
         }
     }
-    
-    public void click(Event event){
+
+    private void onPressed(MouseEvent mouseEvent) {
+        Text text=(Text)mouseEvent.getSource();
+        int i=GridPane.getRowIndex(text);
+        int j=GridPane.getColumnIndex(text);
+        if(text.getText().equals(" x ")){
+            text.setText(" "+String.valueOf(matrix[i][j].getWaarde())+" ");
+            if (firstpress==null) firstpress=text;
+            else {
+                secondpress=text;
+            }
+        }
+        else{
+            text.setText(" x ");
+            firstpress = secondpress = null;
+        }
+
+    }
+
+    private synchronized void onRelease(MouseEvent mouseEvent) {
+        if(!(secondpress==null)){
+        //TODO: Keuze doorgeven aan gameserver
+        System.out.println("Eerste keuze: " + firstpress.getText() + " Tweede Keuze: " + secondpress.getText());
+        try {
+            wait(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //TODO: respons van server verwerken
+        firstpress.setText(" x ");
+        secondpress.setText(" x ");
+        firstpress = null;
+        secondpress = null;
+        }
+
+    }
+
+    public synchronized void click(Event event){
     	Text text=(Text)event.getSource();
     	int i=GridPane.getRowIndex(text);
     	int j=GridPane.getColumnIndex(text);
     	if(text.getText().equals(" x ")){
         	text.setText(" "+String.valueOf(matrix[i][j].getWaarde())+" ");
+        	if (firstpress==null) firstpress=text;
+        	else {
+        	    secondpress=text;
+        	    //TODO: Keuze doorgeven aan gameserver
+                System.out.println("Eerste keuze: " + firstpress.getText() + " Tweede Keuze: " + secondpress.getText());
+                try {
+                    wait(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //TODO: respons van server verwerken
+                firstpress.setText(" x ");
+                secondpress.setText(" x ");
+                firstpress = null;
+                secondpress = null;
+            }
     	}
     	else{
     		text.setText(" x ");
