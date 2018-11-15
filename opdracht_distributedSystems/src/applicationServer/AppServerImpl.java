@@ -131,6 +131,8 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     		activeGame.getGame().getBord().flipCard(x,y);
     	}
 
+		System.out.println(creator + ": " + x + ", " +y);
+
 	}
 
 	
