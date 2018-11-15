@@ -84,4 +84,10 @@ public class Bord implements Serializable {
 		this.grootte = grootte;
 	}
 
+
+	public void flipCard(int x, int y) {
+		
+		
+	}
+
 }

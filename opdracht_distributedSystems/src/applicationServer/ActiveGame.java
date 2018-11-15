@@ -1,6 +1,7 @@
 package applicationServer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import memoryGame.Game;
 
@@ -10,15 +11,17 @@ public class ActiveGame implements Serializable {
 	private int maxPlayers;
 	private String size;
 	private Game game;
+	private ArrayList<String>spelers;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size,Game game) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
 		this.size = size;
 		this.game=game;
+		this.spelers=spelers;
 	}
 	
 	

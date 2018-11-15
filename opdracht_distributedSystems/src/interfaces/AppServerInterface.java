@@ -25,4 +25,6 @@ public interface AppServerInterface extends Remote{
 	ActiveGame getActiveGame(String id) throws RemoteException;
 
 	void increasePlayerCount(String gameId,boolean bit) throws RemoteException;
+
+	void flipCard(String creator, int x, int y)throws RemoteException;
 }

@@ -118,6 +118,20 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		
 		
 	}
+	
+	@Override
+	public void flipCard(String creator,int x,int y)throws RemoteException{
+		ActiveGame activeGame=null;
+    	for(ActiveGame ag:activeGames){
+    		if(ag.getCreator().equals(creator)){
+    			activeGame=ag;
+    		}
+    	}
+    	if(activeGame!=null){
+    		activeGame.getGame().getBord().flipCard(x,y);
+    	}
+
+	}
 
 	
 	
