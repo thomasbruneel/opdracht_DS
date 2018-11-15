@@ -5,6 +5,7 @@ import static client.ClientMain.userName;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -42,9 +43,9 @@ public class ClientMain extends Application {
 	
 	
 	@Override
-	public void stop(){
-		userName=token=null;;
-    	token=null;
+	public void stop() throws RemoteException{
+    	asi.removeactiveGameById(userName);
+		userName=token=null;
 	    System.out.println("Stage is closing");
 	}
 	

@@ -19,6 +19,8 @@ public interface AppServerInterface extends Remote{
 	ArrayList<ActiveGame> getActiveGames() throws RemoteException;
 
 	void removeActiveGame(ActiveGame activeGame) throws RemoteException;
+	
+	void removeactiveGameById(String creator) throws RemoteException;
 
 	ActiveGame getActiveGame(String id) throws RemoteException;
 

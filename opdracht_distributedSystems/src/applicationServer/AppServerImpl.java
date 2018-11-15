@@ -101,6 +101,24 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		
 	}
 
+	@Override
+	public void removeactiveGameById(String creator) throws RemoteException {
+		System.out.println("einde "+creator);
+		ActiveGame tmp = null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(creator)){
+				tmp=ag;
+			}
+		}
+		if(tmp!=null){
+			System.out.println("einde "+tmp.getCreator());
+			activeGames.remove(tmp);
+			
+		}
+		
+		
+	}
+
 	
 	
 	

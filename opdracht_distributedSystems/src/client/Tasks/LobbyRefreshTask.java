@@ -26,7 +26,7 @@ public class LobbyRefreshTask extends Task {
 
 		while(!isCancelled()){
 			ArrayList<ActiveGame> newList = asi.getActiveGames();
-			wait(4000);
+			wait(3000);
 			lc.refresh(newList);
 			
 		}
