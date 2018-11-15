@@ -50,7 +50,9 @@ public class LobbyController {
     
     private ArrayList<ActiveGame> listActiveGames;
     
-    //private boolean running;
+    private LobbyRefreshTask task;
+    
+    //private boolean running=true;
     
     @FXML
     public void initialize() throws RemoteException{
@@ -64,8 +66,9 @@ public class LobbyController {
         uiTabelMaxPlayers.setCellValueFactory(new PropertyValueFactory<>("maxPlayers"));
         uiTabelSize.setCellValueFactory(new PropertyValueFactory<>("size"));
         //startCheckThread();
-        Task task=new LobbyRefreshTask(uiTabel,this);
+        task=new LobbyRefreshTask(uiTabel,this);
         new Thread(task).start();
+       
 
     }
     /*
@@ -126,8 +129,8 @@ public class LobbyController {
 	}
 
 	public synchronized void refresh(ArrayList<ActiveGame> newList) {
-		if( (newList!=null) && (newList.size()!=listActiveGames.size())){
-			System.out.println("xxxxxxx");
+		if( (newList!=null) ){
+
 			listActiveGames=newList;
 			uiTabel.getItems().setAll(listActiveGames);
 		}
