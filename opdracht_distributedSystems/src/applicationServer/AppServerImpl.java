@@ -1,7 +1,5 @@
 package applicationServer;
 
-import static client.ClientMain.asi;
-import static client.ClientMain.gameId;
 
 import java.io.Serializable;
 import java.rmi.NotBoundException;
@@ -147,11 +145,35 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	
 
 	}
-	
-	
-	
-	
 
-
-
+	@Override
+	public void removePlayer(String gameID, String userName) throws RemoteException {
+		ActiveGame tmpActiveGame=null;
+    	for(ActiveGame ag:activeGames){
+    		if(ag.getCreator().equals(gameID)){
+    			tmpActiveGame=ag;
+    		}
+    	}
+    	System.out.println("spelers size voor remove "+tmpActiveGame.getSpelers().size()+ " --> "+tmpActiveGame.getSpelers());
+    	String tmp=null;
+    	for(String s:tmpActiveGame.getSpelers()){
+    		if(s.equals(userName)){
+    			tmp=s;
+    		}
+    	}
+    	tmpActiveGame.getSpelers().remove(tmp);
+    	System.out.println("spelers size na remove "+tmpActiveGame.getSpelers().size()+ " --> "+tmpActiveGame.getSpelers());
+    }
+    
+	
+	
+	
 }
+	
+	
+	
+	
+
+
+
+

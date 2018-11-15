@@ -29,4 +29,6 @@ public interface AppServerInterface extends Remote{
 	void flipCard(String creator, int x, int y)throws RemoteException;
 
 	void addPlayer(String gameId, String speler) throws RemoteException;
+
+	void removePlayer(String creator, String userName) throws RemoteException;
 }

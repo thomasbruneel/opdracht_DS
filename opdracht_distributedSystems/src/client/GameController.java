@@ -49,7 +49,7 @@ public class GameController {
     public void initialize() throws RemoteException{
     	activeGame=asi.getActiveGame(gameId);
     	asi.addPlayer(gameId, userName);
-    	System.out.println("spelers :"+activeGame.getSpelers());
+    	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
     	asi.increasePlayerCount(gameId,true);
     	game=activeGame.getGame();
     	if(game!=null){
@@ -64,6 +64,9 @@ public class GameController {
     	//als de creator het spel verlaat, wordt het spel beeindigd
     	if(activeGame.getCreator().equals(userName)){
     		asi.removeActiveGame(activeGame);
+    	}
+    	else{
+    		asi.removePlayer(gameId,userName);
     	}
     	asi.increasePlayerCount(gameId,false);
     	openUIScreen("lobbyUI.fxml");
