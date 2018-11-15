@@ -1,6 +1,7 @@
 package applicationServer;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import memoryGame.Game;
@@ -83,7 +84,7 @@ public class ActiveGame implements Serializable {
 		
 	}
 	
-	public void voegSpelerToe(String s){
+	public void addPlayer(String s) throws RemoteException{
 		spelers.add(s);
 	}
 

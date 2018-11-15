@@ -32,6 +32,14 @@ public class NewGameController {
     @FXML
     Button uiBackToLobby;
     
+	@FXML
+    RadioButton radioButton2Players;
+	
+	@FXML
+    RadioButton radioButton3Players;
+	
+	@FXML
+    RadioButton radioButton4Players;
 	
 	@FXML
     RadioButton radioButton4x4;
@@ -39,6 +47,7 @@ public class NewGameController {
 	@FXML
     RadioButton radioButton6x6;
     
+	ToggleGroup playersGroup=new ToggleGroup();
     ToggleGroup sizeGroup=new ToggleGroup();
     
     
@@ -46,11 +55,26 @@ public class NewGameController {
     public void initialize() throws RemoteException{
     	radioButton4x4.setToggleGroup(sizeGroup);
     	radioButton6x6.setToggleGroup(sizeGroup);
+    	
+    	radioButton2Players.setToggleGroup(playersGroup);
+    	radioButton3Players.setToggleGroup(playersGroup);
+    	radioButton4Players.setToggleGroup(playersGroup);
         
 
     }
     
     public void createNewGame() throws RemoteException{
+    	int players = 0;
+    	if(radioButton2Players.isSelected()==true){
+    		players=2;
+    	}
+    	else if(radioButton3Players.isSelected()==true){
+    		players=3;
+    	}
+    	else if(radioButton4Players.isSelected()==true){
+    		players=4;
+    	}
+    	
     	String size = null;
     	if(radioButton4x4.isSelected()==true){
     		size="4";
@@ -61,7 +85,7 @@ public class NewGameController {
     	Game game=new Game(Integer.parseInt(size));
 
     	ArrayList<String>spelers=new ArrayList<String>();
-    	ActiveGame activeGame=new ActiveGame(userName,0,Integer.parseInt(uiNumberplayers.getText()),size,game,spelers);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
+    	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
     	asi.addActiveGame(activeGame);
     	
     	gameId=userName;

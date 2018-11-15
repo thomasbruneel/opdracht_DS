@@ -48,6 +48,8 @@ public class GameController {
     @FXML
     public void initialize() throws RemoteException{
     	activeGame=asi.getActiveGame(gameId);
+    	asi.addPlayer(gameId, userName);
+    	System.out.println("spelers :"+activeGame.getSpelers());
     	asi.increasePlayerCount(gameId,true);
     	game=activeGame.getGame();
     	if(game!=null){

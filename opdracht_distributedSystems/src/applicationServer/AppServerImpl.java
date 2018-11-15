@@ -135,7 +135,18 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	}
 
-	
+	@Override
+	public void addPlayer(String gameId,String player)throws RemoteException{
+		ActiveGame activeGame=null;
+    	for(ActiveGame ag:activeGames){
+    		if(ag.getCreator().equals(gameId)){
+    			activeGame=ag;
+    		}
+    	}
+    	activeGame.addPlayer(player);
+    	
+
+	}
 	
 	
 	
