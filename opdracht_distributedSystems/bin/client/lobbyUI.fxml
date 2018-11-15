@@ -20,7 +20,7 @@
             <Font name="Calibri" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="uiLogoutButton" layoutX="512.0" layoutY="2.0" mnemonicParsing="false" onAction="#chacktoken" prefHeight="25.0" prefWidth="88.0" text="LOGOUT" />
+      <Button fx:id="uiLogoutButton" layoutX="512.0" layoutY="2.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="88.0" text="LOGOUT" />
       <Button fx:id="uiCreateNewGameButton" layoutX="185.0" layoutY="116.0" mnemonicParsing="false" onAction="#createNewGame" prefHeight="39.0" prefWidth="235.0" style="-fx-alignment: CENTER;" text="CREATE NEW GAME" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="184.0">
          <font>
             <Font size="18.0" />

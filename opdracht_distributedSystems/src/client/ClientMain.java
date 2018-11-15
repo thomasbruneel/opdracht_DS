@@ -1,6 +1,7 @@
 package client;
 	
 import static client.ClientMain.token;
+import static client.ClientMain.userName;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -37,6 +38,14 @@ public class ClientMain extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Override
+	public void stop(){
+		userName=token=null;;
+    	token=null;
+	    System.out.println("Stage is closing");
 	}
 	
 	public static void openUIScreen(String screen){
@@ -84,6 +93,22 @@ public class ClientMain extends Application {
 	    stage.setScene(scene);
 	    stage.setResizable(false);
 	    stage.show();
+	}
+	
+	public static void logoutNow(){
+		userName=token=null;;
+    	token=null;
+		AnchorPane root = null;
+		try {
+            root = FXMLLoader.load(ClientMain.class.getResource("loginUI.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage= new Stage();
+        Scene scene= new Scene(root,600 , 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
 	}
 	
 	

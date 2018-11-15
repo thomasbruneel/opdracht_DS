@@ -68,8 +68,6 @@ public class LobbyController {
         //startCheckThread();
         task=new LobbyRefreshTask(uiTabel,this);
         new Thread(task).start();
-       
-
     }
     /*
     private void startCheckThread() {
@@ -97,8 +95,9 @@ public class LobbyController {
 	}
 	*/
 
-	public void chacktoken(){
-    	TokenGenerator.CheckExpiration(token);
+	public void logout(){
+    	logoutNow(); // in class ClientMain
+    	uiLogoutButton.getScene().getWindow().hide();
     }
     
     public void createNewGame(){
