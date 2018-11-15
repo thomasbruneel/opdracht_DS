@@ -62,6 +62,15 @@ public class ActiveGame implements Serializable {
 		this.game = game;
 	}
 
+	public ArrayList<String> getSpelers() {
+		return spelers;
+	}
+
+
+	public void setSpelers(ArrayList<String> spelers) {
+		this.spelers = spelers;
+	}
+
 
 	public void increasePlayerCount(boolean bit) {
 		if(bit==true){
@@ -72,6 +81,10 @@ public class ActiveGame implements Serializable {
 		}
 		
 		
+	}
+	
+	public void voegSpelerToe(String s){
+		spelers.add(s);
 	}
 
 
