@@ -111,6 +111,11 @@ public class GameController {
         }
         else{
             text.setText(" x ");
+            try {
+                asi.flipCard(activeGame.getCreator(),i,j);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             firstpress = secondpress = null;
         }
 
@@ -118,18 +123,33 @@ public class GameController {
 
     private synchronized void onRelease(MouseEvent mouseEvent) {
         if(!(secondpress==null)){
-        //TODO: Keuze doorgeven aan gameserver
-        System.out.println("Eerste keuze: " + firstpress.getText() + " Tweede Keuze: " + secondpress.getText());
-        try {
-            wait(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //TODO: respons van server verwerken
-        firstpress.setText(" x ");
-        secondpress.setText(" x ");
-        firstpress = null;
-        secondpress = null;
+            //TODO: Keuze doorgeven aan gameserver
+
+            int i=GridPane.getRowIndex(secondpress);
+            int j=GridPane.getColumnIndex(secondpress);
+            try {
+                asi.flipCard(activeGame.getCreator(),i,j);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Eerste keuze: " + firstpress.getText() + " Tweede Keuze: " + secondpress.getText());
+            try {
+                wait(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            firstpress.setText(" x ");
+            secondpress.setText(" x ");
+            firstpress = null;
+            secondpress = null;
+        } else {
+            int i=GridPane.getRowIndex(firstpress);
+            int j=GridPane.getColumnIndex(firstpress);
+            try {
+                asi.flipCard(activeGame.getCreator(),i,j);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
     }
