@@ -13,7 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import memoryGame.Bord;
 import memoryGame.Game;
@@ -67,6 +69,7 @@ public class GameController {
         int height = (int)(uiGamePane.getPrefWidth());
         System.out.println("gamepane size:  "+width+ "   "+height);
         gridpane=new GridPane();
+        gridpane.setGridLinesVisible(true);
         uiGamePane.getChildren().add(gridpane);
         bord=game.getBord();
         matrix=bord.getMatrix();
@@ -78,8 +81,16 @@ public class GameController {
         		gridpane.add(text, j, i);
         	}
         }
-        
-
+        //Volledige speelveld gebruiken
+        gridpane.setPrefSize(uiGamePane.getPrefWidth(),uiGamePane.getPrefWidth());
+        for (int i=0; i<game.getBord().getGrootte(); i++) {
+            RowConstraints row = new RowConstraints();
+            row.setPercentHeight(50);
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(50);
+            gridpane.getRowConstraints().add(row);
+            gridpane.getColumnConstraints().add(column);
+        }
     }
     
     public void click(Event event){

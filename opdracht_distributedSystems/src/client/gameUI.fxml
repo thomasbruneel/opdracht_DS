@@ -14,7 +14,7 @@
                   <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#setupGame" text="Start Game" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" />
                </children>
             </AnchorPane>
-          <AnchorPane fx:id="uiGamePane" maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" />
+          <AnchorPane fx:id="uiGamePane" maxHeight="1000.0" maxWidth="1000.0" minHeight="1000.0" minWidth="1000.0" prefHeight="1000.0" prefWidth="1000.0" />
         </items>
       </SplitPane>
    </children>
