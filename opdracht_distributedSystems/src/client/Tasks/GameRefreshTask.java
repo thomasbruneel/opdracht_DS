@@ -3,22 +3,28 @@ package client.Tasks;
 import client.GameController;
 import javafx.concurrent.Task;
 import javafx.scene.layout.GridPane;
+import static client.ClientMain.*;
+
+import applicationServer.ActiveGame;
 
 public class GameRefreshTask extends Task{
 	
-	private GridPane gridPane;
 	private GameController gameController;
 	
 	
-	public GameRefreshTask(GridPane gp,GameController gc){
-		this.gridPane=gp;
+	public GameRefreshTask(GameController gc){
 		this.gameController=gc;
 		
 	}
 
 	@Override
-	protected Object call() throws Exception {
-
+	protected synchronized Object call() throws Exception {
+		while(!isCancelled()){
+			System.out.println("thread");
+			ActiveGame ActiveGame=asi.getActiveGame(gameId);
+			wait(2000);
+			gameController.refreshBord(ActiveGame);
+		}
 		return null;
 	}
 	

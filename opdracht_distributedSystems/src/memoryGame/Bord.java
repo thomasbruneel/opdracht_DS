@@ -1,6 +1,7 @@
 package memoryGame;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -85,9 +86,8 @@ public class Bord implements Serializable {
 	}
 
 
-	public void flipCard(int x, int y) {
-		
-		
+	public void flipCard(int x, int y)throws RemoteException {
+		matrix[x][y].setOmgedraaid(true);
 	}
 
 }

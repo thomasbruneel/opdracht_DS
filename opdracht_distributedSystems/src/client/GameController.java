@@ -1,11 +1,13 @@
 package client;
 
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import applicationServer.ActiveGame;
+import client.Tasks.GameRefreshTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -55,8 +57,9 @@ public class GameController {
     	if(game!=null){
     		game.getBord().print();
     	}
-    	
         setupGame();
+    	Task task=new GameRefreshTask(this);
+    	new Thread(task).start();
 
     }
     
@@ -116,15 +119,6 @@ public class GameController {
                 secondpress=text;
             }
         }
-        else{
-            text.setText(" x ");
-            try {
-                asi.flipCard(activeGame.getCreator(),i,j);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            firstpress = secondpress = null;
-        }
 
     }
 
@@ -134,25 +128,35 @@ public class GameController {
 
             int i=GridPane.getRowIndex(secondpress);
             int j=GridPane.getColumnIndex(secondpress);
+            System.out.println("release2 "+i+ "  "+j);
             try {
                 asi.flipCard(activeGame.getCreator(),i,j);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
             System.out.println("Eerste keuze: " + firstpress.getText() + " Tweede Keuze: " + secondpress.getText());
+
             try {
                 wait(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            firstpress.setText(" x ");
-            secondpress.setText(" x ");
+            if(firstpress.getText().equals(secondpress.getText())){
+            	System.out.println("hoera");
+            	
+            }
+            else{
+                firstpress.setText(" x ");
+                secondpress.setText(" x ");
+            }
+
             firstpress = null;
             secondpress = null;
         } else {
             int i=GridPane.getRowIndex(firstpress);
             int j=GridPane.getColumnIndex(firstpress);
             try {
+            	System.out.println("release1 "+i+ "  "+j);
                 asi.flipCard(activeGame.getCreator(),i,j);
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -160,7 +164,9 @@ public class GameController {
         }
 
     }
-
+    
+    
+/*
     public synchronized void click(Event event){
     	Text text=(Text)event.getSource();
     	int i=GridPane.getRowIndex(text);
@@ -190,8 +196,35 @@ public class GameController {
 
     	
     }
-
-
+*/
+    public  void refreshBord(ActiveGame ag){
+    	System.out.println("refresh");
+    	Bord bord=ag.getGame().getBord();
+    	Kaart[][]matrix=bord.getMatrix();
+    	int grootte=bord.getGrootte();
+    	
+    	for(int i=0;i<grootte;i++){
+    		for(int j=0;j<grootte;j++){
+    			System.out.println(matrix[i][j].isOmgedraaid());
+    			
+    			if(matrix[i][j].isOmgedraaid()==false){
+            		Text text=new Text();
+            		text.setText(" x ");
+            		gridpane.add(text, j, i); // hier zit de fout want thread stopt bij deze lijn
+            		
+    			}
+    			else{
+    				
+            		Text text=new Text();
+            		text.setText(String.valueOf(matrix[i][j].getWaarde()));
+            		gridpane.add(text, j, i);
+            	
+            		
+    			}
+    			
+    		}
+    	}
+    }
     
     
 }
