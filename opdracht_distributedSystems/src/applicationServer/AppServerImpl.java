@@ -78,6 +78,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	
 	@Override
 	public ActiveGame getActiveGame(String id)throws RemoteException {
+		System.out.println("Opgeroepen");
 		ActiveGame activeGame=null;
     	for(ActiveGame ag:activeGames){
     		if(ag.getCreator().equals(id)){

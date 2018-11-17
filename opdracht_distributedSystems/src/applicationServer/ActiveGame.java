@@ -74,7 +74,7 @@ public class ActiveGame implements Serializable {
 
 
 	public void increasePlayerCount(boolean bit) {
-		if(bit==true){
+		if(bit){
 			numberPlayers++;
 		}
 		else{

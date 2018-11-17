@@ -98,11 +98,13 @@ public class LobbyController {
 	public void logout(){
     	logoutNow(); // in class ClientMain
     	uiLogoutButton.getScene().getWindow().hide();
+    	task.cancel();
     }
     
     public void createNewGame(){
     	openUIScreen("newGameUI.fxml");
     	uiLogoutButton.getScene().getWindow().hide();
+    	task.cancel();
     }
     
     public void Join(){
@@ -112,6 +114,7 @@ public class LobbyController {
     		gameId=activeGame.getCreator();
         	openUIScreen("gameUI.fxml");
         	uiLogoutButton.getScene().getWindow().hide();
+        	task.cancel();
     	}
     	else{
     		uiErrorMessage.setText("LOBBY ZIT VOL");
@@ -132,7 +135,7 @@ public class LobbyController {
 
 			listActiveGames=newList;
 			uiTabel.getItems().setAll(listActiveGames);
-		}
+        }
 		
 	}
 	

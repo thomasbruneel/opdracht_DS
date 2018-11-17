@@ -58,6 +58,7 @@ public class GameController {
     		game.getBord().print();
     	}
         setupGame();
+
     	Task task=new GameRefreshTask(this);
     	new Thread(task).start();
 
@@ -207,7 +208,7 @@ public class GameController {
     		for(int j=0;j<grootte;j++){
     			System.out.println(matrix[i][j].isOmgedraaid());
     			
-    			if(matrix[i][j].isOmgedraaid()==false){
+    			if(!matrix[i][j].isOmgedraaid()){
             		Text text=new Text();
             		text.setText(" x ");
             		gridpane.add(text, j, i); // hier zit de fout want thread stopt bij deze lijn
