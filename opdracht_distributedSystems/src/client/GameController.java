@@ -5,10 +5,12 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import applicationServer.ActiveGame;
 import client.Tasks.GameRefreshTask;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -43,8 +45,11 @@ public class GameController {
     ActiveGame activeGame=null;
     Text firstpress=null;
     Text secondpress=null;
-    
-    private GridPane gridpane;
+
+    @FXML
+    GridPane gridpane;
+
+    GameRefreshTask task;
     
     
     @FXML
@@ -59,7 +64,7 @@ public class GameController {
     	}
         setupGame();
 
-    	Task task=new GameRefreshTask(this);
+    	task=new GameRefreshTask(this);
     	new Thread(task).start();
 
     }
@@ -108,6 +113,7 @@ public class GameController {
             gridpane.getColumnConstraints().add(column);
         }
     }
+
 
     private void onPressed(MouseEvent mouseEvent) {
         Text text=(Text)mouseEvent.getSource();

@@ -22,11 +22,15 @@ public class GameRefreshTask extends Task{
 		while(!isCancelled()){
 			System.out.println("thread");
 			ActiveGame ActiveGame=asi.getActiveGame(gameId);
-			wait(2000);
+			wait(200);
 			gameController.refreshBord(ActiveGame);
 		}
 		return null;
 	}
-	
 
+	@Override
+	protected void cancelled() {
+		System.out.println("Gestopt");
+		super.cancelled();
+	}
 }
