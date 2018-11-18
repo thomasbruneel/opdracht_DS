@@ -75,14 +75,14 @@ public class NewGameController {
     		players=4;
     	}
     	
-    	String size = null;
+    	int size = 0;
     	if(radioButton4x4.isSelected()==true){
-    		size="4";
+    		size=4;
     	}
     	else if(radioButton6x6.isSelected()==true){
-    		size="6";
+    		size=6;
     	}
-    	Game game=new Game(Integer.parseInt(size));
+    	Game game=new Game(size);
 
     	ArrayList<String>spelers=new ArrayList<String>();
     	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)

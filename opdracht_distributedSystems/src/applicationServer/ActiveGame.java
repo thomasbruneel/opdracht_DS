@@ -10,13 +10,13 @@ public class ActiveGame implements Serializable {
 	private String creator;
 	private int numberPlayers;
 	private int maxPlayers;
-	private String size;
+	private int size;
 	private Game game;
 	private ArrayList<String>spelers;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
@@ -48,12 +48,17 @@ public class ActiveGame implements Serializable {
 		this.maxPlayers = maxPlayers;
 	}
 
-	public String getSize() {
+
+
+	public int getSize() {
 		return size;
 	}
-	public void setSize(String size) {
+
+
+	public void setSize(int size) {
 		this.size = size;
 	}
+
 
 	public Game getGame() {
 		return game;

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import applicationServer.ActiveGame;
 import interfaces.DatabankServerInterface;
 
 
@@ -39,7 +40,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	    }
 	    return conn;
 	 }
-	
+	//---------------------Data Table Speler---------------------
 	@Override
 	public void register(String naam, String pwd) {
 		String time=new Date().toString();
@@ -147,6 +148,46 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
             System.out.println(e.getMessage());
         }
     }
+	
+	//---------------------Data Table ActiveGame---------------------
+
+	@Override
+	public void createActiveGame(ActiveGame activeGame,String bord,String omgedraaid){
+		String sql = "INSERT INTO ActiveGame(creator,numberPlayers,maxPlayers,size,bord,omgedraaid) VALUES(?,?,?,?,?,?)";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, activeGame.getCreator());
+	           pstmt.setInt(2, activeGame.getNumberPlayers());
+	           pstmt.setInt(3, activeGame.getMaxPlayers());
+	           pstmt.setInt(4,activeGame.getSize());
+	           
+	           pstmt.setString(5,bord);
+	           pstmt.setString(6,omgedraaid);
+	         
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	
+
+    }
+	
+	@Override
+	public void removeActiveGame(String creator){
+		String sql = "DELETE FROM ActiveGame WHERE creator=?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	          pstmt.setString(1, creator);
+	         
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	
+
+    }
+	
+	
 
 	
 	

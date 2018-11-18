@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
+import memoryGame.Kaart;
 
 public class AppServerImpl extends UnicastRemoteObject implements AppServerInterface{
 	private DatabankServerInterface dsi;
@@ -56,6 +57,16 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void addActiveGame(ActiveGame activeGame) throws RemoteException {
 		activeGames.add(activeGame);
+		StringBuffer sb1=new StringBuffer();
+		StringBuffer sb2=new StringBuffer();
+		Kaart[][]matrix=activeGame.getGame().getBord().getMatrix();
+		for(int i=0;i<activeGame.getSize();i++){
+			for(int j=0;j<activeGame.getSize();j++){
+				sb1.append(matrix[i][j].getWaarde()+" ");
+				sb2.append("0 ");
+			}
+		}
+		dsi.createActiveGame(activeGame,sb1.toString(),sb2.toString());
 		
 	}
 	
@@ -67,7 +78,9 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 				tmp=ag;
 			}
 		}
+		dsi.removeActiveGame(tmp.getCreator());
 		activeGames.remove(tmp);
+		
 
 		
 	}
@@ -102,7 +115,6 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	@Override
 	public void removeactiveGameById(String creator) throws RemoteException {
-		System.out.println("einde "+creator);
 		ActiveGame tmp = null;
 		for(ActiveGame ag:activeGames){
 			if(ag.getCreator().equals(creator)){
@@ -110,7 +122,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			}
 		}
 		if(tmp!=null){
-			System.out.println("einde "+tmp.getCreator());
+			dsi.removeActiveGame(tmp.getCreator());
 			activeGames.remove(tmp);
 			
 		}
