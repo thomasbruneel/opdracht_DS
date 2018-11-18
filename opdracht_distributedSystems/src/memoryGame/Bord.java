@@ -87,7 +87,13 @@ public class Bord implements Serializable {
 
 
 	public void flipCard(int x, int y)throws RemoteException {
-		matrix[x][y].setOmgedraaid(true);
+		if(!matrix[x][y].isOmgedraaid()){
+			matrix[x][y].setOmgedraaid(true);
+		}
+		else{
+			matrix[x][y].setOmgedraaid(false);
+		}
+
 	}
 
 }
