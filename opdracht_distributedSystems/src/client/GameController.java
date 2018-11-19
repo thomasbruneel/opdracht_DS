@@ -14,6 +14,7 @@ import java.util.Observable;
 
 import applicationServer.ActiveGame;
 import client.Tasks.GameRefreshTask;
+import client.Tasks.ScoreRefreshTask;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -38,6 +39,10 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 	@FXML
 	AnchorPane uiGamePane;
+	
+	
+	@FXML
+	AnchorPane uiGameInfo;
 
 	@FXML
     Button uiButton;
@@ -53,6 +58,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     GridPane gridpane;
+    
+    @FXML
+    GridPane scoreInfo;
 
     GameRefreshTask task;
     Thread gameRefreshThread;
@@ -62,6 +70,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     int j1;
     int i2;
     int j2;
+    
+    int score=0;
 
     public GameController() throws RemoteException {
         aanZet = false;
@@ -79,14 +89,22 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     		game.getBord().print();
     	}
         setupGame();
+        setupScoreBord();
 
     	task=new GameRefreshTask(this);
     	gameRefreshThread = new Thread(task);
     	gameRefreshThread.start();
+    	
+    	Task task2=new ScoreRefreshTask(this);
+    	Thread ScoreRefreshTask = new Thread(task2);
+    	ScoreRefreshTask.start();
+    	
+
 
     }
-    
-    public void backToLobby() throws RemoteException{
+
+
+	public void backToLobby() throws RemoteException{
     	//als de creator het spel verlaat, wordt het spel beeindigd
     	if(activeGame.getCreator().equals(userName)){
     		asi.removeActiveGame(activeGame);
@@ -113,13 +131,11 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         	for(int j=0;j<game.getBord().getGrootte();j++){
         		Text text=new Text();
         		text.setText(" x ");
-        		//text.setOnMouseClicked(this::click);
         		text.setOnMousePressed(this::onPressed);
         		text.setOnMouseReleased(arg0 -> {
 					try {
 						onRelease(arg0);
 					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				});
@@ -180,11 +196,13 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                 e.printStackTrace();
             }
             if(firstpress.getText().equals(secondpress.getText())){
+            	//als juiste match --> punt gescoord
             	System.out.println("hoera");
+            	score++;
             	
             }
             else{
-                
+                //als geen juiste match --> kaarten terug omdraaien
                 asi.flipCard(activeGame.getCreator(),i1,j1);
                 asi.flipCard(activeGame.getCreator(),i2,j2);
             }
@@ -204,8 +222,72 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     }
     
+   
+    public  void refreshBord(ActiveGame ag){
+    	System.out.println("refresh");
+        Bord bord=ag.getGame().getBord();
+    	Kaart[][]matrix=bord.getMatrix();
+    	int grootte=bord.getGrootte();
+    	
+    	ObservableList<Node> nodes = gridpane.getChildren();
+    	System.out.println("size: "+nodes.size());	//geeft size 17 want eerst node is class group bij (4x4)
+    	for(Node n:nodes){ 
+    		if(n instanceof Text){
+    			Text text=(Text)n;
+    			int col=GridPane.getColumnIndex(n);
+    			int row=GridPane.getRowIndex(n);
+    			
+    			if(!matrix[row][col].isOmgedraaid()){
+    				text.setText(" x ");
+    			}
+    			else{
+    				text.setText(" "+String.valueOf(matrix[row][col].getWaarde())+" ");
+    			}
+    			
+    		}
+    		
+    	}
+    			
+
+    }
     
-/*
+    private void setupScoreBord() throws RemoteException {
+    	scoreInfo =new GridPane();
+    	scoreInfo.setTranslateY(100);
+    	scoreInfo.setGridLinesVisible(true);
+    	scoreInfo.add(new Text("Speler"), 0, 0); //col row
+    	scoreInfo.add(new Text("Score"), 1, 0);
+    	uiGameInfo.getChildren().add(scoreInfo);
+    	
+    	int row=1;
+    	for(String speler:asi.getActiveGame(gameId).getSpelers()){
+    	 	scoreInfo.add(new Text(speler), 0, row);
+        	scoreInfo.add(new Text("0"), 1, row);
+        	row++;
+        	
+    	}
+	}
+    
+    public  void refreshScore(ActiveGame ag){
+        Bord bord=ag.getGame().getBord();
+    	Kaart[][]matrix=bord.getMatrix();
+    	int grootte=bord.getGrootte();
+    	
+    	scoreInfo.add(new Text("Speler"), 0, 0); //col row
+    	scoreInfo.add(new Text("Score"), 1, 0);
+    	
+    	int row=1;
+    	for(String speler:ag.getSpelers()){
+    	 	scoreInfo.add(new Text(speler), 0, row);
+        	scoreInfo.add(new Text("0"), 1, row);
+        	row++;
+        	
+    	}
+    			
+
+    }
+    
+    /*
     public synchronized void click(Event event){
     	Text text=(Text)event.getSource();
     	int i=GridPane.getRowIndex(text);
@@ -236,33 +318,6 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	
     }
 */
-    public  void refreshBord(ActiveGame ag){
-    	System.out.println("refresh");
-        Bord bord=ag.getGame().getBord();
-    	Kaart[][]matrix=bord.getMatrix();
-    	int grootte=bord.getGrootte();
-    	
-    	ObservableList<Node> nodes = gridpane.getChildren();
-    	System.out.println("size: "+nodes.size());	//geeft size 17 want eerst node is class group bij (4x4)
-    	for(Node n:nodes){ 
-    		if(n instanceof Text){
-    			Text text=(Text)n;
-    			int col=GridPane.getColumnIndex(n);
-    			int row=GridPane.getRowIndex(n);
-    			
-    			if(!matrix[row][col].isOmgedraaid()){
-    				text.setText(" x ");
-    			}
-    			else{
-    				text.setText(" "+String.valueOf(matrix[row][col].getWaarde())+" ");
-    			}
-    			
-    		}
-    		
-    	}
-    			
-
-    }
     
     
 }
