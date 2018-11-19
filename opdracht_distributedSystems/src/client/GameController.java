@@ -57,6 +57,11 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     GameRefreshTask task;
     Thread gameRefreshThread;
     Boolean aanZet;
+    
+    int i1;
+    int j1;
+    int i2;
+    int j2;
 
     public GameController() throws RemoteException {
         aanZet = false;
@@ -110,7 +115,14 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         		text.setText(" x ");
         		//text.setOnMouseClicked(this::click);
         		text.setOnMousePressed(this::onPressed);
-        		text.setOnMouseReleased(this::onRelease);
+        		text.setOnMouseReleased(arg0 -> {
+					try {
+						onRelease(arg0);
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
         		gridpane.add(text, j, i);
         	}
         }
@@ -148,15 +160,15 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     }
 
-    private synchronized void onRelease(MouseEvent mouseEvent) {
+    private synchronized void onRelease(MouseEvent mouseEvent) throws RemoteException {
         if(!(secondpress==null)){
             //TODO: Keuze doorgeven aan gameserver
 
-            int i=GridPane.getRowIndex(secondpress);
-            int j=GridPane.getColumnIndex(secondpress);
-            System.out.println("release2 "+i+ "  "+j);
+            i2=GridPane.getRowIndex(secondpress);
+            j2=GridPane.getColumnIndex(secondpress);
+            System.out.println("release2 "+i2+ "  "+j2);
             try {
-                asi.flipCard(activeGame.getCreator(),i,j);
+                asi.flipCard(activeGame.getCreator(),i2,j2);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -172,18 +184,19 @@ public class GameController extends UnicastRemoteObject implements gameControlle
             	
             }
             else{
-                firstpress.setText(" x ");
-                secondpress.setText(" x ");
+                
+                asi.flipCard(activeGame.getCreator(),i1,j1);
+                asi.flipCard(activeGame.getCreator(),i2,j2);
             }
 
             firstpress = null;
             secondpress = null;
         } else {
-            int i=GridPane.getRowIndex(firstpress);
-            int j=GridPane.getColumnIndex(firstpress);
+            i1=GridPane.getRowIndex(firstpress);
+            j1=GridPane.getColumnIndex(firstpress);
             try {
-            	System.out.println("release1 "+i+ "  "+j);
-                asi.flipCard(activeGame.getCreator(),i,j);
+            	System.out.println("release1 "+i1+ "  "+j1);
+                asi.flipCard(activeGame.getCreator(),i1,j1);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -225,43 +238,30 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 */
     public  void refreshBord(ActiveGame ag){
     	System.out.println("refresh");
-
         Bord bord=ag.getGame().getBord();
     	Kaart[][]matrix=bord.getMatrix();
     	int grootte=bord.getGrootte();
     	
-    	for(int i=0;i<grootte;i++){
-    		for(int j=0;j<grootte;j++){
-
-    			if(!matrix[i][j].isOmgedraaid()){
-
-    			    Text text = null;
-                    ObservableList<Node> nodes = gridpane.getChildren();
-    			    for(Node n : nodes){
-    			        if(GridPane.getRowIndex(n) == i && GridPane.getColumnIndex(n) == j){
-    			            text = (Text)n;
-                        }
-                    }
-
-            		           //Todo : Text wijzigen ipv nieuwe overleggen,
-                                                    // tenzij dat dit met afbeeldingen een ander probleem geeft
-
-
-            		text.setText(" x ");
-            		gridpane.add(text, j, i); // hier zit de fout want thread stopt bij deze lijn
-            		
+    	ObservableList<Node> nodes = gridpane.getChildren();
+    	System.out.println("size: "+nodes.size());	//geeft size 17 want eerst node is class group bij (4x4)
+    	for(Node n:nodes){ 
+    		if(n instanceof Text){
+    			Text text=(Text)n;
+    			int col=GridPane.getColumnIndex(n);
+    			int row=GridPane.getRowIndex(n);
+    			
+    			if(!matrix[row][col].isOmgedraaid()){
+    				text.setText(" x ");
     			}
     			else{
-    				
-            		Text text=new Text();
-            		text.setText(String.valueOf(matrix[i][j].getWaarde()));
-            		gridpane.add(text, j, i);
-            	
-            		
+    				text.setText(" "+String.valueOf(matrix[row][col].getWaarde())+" ");
     			}
     			
     		}
+    		
     	}
+    			
+
     }
     
     
