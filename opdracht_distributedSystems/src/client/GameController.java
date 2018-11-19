@@ -123,6 +123,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	asi.increasePlayerCount(gameId,false);
     	openUIScreen("lobbyUI.fxml");
     	uiButton.getScene().getWindow().hide();
+    	task.cancel();
     	
     }
 
@@ -154,6 +155,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
     private synchronized void onPressed(MouseEvent mouseEvent){
+        task.cancel();
     	ImageView image=(ImageView)mouseEvent.getSource();
         int i=GridPane.getRowIndex(image);
         int j=GridPane.getColumnIndex(image);
@@ -200,6 +202,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                 asi.flipCard(activeGame.getCreator(),i2,j2);
             }
 
+            task.run();
             firstpress = null;
             secondpress = null;
         } else {
@@ -216,31 +219,35 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     }
     
    
-    public  void refreshBord(ActiveGame ag){
+    public void refreshBord(ActiveGame ag){/*
     	//System.out.println("refresh");
         Bord bord=ag.getGame().getBord();
     	Kaart[][]matrix=bord.getMatrix();
+    	Kaart[][]huidige=activeGame.getGame().getBord().getMatrix();
     	int grootte=bord.getGrootte();
     	
     	ObservableList<Node> nodes = gridpane.getChildren();
     	System.out.println("size: "+nodes.size());	//geeft size 17 want eerst node is class group bij (4x4)
     	for(Node n:nodes){ 
     		if(n instanceof ImageView){
-    			ImageView imageView=(ImageView)n;
-    			int col=GridPane.getColumnIndex(n);
-    			int row=GridPane.getRowIndex(n);
-    			
-    			if(!matrix[row][col].isOmgedraaid()){
-    				imageView.setImage(new Image("client/images/batman/back.jpg"));
-    			}
-    			else{
-    				imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
-    			}
+                int col=GridPane.getColumnIndex(n);
+                int row=GridPane.getRowIndex(n);
+                if(matrix[row][col]!=huidige[row][col]) {
+
+                    ImageView imageView=(ImageView)n;
+
+
+                    if (!matrix[row][col].isOmgedraaid()) {
+                        imageView.setImage(new Image("client/images/batman/back.jpg"));
+                    } else {
+                        imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
+                    }
+                }
     			
     		}
     		
     	}
-    			
+    		*/
 
     }
     
@@ -264,7 +271,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 	}
     
     public synchronized void refreshScore(ActiveGame ag){
-    	ObservableList<Node> nodes = scoreInfo.getChildren();	
+    	/*ObservableList<Node> nodes = scoreInfo.getChildren();
         int index=0;
         for(Node n:nodes){
         	if(n instanceof Text){
@@ -289,7 +296,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         			
         	}
         		
-        }
+        }*/
     }
     public ImageView convertStringToImageView(String s) throws RemoteException{
     	Image image=new Image(s);

@@ -21,7 +21,7 @@ public class ScoreRefreshTask extends Task{
 	@Override
 	protected synchronized Object call() throws Exception {
 		while(!isCancelled()){
-			System.out.println("thread");
+			//System.out.println("thread");
 			ActiveGame activeGame=asi.getActiveGame(gameId);
 			if (activeGame!=null) Platform.runLater(() -> gameController.refreshScore(activeGame));
             wait(2000);
