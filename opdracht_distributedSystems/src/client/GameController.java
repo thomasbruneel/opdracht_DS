@@ -219,7 +219,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     }
     
    
-    public void refreshBord(ActiveGame ag){/*
+    public void refreshBord(ActiveGame ag){
     	//System.out.println("refresh");
         Bord bord=ag.getGame().getBord();
     	Kaart[][]matrix=bord.getMatrix();
@@ -247,7 +247,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     		}
     		
     	}
-    		*/
+
 
     }
     
@@ -271,7 +271,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 	}
     
     public synchronized void refreshScore(ActiveGame ag){
-    	/*ObservableList<Node> nodes = scoreInfo.getChildren();
+    	ObservableList<Node> nodes = scoreInfo.getChildren();
         int index=0;
         for(Node n:nodes){
         	if(n instanceof Text){
@@ -296,7 +296,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         			
         	}
         		
-        }*/
+        }
     }
     public ImageView convertStringToImageView(String s) throws RemoteException{
     	Image image=new Image(s);
