@@ -123,7 +123,6 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	asi.increasePlayerCount(gameId,false);
     	openUIScreen("lobbyUI.fxml");
     	uiButton.getScene().getWindow().hide();
-    	task.cancel();
     	
     }
 
@@ -155,7 +154,6 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
     private synchronized void onPressed(MouseEvent mouseEvent){
-        task.cancel();
     	ImageView image=(ImageView)mouseEvent.getSource();
         int i=GridPane.getRowIndex(image);
         int j=GridPane.getColumnIndex(image);
@@ -202,7 +200,6 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                 asi.flipCard(activeGame.getCreator(),i2,j2);
             }
 
-            task.run();
             firstpress = null;
             secondpress = null;
         } else {
