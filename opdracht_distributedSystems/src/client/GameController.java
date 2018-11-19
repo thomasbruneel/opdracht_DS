@@ -81,7 +81,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     @FXML
     public void initialize() throws RemoteException{
     	activeGame=asi.getActiveGame(gameId);
-    	asi.addPlayer(gameId, userName);
+    	asi.addPlayer(gameId, userName); // ook initialiseren score
     	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
     	asi.increasePlayerCount(gameId,true);
     	game=activeGame.getGame();
@@ -198,7 +198,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
             if(firstpress.getText().equals(secondpress.getText())){
             	//als juiste match --> punt gescoord
             	System.out.println("hoera");
-            	score++;
+            	asi.increaseScore(gameId, userName);
             	
             }
             else{
@@ -255,11 +255,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	scoreInfo =new GridPane();
     	scoreInfo.setTranslateY(100);
     	scoreInfo.setGridLinesVisible(true);
-    	scoreInfo.add(new Text("Speler"), 0, 0); //col row
-    	scoreInfo.add(new Text("Score"), 1, 0);
     	uiGameInfo.getChildren().add(scoreInfo);
     	
-    	int row=1;
+    	int row=0;
     	for(String speler:asi.getActiveGame(gameId).getSpelers()){
     	 	scoreInfo.add(new Text(speler), 0, row);
         	scoreInfo.add(new Text("0"), 1, row);
@@ -268,21 +266,32 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	}
 	}
     
-    public  void refreshScore(ActiveGame ag){
-        Bord bord=ag.getGame().getBord();
-    	Kaart[][]matrix=bord.getMatrix();
-    	int grootte=bord.getGrootte();
+    public synchronized void refreshScore(ActiveGame ag){
+    	ObservableList<Node> nodes = scoreInfo.getChildren();
+        System.out.println("size score: "+nodes.size());	
+        int index=0;
+        for(Node n:nodes){
+        	if(n instanceof Text){
+        		System.out.println("index: "+index);
+        		Text text=(Text)n ;
+        		int col=GridPane.getColumnIndex(n);
+        		String speler=ag.getSpelers().get(index);
+        		String score=String.valueOf(ag.getScore().get(speler));
+        		if(col==0){
+        			text.setText(speler);
+        		}
+        		else{
+        			text.setText(score);
+        			index++;
+        		}
+            	 	
+        			
+        	}
+        		
+        }
+    }
+    
     	
-    	scoreInfo.add(new Text("Speler"), 0, 0); //col row
-    	scoreInfo.add(new Text("Score"), 1, 0);
-    	
-    	int row=1;
-    	for(String speler:ag.getSpelers()){
-    	 	scoreInfo.add(new Text(speler), 0, row);
-        	scoreInfo.add(new Text("0"), 1, row);
-        	row++;
-        	
-    	}
     			
 
     }
@@ -320,4 +329,4 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 */
     
     
-}
+

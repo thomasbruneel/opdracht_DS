@@ -3,6 +3,7 @@ package applicationServer;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import memoryGame.Game;
 
@@ -13,11 +14,12 @@ public class ActiveGame implements Serializable {
 	private int size;
 	private Game game;
 	private ArrayList<String>spelers;
+	private Map<String,Integer> score;
 	private boolean changed;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers,Map<String,Integer>score) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
@@ -25,6 +27,7 @@ public class ActiveGame implements Serializable {
 		this.game=game;
 		this.spelers=spelers;
 		this.changed=false;
+		this.score=score;
 	}
 	
 	
@@ -85,6 +88,18 @@ public class ActiveGame implements Serializable {
 	public void setChanged(boolean changed) {
 		this.changed = changed;
 	}
+	
+	
+
+	public Map<String, Integer> getScore() {
+		return score;
+	}
+
+
+	public void setScore(Map<String, Integer> score) {
+		this.score = score;
+	}
+
 
 	public void increasePlayerCount(boolean bit) {
 		if(bit){
@@ -99,6 +114,19 @@ public class ActiveGame implements Serializable {
 	
 	public void addPlayer(String s) throws RemoteException{
 		spelers.add(s);
+	}
+
+
+	public void initializeScore(String player, int i) {
+		score.put(player, i);
+		
+		
+	}
+
+
+	public void increaseScore(String speler) {
+		score.put(speler, score.get(speler) + 1);
+		
 	}
 
 

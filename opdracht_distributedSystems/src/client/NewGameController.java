@@ -4,6 +4,8 @@ import static client.ClientMain.*;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import applicationServer.ActiveGame;
@@ -85,7 +87,8 @@ public class NewGameController {
     	Game game=new Game(size);
 
     	ArrayList<String>spelers=new ArrayList<String>();
-    	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
+    	Map <String,Integer> score=new HashMap<String,Integer>();
+    	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers,score);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
     	asi.addActiveGame(activeGame);
     	
     	gameId=userName;
