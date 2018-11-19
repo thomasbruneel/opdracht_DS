@@ -256,34 +256,42 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	scoreInfo.setTranslateY(100);
     	scoreInfo.setGridLinesVisible(true);
     	uiGameInfo.getChildren().add(scoreInfo);
-    	
+    	/*
     	int row=0;
     	for(String speler:asi.getActiveGame(gameId).getSpelers()){
     	 	scoreInfo.add(new Text(speler), 0, row);
         	scoreInfo.add(new Text("0"), 1, row);
         	row++;
-        	
+    	}*/
+    	for(int i=0;i<4;i++){
+    		for(int j=0;j<2;j++){
+        	 	scoreInfo.add(new Text(" "), j, i);
+    		}
     	}
 	}
     
     public synchronized void refreshScore(ActiveGame ag){
-    	ObservableList<Node> nodes = scoreInfo.getChildren();
-        System.out.println("size score: "+nodes.size());	
+    	ObservableList<Node> nodes = scoreInfo.getChildren();	
         int index=0;
         for(Node n:nodes){
         	if(n instanceof Text){
-        		System.out.println("index: "+index);
         		Text text=(Text)n ;
         		int col=GridPane.getColumnIndex(n);
-        		String speler=ag.getSpelers().get(index);
-        		String score=String.valueOf(ag.getScore().get(speler));
-        		if(col==0){
-        			text.setText(speler);
+        		if(index<ag.getSpelers().size()){
+        			String speler=ag.getSpelers().get(index);
+                		String score=String.valueOf(ag.getScore().get(speler));
+                		if(col==0){
+                			text.setText(speler);
+                		}
+                		else{
+                			text.setText(score);
+                			index++;
+                		}
+        			
+
+        		
         		}
-        		else{
-        			text.setText(score);
-        			index++;
-        		}
+
             	 	
         			
         	}
