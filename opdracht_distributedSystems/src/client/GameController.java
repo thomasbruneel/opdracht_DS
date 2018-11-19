@@ -137,7 +137,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         matrix=bord.getMatrix();
         for(int i=0;i<game.getBord().getGrootte();i++){
         	for(int j=0;j<game.getBord().getGrootte();j++){
-        		gridpane.add(convertStringToImageView("client/images/batman/back.jpg"), j, i);
+        		gridpane.add(convertStringToImageView("client/images/batman/back2.jpg"), j, i);
         	}
         }
         //Volledige speelveld gebruiken
@@ -235,7 +235,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
                     if (!matrix[row][col].isOmgedraaid()) {
-                        imageView.setImage(new Image("client/images/batman/back.jpg"));
+                        imageView.setImage(new Image("client/images/batman/back2.jpg"));
                     } else {
                         imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
                     }
@@ -250,7 +250,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     
     private void setupScoreBord() throws RemoteException {
     	scoreInfo =new GridPane();
-    	scoreInfo.setTranslateY(100);
+    	scoreInfo.setTranslateY(120);
     	scoreInfo.setGridLinesVisible(true);
     	uiGameInfo.getChildren().add(scoreInfo);
     	/*
