@@ -8,6 +8,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.HashMap;
+import java.util.Map;
 
 import applicationServer.TokenGenerator;
 import interfaces.AppServerInterface;
@@ -27,6 +29,8 @@ public class ClientMain extends Application {
 	public static String userName;
 	
 	public static String gameId;
+	
+	public static Map<Integer,String> afbeeldingen=new HashMap();
 	
 	@Override
 	public void start(Stage primaryStage) {

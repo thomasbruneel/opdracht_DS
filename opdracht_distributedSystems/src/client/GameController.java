@@ -23,6 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -53,8 +55,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     Bord bord=null;
     Kaart[][] matrix=null;
     ActiveGame activeGame=null;
-    Text firstpress=null;
-    Text secondpress=null;
+    ImageView firstpress=null;
+    ImageView secondpress=null;
 
     @FXML
     GridPane gridpane;
@@ -72,6 +74,12 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     int j2;
     
     int score=0;
+    
+    int width;
+    int height;
+    
+    int press1=-666;
+    int press2=-666;
 
     public GameController() throws RemoteException {
         aanZet = false;
@@ -119,8 +127,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     }
 
     public void setupGame() throws RemoteException{
-        int width = (int)uiGamePane.getPrefWidth();
-        int height = (int)(uiGamePane.getPrefWidth());
+        width = (int)uiGamePane.getPrefWidth();
+        height = (int)(uiGamePane.getPrefWidth());
         System.out.println("gamepane size:  "+width+ "   "+height);
         gridpane=new GridPane();
         gridpane.setGridLinesVisible(true);
@@ -129,17 +137,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         matrix=bord.getMatrix();
         for(int i=0;i<game.getBord().getGrootte();i++){
         	for(int j=0;j<game.getBord().getGrootte();j++){
-        		Text text=new Text();
-        		text.setText(" x ");
-        		text.setOnMousePressed(this::onPressed);
-        		text.setOnMouseReleased(arg0 -> {
-					try {
-						onRelease(arg0);
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-				});
-        		gridpane.add(text, j, i);
+        		gridpane.add(convertStringToImageView("client/images/batman/back.jpg"), j, i);
         	}
         }
         //Volledige speelveld gebruiken
@@ -156,22 +154,17 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
     private synchronized void onPressed(MouseEvent mouseEvent){
-        /* geeft error
-        try {
-            gameRefreshThread.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    	ImageView image=(ImageView)mouseEvent.getSource();
+        int i=GridPane.getRowIndex(image);
+        int j=GridPane.getColumnIndex(image);
+
+        if (firstpress==null){
+        	firstpress=image;
+        	press1=matrix[i][j].getWaarde();
         }
-        */
-        Text text=(Text)mouseEvent.getSource();
-        int i=GridPane.getRowIndex(text);
-        int j=GridPane.getColumnIndex(text);
-        if(text.getText().equals(" x ")){
-            text.setText(" "+String.valueOf(matrix[i][j].getWaarde())+" ");
-            if (firstpress==null) firstpress=text;
-            else {
-                secondpress=text;
-            }
+        else {
+            secondpress=image;
+            press2=matrix[i][j].getWaarde();
         }
 
     }
@@ -188,14 +181,14 @@ public class GameController extends UnicastRemoteObject implements gameControlle
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            System.out.println("Eerste keuze: " + firstpress.getText() + " Tweede Keuze: " + secondpress.getText());
+
 
             try {
-                wait(3000);
+                wait(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(firstpress.getText().equals(secondpress.getText())){
+            if(press1==press2){
             	//als juiste match --> punt gescoord
             	System.out.println("hoera");
             	asi.increaseScore(gameId, userName);
@@ -224,7 +217,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     
    
     public  void refreshBord(ActiveGame ag){
-    	System.out.println("refresh");
+    	//System.out.println("refresh");
         Bord bord=ag.getGame().getBord();
     	Kaart[][]matrix=bord.getMatrix();
     	int grootte=bord.getGrootte();
@@ -232,16 +225,16 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	ObservableList<Node> nodes = gridpane.getChildren();
     	System.out.println("size: "+nodes.size());	//geeft size 17 want eerst node is class group bij (4x4)
     	for(Node n:nodes){ 
-    		if(n instanceof Text){
-    			Text text=(Text)n;
+    		if(n instanceof ImageView){
+    			ImageView imageView=(ImageView)n;
     			int col=GridPane.getColumnIndex(n);
     			int row=GridPane.getRowIndex(n);
     			
     			if(!matrix[row][col].isOmgedraaid()){
-    				text.setText(" x ");
+    				imageView.setImage(new Image("client/images/batman/back.jpg"));
     			}
     			else{
-    				text.setText(" "+String.valueOf(matrix[row][col].getWaarde())+" ");
+    				imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
     			}
     			
     		}
@@ -297,6 +290,26 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         	}
         		
         }
+    }
+    public ImageView convertStringToImageView(String s) throws RemoteException{
+    	Image image=new Image(s);
+    	ImageView imageView=new ImageView(image);
+    	imageView.setFitWidth(width/bord.getGrootte());
+    	imageView.setFitHeight(height/bord.getGrootte());
+    	imageView.setOnMousePressed(event -> {
+			onPressed(event);
+		});
+    	imageView.setOnMouseReleased(event -> {
+			try {
+				onRelease(event);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+		
+		return imageView;
     }
     
     	

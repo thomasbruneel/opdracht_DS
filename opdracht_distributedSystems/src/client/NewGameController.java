@@ -61,6 +61,8 @@ public class NewGameController {
     	radioButton2Players.setToggleGroup(playersGroup);
     	radioButton3Players.setToggleGroup(playersGroup);
     	radioButton4Players.setToggleGroup(playersGroup);
+    	
+    	voegAfbeeldingenToe();
         
 
     }
@@ -101,6 +103,29 @@ public class NewGameController {
     	uiBackToLobby.getScene().getWindow().hide();
     	 
     }
+    
+    private void voegAfbeeldingenToe() {
+    	afbeeldingen.put(0,"client/images/batman/0.jpg");
+    	afbeeldingen.put(1, "client/images/batman/1.jpg");
+    	afbeeldingen.put(2, "client/images/batman/2.jpg");
+    	afbeeldingen.put(3, "client/images/batman/3.jpg");
+    	afbeeldingen.put(4, "client/images/batman/4.jpg");
+    	afbeeldingen.put(5, "client/images/batman/5.jpg");
+    	afbeeldingen.put(6, "client/images/batman/6.jpg");
+    	afbeeldingen.put(7, "client/images/batman/7.jpg");
+    	afbeeldingen.put(8, "client/images/batman/8.jpg");
+    	afbeeldingen.put(9, "client/images/batman/9.jpg");
+    	afbeeldingen.put(10, "client/images/batman/10.jpg");
+    	afbeeldingen.put(11, "client/images/batman/11.jpg");
+    	afbeeldingen.put(12, "client/images/batman/12.jpg");
+    	afbeeldingen.put(13, "client/images/batman/13.jpg");
+    	afbeeldingen.put(14, "client/images/batman/14.jpg");
+    	afbeeldingen.put(15, "client/images/batman/15.jpg");
+    	afbeeldingen.put(16, "client/images/batman/16.jpg");
+    	afbeeldingen.put(17, "client/images/batman/17.jpg");
+		
+		
+	}
     
     
 

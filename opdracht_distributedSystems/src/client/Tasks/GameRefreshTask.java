@@ -21,7 +21,7 @@ public class GameRefreshTask extends Task{
 	@Override
 	protected synchronized Object call() throws Exception {
 		while(!isCancelled()){
-			System.out.println("thread");
+			//System.out.println("thread");
 			ActiveGame activeGame=asi.getChangedActiveGame(gameId);
 			if (activeGame!=null) Platform.runLater(() -> gameController.refreshBord(activeGame));
             wait(2000);
