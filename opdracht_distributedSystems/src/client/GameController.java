@@ -1,12 +1,16 @@
 package client;
 
+import interfaces.gameControllerInterface;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import applicationServer.ActiveGame;
 import client.Tasks.GameRefreshTask;
@@ -30,7 +34,7 @@ import memoryGame.Kaart;
 
 import static client.ClientMain.*;
 
-public class GameController {
+public class GameController extends UnicastRemoteObject implements gameControllerInterface {
 
 	@FXML
 	AnchorPane uiGamePane;
@@ -53,8 +57,12 @@ public class GameController {
     GameRefreshTask task;
     Thread gameRefreshThread;
     Boolean aanZet;
-    
-    
+
+    public GameController() throws RemoteException {
+        aanZet = false;
+    }
+
+
     @FXML
     public void initialize() throws RemoteException{
     	activeGame=asi.getActiveGame(gameId);
@@ -217,18 +225,28 @@ public class GameController {
 */
     public  void refreshBord(ActiveGame ag){
     	System.out.println("refresh");
-    	if(Platform.isFxApplicationThread()) System.out.println("APPthread");
-    	else System.out.println("NietAPPThread!!!");
+
         Bord bord=ag.getGame().getBord();
     	Kaart[][]matrix=bord.getMatrix();
     	int grootte=bord.getGrootte();
     	
     	for(int i=0;i<grootte;i++){
     		for(int j=0;j<grootte;j++){
-    			System.out.println(matrix[i][j].isOmgedraaid());
-    			
+
     			if(!matrix[i][j].isOmgedraaid()){
-            		Text text=new Text();
+
+    			    Text text = null;
+                    ObservableList<Node> nodes = gridpane.getChildren();
+    			    for(Node n : nodes){
+    			        if(GridPane.getRowIndex(n) == i && GridPane.getColumnIndex(n) == j){
+    			            text = (Text)n;
+                        }
+                    }
+
+            		           //Todo : Text wijzigen ipv nieuwe overleggen,
+                                                    // tenzij dat dit met afbeeldingen een ander probleem geeft
+
+
             		text.setText(" x ");
             		gridpane.add(text, j, i); // hier zit de fout want thread stopt bij deze lijn
             		
