@@ -1,5 +1,6 @@
 package client;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -50,6 +51,8 @@ public class GameController {
     GridPane gridpane;
 
     GameRefreshTask task;
+    Thread gameRefreshThread;
+    Boolean aanZet;
     
     
     @FXML
@@ -65,7 +68,8 @@ public class GameController {
         setupGame();
 
     	task=new GameRefreshTask(this);
-    	new Thread(task).start();
+    	gameRefreshThread = new Thread(task);
+    	gameRefreshThread.start();
 
     }
     
@@ -115,7 +119,14 @@ public class GameController {
     }
 
 
-    private void onPressed(MouseEvent mouseEvent) {
+    private synchronized void onPressed(MouseEvent mouseEvent){
+        /* geeft error
+        try {
+            gameRefreshThread.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
         Text text=(Text)mouseEvent.getSource();
         int i=GridPane.getRowIndex(text);
         int j=GridPane.getColumnIndex(text);
@@ -206,7 +217,9 @@ public class GameController {
 */
     public  void refreshBord(ActiveGame ag){
     	System.out.println("refresh");
-    	Bord bord=ag.getGame().getBord();
+    	if(Platform.isFxApplicationThread()) System.out.println("APPthread");
+    	else System.out.println("NietAPPThread!!!");
+        Bord bord=ag.getGame().getBord();
     	Kaart[][]matrix=bord.getMatrix();
     	int grootte=bord.getGrootte();
     	

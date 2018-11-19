@@ -13,6 +13,7 @@ public class ActiveGame implements Serializable {
 	private int size;
 	private Game game;
 	private ArrayList<String>spelers;
+	private boolean changed;
 	
 	
 	//constructor
@@ -23,6 +24,7 @@ public class ActiveGame implements Serializable {
 		this.size = size;
 		this.game=game;
 		this.spelers=spelers;
+		this.changed=false;
 	}
 	
 	
@@ -72,11 +74,17 @@ public class ActiveGame implements Serializable {
 		return spelers;
 	}
 
-
 	public void setSpelers(ArrayList<String> spelers) {
 		this.spelers = spelers;
 	}
 
+	public boolean isChanged() {
+		return changed;
+	}
+
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
 
 	public void increasePlayerCount(boolean bit) {
 		if(bit){

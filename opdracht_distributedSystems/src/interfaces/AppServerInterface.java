@@ -31,4 +31,6 @@ public interface AppServerInterface extends Remote{
 	void addPlayer(String gameId, String speler) throws RemoteException;
 
 	void removePlayer(String creator, String userName) throws RemoteException;
+
+	ActiveGame getChangedActiveGame(String gameId) throws RemoteException;
 }

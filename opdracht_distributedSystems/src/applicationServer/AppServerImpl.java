@@ -140,6 +140,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	}
     	if(activeGame!=null){
     		activeGame.getGame().getBord().flipCard(x,y);
+    		activeGame.setChanged(true);
     	}
 
 		System.out.println(creator + ": " + x + ", " +y);
@@ -177,10 +178,20 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	tmpActiveGame.getSpelers().remove(tmp);
     	System.out.println("spelers size na remove "+tmpActiveGame.getSpelers().size()+ " --> "+tmpActiveGame.getSpelers());
     }
-    
-	
-	
-	
+
+	@Override
+	public ActiveGame getChangedActiveGame(String gameId) throws RemoteException{
+		ActiveGame activeGame=null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(gameId)){
+				activeGame=ag;
+                if (activeGame.isChanged()) return activeGame;
+			}
+		}
+        return null;
+	}
+
+
 }
 	
 	
