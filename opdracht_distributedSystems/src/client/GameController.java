@@ -102,9 +102,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         setupGame();
         setupScoreBord();
 
-    	task=new GameRefreshTask(this);
-    	gameRefreshThread = new Thread(task);
-    	gameRefreshThread.start();
+    	//task=new GameRefreshTask(this);
+    	//gameRefreshThread = new Thread(task);
+    	//gameRefreshThread.start();
     	
     	Task task2=new ScoreRefreshTask(this);
     	Thread ScoreRefreshTask = new Thread(task2);
@@ -203,7 +203,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                     asi.flipCard(activeGame.getCreator(), i2, j2);
                 }
 
-                asi.endTurnTest(gameId);
+                //asi.endTurnTest(gameId);
                 firstpress = null;
                 secondpress = null;
             } else {
@@ -336,7 +336,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         }
     }
     
-    public void refreshBord2(int i,int j){
+    @Override
+    public void refreshBord2(int i,int j) throws RemoteException{
+    	System.out.println("refresh2");
     	Kaart[][]matrix=bord.getMatrix();
  
     	 ObservableList<Node> nodes = gridpane.getChildren();
@@ -345,12 +347,16 @@ public class GameController extends UnicastRemoteObject implements gameControlle
              Node n=nodes.get(bord.getGrootte()*i+j+1);
              int col = GridPane.getColumnIndex(n);
              int row = GridPane.getRowIndex(n);
-             
+             System.out.println("row "+row+ " col "+col);
              ImageView imageView = (ImageView) n;
+             matrix[row][col].setOmgedraaid(!matrix[row][col].isOmgedraaid());
              if (!matrix[row][col].isOmgedraaid()) {
                  imageView.setImage(new Image("client/images/batman/back2.jpg"));
+                 System.out.println("back");
+                 System.out.println(matrix[i][j].getWaarde()+"    "+matrix[i][j].isOmgedraaid());
              } else {
                  imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
+                 System.out.println("front");
              }
 
 

@@ -135,6 +135,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	
 	@Override
 	public void flipCard(String creator,int x,int y)throws RemoteException{
+		System.out.println("flipcard");
 		ActiveGame activeGame=null;
     	for(ActiveGame ag:activeGames){
     		if(ag.getCreator().equals(creator)){
@@ -144,6 +145,10 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	if(activeGame!=null){
     		activeGame.getGame().getBord().flipCard(x,y);
     		activeGame.setChanged(true);
+    	}
+    	for(gameControllerInterface gci:activeGame.getGamecontrollers()){
+    		System.out.println("interface");
+    		gci.refreshBord2(x, y);
     	}
 
 		System.out.println(creator + ": " + x + ", " +y);
