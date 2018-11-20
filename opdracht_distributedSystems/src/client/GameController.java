@@ -40,6 +40,7 @@ import memoryGame.Game;
 import memoryGame.Kaart;
 
 import static client.ClientMain.*;
+import static java.lang.Thread.sleep;
 
 public class GameController extends UnicastRemoteObject implements gameControllerInterface, Initializable {
 
@@ -186,12 +187,6 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                     e.printStackTrace();
                 }
 
-
-                try {
-                    wait(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 if (press1 == press2) {
                     //als juiste match --> punt gescoord
                     System.out.println("hoera");
@@ -199,8 +194,19 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
                 } else {
                     //als geen juiste match --> kaarten terug omdraaien
-                    asi.flipCard(activeGame.getCreator(), i1, j1);
-                    asi.flipCard(activeGame.getCreator(), i2, j2);
+                    Thread t = new Thread(() -> {
+                        try {
+                            System.out.println("voor");
+                            sleep(2000);
+                            System.out.println("na");
+                            asi.flipCard(activeGame.getCreator(), i1, j1);
+                            asi.flipCard(activeGame.getCreator(), i2, j2);
+                        } catch (RemoteException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    t.run();
+
                 }
 
                 //asi.endTurnTest(gameId);
