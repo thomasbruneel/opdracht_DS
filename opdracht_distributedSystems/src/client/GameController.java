@@ -212,6 +212,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                             System.out.println("na");
                             asi.flipCard(activeGame.getCreator(), i1, j1);
                             asi.flipCard(activeGame.getCreator(), i2, j2);
+                            asi.endTurnTest(gameId);
+                            aanZet=false;
                         } catch (RemoteException | InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -220,8 +222,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
                 }
 
-                asi.endTurnTest(gameId);
-                aanZet=false;
+
                 firstpress = null;
                 secondpress = null;
             } else {
