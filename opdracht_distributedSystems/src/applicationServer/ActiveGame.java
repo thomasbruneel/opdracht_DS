@@ -16,10 +16,12 @@ public class ActiveGame implements Serializable {
 	private ArrayList<String>spelers;
 	private Map<String,Integer> score;
 	private boolean changed; //zal wss weg mogen
+	private boolean changed;
+	boolean theme;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers,Map<String,Integer>score) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers,Map<String,Integer>score, boolean theme) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
@@ -28,6 +30,7 @@ public class ActiveGame implements Serializable {
 		this.spelers=spelers;
 		this.changed=false;
 		this.score=score;
+		this.theme=theme;
 	}
 	
 	
@@ -98,6 +101,16 @@ public class ActiveGame implements Serializable {
 
 	public void setScore(Map<String, Integer> score) {
 		this.score = score;
+	}
+	
+
+	public boolean getTheme() {
+		return theme;
+	}
+
+
+	public void setTheme(boolean theme) {
+		this.theme = theme;
 	}
 
 

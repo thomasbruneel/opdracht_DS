@@ -15,12 +15,15 @@
          </font>
       </Label>
       <Label layoutX="184.0" layoutY="192.0" text="Size board game:" />
-      <Button fx:id="uiCreateNewGameButton" layoutX="288.0" layoutY="267.0" mnemonicParsing="false" onAction="#createNewGame" text="create game" />
+      <Button fx:id="uiCreateNewGameButton" layoutX="259.0" layoutY="342.0" mnemonicParsing="false" onAction="#createNewGame" text="create game" />
       <Button fx:id="uiBackToLobby" layoutX="511.0" layoutY="2.0" mnemonicParsing="false" onAction="#backToLobby" text="Back to lobby" />
       <RadioButton fx:id="radioButton4x4" layoutX="300.0" layoutY="192.0" mnemonicParsing="false" text="4 x 4" />
       <RadioButton fx:id="radioButton6x6" layoutX="375.0" layoutY="192.0" mnemonicParsing="false" text="6 x 6" />
       <RadioButton fx:id="radioButton2Players" layoutX="300.0" layoutY="116.0" mnemonicParsing="false" text="2" />
       <RadioButton fx:id="radioButton3Players" layoutX="375.0" layoutY="116.0" mnemonicParsing="false" text="3" />
       <RadioButton fx:id="radioButton4Players" layoutX="453.0" layoutY="116.0" mnemonicParsing="false" text="4" />
+      <Label layoutX="239.0" layoutY="258.0" prefHeight="17.0" prefWidth="40.0" text="Theme:" />
+      <RadioButton fx:id="radioButtonBatman" layoutX="293.0" layoutY="258.0" mnemonicParsing="false" text="batman" />
+      <RadioButton fx:id="radioButtonPokemon" layoutX="375.0" layoutY="258.0" mnemonicParsing="false" text="pokemon" />
    </children>
 </AnchorPane>
