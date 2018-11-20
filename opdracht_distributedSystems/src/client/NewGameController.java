@@ -69,21 +69,21 @@ public class NewGameController {
     
     public void createNewGame() throws RemoteException{
     	int players = 0;
-    	if(radioButton2Players.isSelected()==true){
+    	if(radioButton2Players.isSelected()){
     		players=2;
     	}
-    	else if(radioButton3Players.isSelected()==true){
+    	else if(radioButton3Players.isSelected()){
     		players=3;
     	}
-    	else if(radioButton4Players.isSelected()==true){
+    	else if(radioButton4Players.isSelected()){
     		players=4;
     	}
     	
     	int size = 0;
-    	if(radioButton4x4.isSelected()==true){
+    	if(radioButton4x4.isSelected()){
     		size=4;
     	}
-    	else if(radioButton6x6.isSelected()==true){
+    	else if(radioButton6x6.isSelected()){
     		size=6;
     	}
     	Game game=new Game(size);

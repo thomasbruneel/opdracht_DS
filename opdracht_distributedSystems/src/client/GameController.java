@@ -42,14 +42,11 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 	@FXML
 	AnchorPane uiGamePane;
 	
-	
 	@FXML
 	AnchorPane uiGameInfo;
 
 	@FXML
     Button uiButton;
-
-
     
     Game game = null;
     Bord bord=null;
@@ -67,7 +64,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     GameRefreshTask task;
     Thread gameRefreshThread;
     Boolean aanZet;
-    
+
     int i1;
     int j1;
     int i2;
@@ -82,7 +79,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     int press2=-666;
 
     public GameController() throws RemoteException {
-        aanZet = false;
+        aanZet = true;
     }
 
 
@@ -154,65 +151,65 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
     private synchronized void onPressed(MouseEvent mouseEvent){
-    	ImageView image=(ImageView)mouseEvent.getSource();
-        int i=GridPane.getRowIndex(image);
-        int j=GridPane.getColumnIndex(image);
+        if(aanZet) {
+            ImageView image = (ImageView) mouseEvent.getSource();
+            int i = GridPane.getRowIndex(image);
+            int j = GridPane.getColumnIndex(image);
 
-        if (firstpress==null){
-        	firstpress=image;
-        	press1=matrix[i][j].getWaarde();
+            if (firstpress == null) {
+                firstpress = image;
+                press1 = matrix[i][j].getWaarde();
+            } else {
+                secondpress = image;
+                press2 = matrix[i][j].getWaarde();
+            }
         }
-        else {
-            secondpress=image;
-            press2=matrix[i][j].getWaarde();
-        }
-
     }
 
     private synchronized void onRelease(MouseEvent mouseEvent) throws RemoteException {
-        if(!(secondpress==null)){
-            //TODO: Keuze doorgeven aan gameserver
+        if(aanZet) {
+            if (!(secondpress == null)) {
+                //TODO: Keuze doorgeven aan gameserver
 
-            i2=GridPane.getRowIndex(secondpress);
-            j2=GridPane.getColumnIndex(secondpress);
-            System.out.println("release2 "+i2+ "  "+j2);
-            try {
-                asi.flipCard(activeGame.getCreator(),i2,j2);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+                i2 = GridPane.getRowIndex(secondpress);
+                j2 = GridPane.getColumnIndex(secondpress);
+                System.out.println("release2 " + i2 + "  " + j2);
+                try {
+                    asi.flipCard(activeGame.getCreator(), i2, j2);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
 
 
-            try {
-                wait(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(press1==press2){
-            	//als juiste match --> punt gescoord
-            	System.out.println("hoera");
-            	asi.increaseScore(gameId, userName);
-            	
-            }
-            else{
-                //als geen juiste match --> kaarten terug omdraaien
-                asi.flipCard(activeGame.getCreator(),i1,j1);
-                asi.flipCard(activeGame.getCreator(),i2,j2);
-            }
+                try {
+                    wait(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (press1 == press2) {
+                    //als juiste match --> punt gescoord
+                    System.out.println("hoera");
+                    asi.increaseScore(gameId, userName);
 
-            firstpress = null;
-            secondpress = null;
-        } else {
-            i1=GridPane.getRowIndex(firstpress);
-            j1=GridPane.getColumnIndex(firstpress);
-            try {
-            	System.out.println("release1 "+i1+ "  "+j1);
-                asi.flipCard(activeGame.getCreator(),i1,j1);
-            } catch (RemoteException e) {
-                e.printStackTrace();
+                } else {
+                    //als geen juiste match --> kaarten terug omdraaien
+                    asi.flipCard(activeGame.getCreator(), i1, j1);
+                    asi.flipCard(activeGame.getCreator(), i2, j2);
+                }
+
+                firstpress = null;
+                secondpress = null;
+            } else {
+                i1 = GridPane.getRowIndex(firstpress);
+                j1 = GridPane.getColumnIndex(firstpress);
+                try {
+                    System.out.println("release1 " + i1 + "  " + j1);
+                    asi.flipCard(activeGame.getCreator(), i1, j1);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
     }
     
    
@@ -315,11 +312,14 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 		
 		return imageView;
     }
-    
-    	
-    			
 
+
+    @Override
+    public void giveTurn() throws RemoteException {
+        aanZet=!aanZet;
+        System.out.println("Aanzet? : " + aanZet);
     }
+}
     
     /*
     public synchronized void click(Event event){
