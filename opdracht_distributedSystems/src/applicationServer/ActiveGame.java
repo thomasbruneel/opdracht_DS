@@ -32,6 +32,7 @@ public class ActiveGame implements Serializable {
 		this.changed=false;
 		this.score=score;
 		this.theme=theme;
+		this.gamecontrollers = new ArrayList<>();
 	}
 	
 	
@@ -114,8 +115,19 @@ public class ActiveGame implements Serializable {
 		this.theme = theme;
 	}
 
+    public boolean isTheme() {
+        return theme;
+    }
 
-	public void increasePlayerCount(boolean bit) {
+    public ArrayList<gameControllerInterface> getGamecontrollers() {
+        return gamecontrollers;
+    }
+
+    public void setGamecontrollers(ArrayList<gameControllerInterface> gamecontrollers) {
+        this.gamecontrollers = gamecontrollers;
+    }
+
+    public void increasePlayerCount(boolean bit) {
 		if(bit){
 			numberPlayers++;
 		}

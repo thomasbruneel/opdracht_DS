@@ -6,16 +6,20 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.ResourceBundle;
 
 import applicationServer.ActiveGame;
 import client.Tasks.GameRefreshTask;
 import client.Tasks.ScoreRefreshTask;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -37,7 +41,7 @@ import memoryGame.Kaart;
 
 import static client.ClientMain.*;
 
-public class GameController extends UnicastRemoteObject implements gameControllerInterface {
+public class GameController extends UnicastRemoteObject implements gameControllerInterface, Initializable {
 
 	@FXML
 	AnchorPane uiGamePane;
@@ -86,7 +90,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     @FXML
     public void initialize() throws RemoteException{
 
-        asi.addGameController(gameId,this);
+        asi.addGameController(gameId, this);
     	activeGame=asi.getActiveGame(gameId);
     	asi.addPlayer(gameId, userName); // ook initialiseren score
     	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
@@ -199,6 +203,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                     asi.flipCard(activeGame.getCreator(), i2, j2);
                 }
 
+                asi.endTurnTest(gameId);
                 firstpress = null;
                 secondpress = null;
             } else {
@@ -320,6 +325,15 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     public void giveTurn() throws RemoteException {
         aanZet=!aanZet;
         System.out.println("Aanzet? : " + aanZet);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            initialize();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
     

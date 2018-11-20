@@ -217,12 +217,24 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
                 
 			}
 		}
-		activeGame.addGameController(gci);
-		
-		
+		if (activeGame != null && gci != null) {
+			activeGame.addGameController(gci);
+		}
+
+
 	}
-	
-	
+
+	@Override
+	public void endTurnTest(String Gameid) throws RemoteException {
+		ActiveGame activeGame=null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(Gameid)){
+				activeGame=ag;
+
+			}
+		}
+		for (gameControllerInterface g : activeGame.getGamecontrollers()) g.giveTurn();
+	}
 
 
 }
