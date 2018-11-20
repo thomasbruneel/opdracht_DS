@@ -335,6 +335,26 @@ public class GameController extends UnicastRemoteObject implements gameControlle
             e.printStackTrace();
         }
     }
+    
+    public void refreshBord2(int i,int j){
+    	Kaart[][]matrix=bord.getMatrix();
+ 
+    	 ObservableList<Node> nodes = gridpane.getChildren();
+    	 System.out.println("aantal nodes : "+nodes.size());
+
+             Node n=nodes.get(bord.getGrootte()*i+j+1);
+             int col = GridPane.getColumnIndex(n);
+             int row = GridPane.getRowIndex(n);
+             
+             ImageView imageView = (ImageView) n;
+             if (!matrix[row][col].isOmgedraaid()) {
+                 imageView.setImage(new Image("client/images/batman/back2.jpg"));
+             } else {
+                 imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
+             }
+
+
+    }
 }
     
     /*
