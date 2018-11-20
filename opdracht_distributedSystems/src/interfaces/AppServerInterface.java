@@ -35,4 +35,6 @@ public interface AppServerInterface extends Remote{
 	ActiveGame getChangedActiveGame(String gameId) throws RemoteException;
 	
 	void increaseScore(String gameId, String speler) throws RemoteException;
+	
+	void addGameController(String Gameid,gameControllerInterface gci) throws RemoteException;
 }

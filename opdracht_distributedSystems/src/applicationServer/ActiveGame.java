@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import interfaces.gameControllerInterface;
 import memoryGame.Game;
 
 public class ActiveGame implements Serializable {
@@ -15,9 +16,9 @@ public class ActiveGame implements Serializable {
 	private Game game;
 	private ArrayList<String>spelers;
 	private Map<String,Integer> score;
-	private boolean changed; //zal wss weg mogen
 	private boolean changed;
 	boolean theme;
+	private ArrayList<gameControllerInterface> gamecontrollers;
 	
 	
 	//constructor
@@ -127,6 +128,10 @@ public class ActiveGame implements Serializable {
 	
 	public void addPlayer(String s) throws RemoteException{
 		spelers.add(s);
+	}
+	
+	public void addGameController(gameControllerInterface gci) throws RemoteException{
+		gamecontrollers.add(gci);
 	}
 
 
