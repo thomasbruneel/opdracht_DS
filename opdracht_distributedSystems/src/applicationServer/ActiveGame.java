@@ -15,7 +15,6 @@ public class ActiveGame implements Serializable {
 	private Game game;
 	private ArrayList<String>spelers;
 	private Map<String,Integer> score;
-	private boolean changed; //zal wss weg mogen
 	private boolean changed;
 	boolean theme;
 	

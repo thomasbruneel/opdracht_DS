@@ -85,6 +85,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     public void initialize() throws RemoteException{
+
+        asi.addGameController(gameId,this);
     	activeGame=asi.getActiveGame(gameId);
     	asi.addPlayer(gameId, userName); // ook initialiseren score
     	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
