@@ -108,9 +108,7 @@ public class NewGameController {
     	Map <String,Integer> score=new HashMap<String,Integer>();
     	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers,score,theme);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
     	asi.addActiveGame(activeGame);
-    	
 
-    	
     	gameId=userName;
     	openUIScreen("gameUI.fxml");
     	uiBackToLobby.getScene().getWindow().hide();

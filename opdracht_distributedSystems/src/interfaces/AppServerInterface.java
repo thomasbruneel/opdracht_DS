@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import applicationServer.ActiveGame;
+import client.LobbyController;
 
 public interface AppServerInterface extends Remote{
 	
@@ -39,4 +40,8 @@ public interface AppServerInterface extends Remote{
 	void addGameController(String Gameid,gameControllerInterface gci) throws RemoteException;
 
 	void endTurnTest(String Gameid) throws RemoteException;
+
+	void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException;
+
+	void updateLobby() throws RemoteException;
 }

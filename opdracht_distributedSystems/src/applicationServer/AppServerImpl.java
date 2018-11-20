@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
+import interfaces.LobbyControllerInterface;
 import interfaces.gameControllerInterface;
 import memoryGame.Kaart;
 
@@ -19,9 +20,10 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	
 	private ArrayList<ActiveGame>activeGames;
 	
-	
+	private ArrayList<LobbyControllerInterface> lobbyControllers;
 	
 	public AppServerImpl() throws RemoteException{
+		lobbyControllers=new ArrayList<LobbyControllerInterface>();
 		activeGames=new ArrayList<ActiveGame>();
 		Registry registry=LocateRegistry.getRegistry("localhost",2222);
 		try {
@@ -239,6 +241,22 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			}
 		}
 		for (gameControllerInterface g : activeGame.getGamecontrollers()) g.giveTurn();
+	}
+
+	@Override
+	public void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
+		lobbyControllers.add(lobbyController);
+		System.out.println("aantal lobbycontroller :"+lobbyControllers.size());
+		
+	}
+
+	@Override
+	public void updateLobby() throws RemoteException {
+		
+		for(LobbyControllerInterface lobbyController:lobbyControllers){
+			lobbyController.updateLobby(activeGames);
+		}
+		
 	}
 
 

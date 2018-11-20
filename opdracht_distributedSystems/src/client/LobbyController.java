@@ -1,12 +1,15 @@
 package client;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
 import applicationServer.ActiveGame;
 import applicationServer.TokenGenerator;
 import client.Tasks.LobbyRefreshTask;
+import interfaces.LobbyControllerInterface;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,8 +20,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import static client.ClientMain.*;
 
-public class LobbyController {
-    @FXML
+public class LobbyController extends UnicastRemoteObject implements LobbyControllerInterface,Serializable {
+	
+    public LobbyController() throws RemoteException {
+        
+    }
+
+
+	@FXML
     Label uiWelcomeUser;
     
     @FXML
@@ -50,7 +59,7 @@ public class LobbyController {
     
     private ArrayList<ActiveGame> listActiveGames;
     
-    private LobbyRefreshTask task;
+   // private LobbyRefreshTask task;
     
     //private boolean running=true;
     
@@ -66,8 +75,11 @@ public class LobbyController {
         uiTabelMaxPlayers.setCellValueFactory(new PropertyValueFactory<>("maxPlayers"));
         uiTabelSize.setCellValueFactory(new PropertyValueFactory<>("size"));
         //startCheckThread();
-        task=new LobbyRefreshTask(uiTabel,this);
-        new Thread(task).start();
+        //task=new LobbyRefreshTask(uiTabel,this);
+        //new Thread(task).start();
+        
+        asi.addLobbyController(this);
+        asi.updateLobby();
     }
     /*
     private void startCheckThread() {
@@ -98,13 +110,13 @@ public class LobbyController {
 	public void logout(){
     	logoutNow(); // in class ClientMain
     	uiLogoutButton.getScene().getWindow().hide();
-    	task.cancel();
+    	//task.cancel();
     }
     
     public void createNewGame(){
     	openUIScreen("newGameUI.fxml");
     	uiLogoutButton.getScene().getWindow().hide();
-    	task.cancel();
+    	//task.cancel();
     }
     
     public void Join(){
@@ -115,7 +127,7 @@ public class LobbyController {
         	openUIScreen("gameUI.fxml");
         	uiLogoutButton.getScene().getWindow().hide();
         	voegAfbeeldingenToe(activeGame.getTheme());
-        	task.cancel();
+        	//task.cancel();
     	}
     	else{
     		uiErrorMessage.setText("LOBBY ZIT VOL");
@@ -161,6 +173,13 @@ public class LobbyController {
 	    	afbeeldingen.put(17, "client/images/batman/17.jpg");
     	}
 		
+		
+	}
+
+	@Override
+	public void updateLobby(ArrayList<ActiveGame> games) throws RemoteException {
+		listActiveGames=games;
+		uiTabel.getItems().setAll(games);
 		
 	}
     

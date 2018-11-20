@@ -90,12 +90,15 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     public void initialize() throws RemoteException{
-
+    	
         asi.addGameController(gameId, this);
     	activeGame=asi.getActiveGame(gameId);
     	asi.addPlayer(gameId, userName); // ook initialiseren score
     	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
     	asi.increasePlayerCount(gameId,true);
+    	
+    	asi.updateLobby();//refreshen lobby
+    	
     	game=activeGame.getGame();
     	if(game!=null){
     		game.getBord().print();
@@ -125,6 +128,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     		asi.removePlayer(gameId,userName);
     	}
     	asi.increasePlayerCount(gameId,false);
+    	asi.updateLobby();//refreshen lobby
     	openUIScreen("lobbyUI.fxml");
     	uiButton.getScene().getWindow().hide();
     	
