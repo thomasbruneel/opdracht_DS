@@ -205,7 +205,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                             e.printStackTrace();
                         }
                     });
-                    t.run();
+                    t.start();
 
                 }
 
