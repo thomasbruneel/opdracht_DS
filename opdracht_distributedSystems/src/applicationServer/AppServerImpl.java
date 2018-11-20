@@ -11,12 +11,15 @@ import java.util.ArrayList;
 
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
+import interfaces.gameControllerInterface;
 import memoryGame.Kaart;
 
 public class AppServerImpl extends UnicastRemoteObject implements AppServerInterface{
 	private DatabankServerInterface dsi;
 	
 	private ArrayList<ActiveGame>activeGames;
+	
+	
 	
 	public AppServerImpl() throws RemoteException{
 		activeGames=new ArrayList<ActiveGame>();
@@ -204,6 +207,22 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		activeGame.increaseScore(speler);
 		
 	}
+
+	@Override
+	public void addGameController(String gameId, gameControllerInterface gci) throws RemoteException {
+		ActiveGame activeGame=null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(gameId)){
+				activeGame=ag;
+                
+			}
+		}
+		activeGame.addGameController(gci);
+		
+		
+	}
+	
+	
 
 
 }
