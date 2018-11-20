@@ -84,7 +84,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     int press2=-666;
 
     public GameController() throws RemoteException {
-        aanZet = true;
+        aanZet = false;
     }
 
 
@@ -92,11 +92,18 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     public void initialize() throws RemoteException{
     	
         asi.addGameController(gameId, this);
-    	activeGame=asi.getActiveGame(gameId);
     	asi.addPlayer(gameId, userName); // ook initialiseren score
     	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
     	asi.increasePlayerCount(gameId,true);
     	
+    	activeGame=asi.getActiveGame(gameId);
+    	if(activeGame.getMaxPlayers()==activeGame.getNumberPlayers()){
+    		System.out.println("ik ben aan beurt");
+    		aanZet=true;
+    	}
+    	else{
+    		System.out.println("ik ben niet aan beurt");
+    	}
     	asi.updateLobby();//refreshen lobby
     	
     	game=activeGame.getGame();
@@ -213,7 +220,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
                 }
 
-                //asi.endTurnTest(gameId);
+                asi.endTurnTest(gameId);
+                aanZet=false;
                 firstpress = null;
                 secondpress = null;
             } else {

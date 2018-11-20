@@ -19,6 +19,7 @@ public class ActiveGame implements Serializable {
 	private boolean changed;
 	boolean theme;
 	private ArrayList<gameControllerInterface> gamecontrollers;
+	private int beurt;
 	
 	
 	//constructor
@@ -33,6 +34,7 @@ public class ActiveGame implements Serializable {
 		this.score=score;
 		this.theme=theme;
 		this.gamecontrollers = new ArrayList<>();
+		this.beurt=maxPlayers-1;
 	}
 	
 	
@@ -151,6 +153,16 @@ public class ActiveGame implements Serializable {
 		score.put(player, i);
 		
 		
+	}
+
+
+	public int getBeurt() {
+		return beurt;
+	}
+
+
+	public void setBeurt(int beurt) {
+		this.beurt = beurt;
 	}
 
 

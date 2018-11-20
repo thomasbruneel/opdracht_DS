@@ -240,7 +240,15 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 			}
 		}
-		for (gameControllerInterface g : activeGame.getGamecontrollers()) g.giveTurn();
+		int beurt;
+		if(activeGame.getBeurt()==activeGame.getMaxPlayers()-1){
+			beurt=0;
+		}
+		else{
+			beurt=activeGame.getBeurt()+1;
+		}
+		activeGame.setBeurt(beurt);
+		activeGame.getGamecontrollers().get(beurt).giveTurn();
 	}
 
 	@Override
