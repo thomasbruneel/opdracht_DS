@@ -287,6 +287,19 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		
 	}
 
+	@Override
+	public void refreshScore(ActiveGame activeGame) throws RemoteException {
+    	for(gameControllerInterface gci:activeGame.getGamecontrollers()){
+    		gci.refreshScore(activeGame);
+    	}
+    	
+    	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
+    		System.out.println("interface");
+    		gci.refreshScore(activeGame);
+    	}
+		
+	}
+
 
 }
 	

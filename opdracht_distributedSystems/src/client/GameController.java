@@ -91,12 +91,14 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     public void initialize() throws RemoteException{
+    	setupScoreBord();
     	activeGame=asi.getActiveGame(gameId);
         if(!spectateMode){
             asi.addGameController(gameId, this);
         	asi.addPlayer(gameId, userName); // ook initialiseren score
         	asi.increasePlayerCount(gameId,true);
         	activeGame=asi.getActiveGame(gameId);
+        	asi.refreshScore(activeGame);
         	if(activeGame.getMaxPlayers()==activeGame.getNumberPlayers()){
         		System.out.println("ik ben aan beurt");
         		aanZet=true;
@@ -109,7 +111,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         }
         else{
         	asi.addSpectateController(gameId, this);
+        	asi.refreshScore(asi.getActiveGame(gameId));
         }
+        
     	asi.updateLobby();//refreshen lobby
     	
     	game=activeGame.getGame();
@@ -117,15 +121,14 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     		game.getBord().print();
     	}
         setupGame();
-        setupScoreBord();
 
     	//task=new GameRefreshTask(this);
     	//gameRefreshThread = new Thread(task);
     	//gameRefreshThread.start();
     	
-    	Task task2=new ScoreRefreshTask(this);
-    	Thread ScoreRefreshTask = new Thread(task2);
-    	ScoreRefreshTask.start();
+    	//Task task2=new ScoreRefreshTask(this);
+    	//Thread ScoreRefreshTask = new Thread(task2);
+    	//ScoreRefreshTask.start();
     }
 
 
@@ -211,6 +214,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                         //als juiste match --> punt gescoord
                         System.out.println("hoera");
                         asi.increaseScore(gameId, userName);
+                        asi.refreshScore(asi.getActiveGame(gameId));
 
                     } else {
                         //als geen juiste match --> kaarten terug omdraaien
@@ -278,27 +282,19 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
     }
-    
-    private void setupScoreBord() throws RemoteException {
+    public void setupScoreBord() throws RemoteException {
     	scoreInfo =new GridPane();
     	scoreInfo.setTranslateY(120);
     	scoreInfo.setGridLinesVisible(true);
     	uiGameInfo.getChildren().add(scoreInfo);
-    	/*
-    	int row=0;
-    	for(String speler:asi.getActiveGame(gameId).getSpelers()){
-    	 	scoreInfo.add(new Text(speler), 0, row);
-        	scoreInfo.add(new Text("0"), 1, row);
-        	row++;
-    	}*/
     	for(int i=0;i<4;i++){
     		for(int j=0;j<2;j++){
         	 	scoreInfo.add(new Text(" "), j, i);
     		}
     	}
 	}
-    
-    public synchronized void refreshScore(ActiveGame ag){
+    @Override
+    public  void refreshScore(ActiveGame ag){
     	ObservableList<Node> nodes = scoreInfo.getChildren();
         int index=0;
         for(Node n:nodes){
