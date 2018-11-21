@@ -152,6 +152,11 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     		System.out.println("interface");
     		gci.refreshBord2(x, y);
     	}
+    	
+    	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
+    		System.out.println("interface");
+    		gci.refreshBord2(x, y);
+    	}
 
 		System.out.println(creator + ": " + x + ", " +y);
 
@@ -263,6 +268,21 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		
 		for(LobbyControllerInterface lobbyController:lobbyControllers){
 			lobbyController.updateLobby(activeGames);
+		}
+		
+	}
+
+	@Override
+	public void addSpectateController(String gameId, gameControllerInterface gci) throws RemoteException {
+		ActiveGame activeGame=null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(gameId)){
+				activeGame=ag;
+                
+			}
+		}
+		if (activeGame != null && gci != null) {
+			activeGame.addSpectateController(gci);
 		}
 		
 	}

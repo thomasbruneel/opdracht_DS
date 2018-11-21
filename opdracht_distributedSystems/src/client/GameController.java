@@ -69,6 +69,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     GameRefreshTask task;
     Thread gameRefreshThread;
     Boolean aanZet;
+    
 
     int i1;
     int j1;
@@ -90,20 +91,25 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     public void initialize() throws RemoteException{
-    	
-        asi.addGameController(gameId, this);
-    	asi.addPlayer(gameId, userName); // ook initialiseren score
-    	System.out.println("spelers :"+asi.getActiveGame(gameId).getSpelers());//testen
-    	asi.increasePlayerCount(gameId,true);
-    	
     	activeGame=asi.getActiveGame(gameId);
-    	if(activeGame.getMaxPlayers()==activeGame.getNumberPlayers()){
-    		System.out.println("ik ben aan beurt");
-    		aanZet=true;
-    	}
-    	else{
-    		System.out.println("ik ben niet aan beurt");
-    	}
+        if(!spectateMode){
+            asi.addGameController(gameId, this);
+        	asi.addPlayer(gameId, userName); // ook initialiseren score
+        	asi.increasePlayerCount(gameId,true);
+        	activeGame=asi.getActiveGame(gameId);
+        	if(activeGame.getMaxPlayers()==activeGame.getNumberPlayers()){
+        		System.out.println("ik ben aan beurt");
+        		aanZet=true;
+        	}
+        	else{
+        		System.out.println("ik ben niet aan beurt");
+        	}
+        	
+        	
+        }
+        else{
+        	asi.addSpectateController(gameId, this);
+        }
     	asi.updateLobby();//refreshen lobby
     	
     	game=activeGame.getGame();
@@ -120,22 +126,23 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	Task task2=new ScoreRefreshTask(this);
     	Thread ScoreRefreshTask = new Thread(task2);
     	ScoreRefreshTask.start();
-    	
-
-
     }
 
 
 	public void backToLobby() throws RemoteException{
     	//als de creator het spel verlaat, wordt het spel beeindigd
-    	if(activeGame.getCreator().equals(userName)){
-    		asi.removeActiveGame(activeGame);
-    	}
-    	else{
-    		asi.removePlayer(gameId,userName);
-    	}
-    	asi.increasePlayerCount(gameId,false);
-    	asi.updateLobby();//refreshen lobby
+		if(!spectateMode){
+	    	if(activeGame.getCreator().equals(userName)){
+	    		asi.removeActiveGame(activeGame);
+	    	}
+	    	else{
+	    		asi.removePlayer(gameId,userName);
+	    	}
+	    	asi.increasePlayerCount(gameId,false);
+	    	asi.updateLobby();//refreshen lobby
+		}
+
+
     	openUIScreen("lobbyUI.fxml");
     	uiButton.getScene().getWindow().hide();
     	

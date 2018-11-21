@@ -44,4 +44,6 @@ public interface AppServerInterface extends Remote{
 	void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException;
 
 	void updateLobby() throws RemoteException;
+
+	void addSpectateController(String gameId, gameControllerInterface gameController) throws RemoteException;
 }

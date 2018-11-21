@@ -120,6 +120,7 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     }
     
     public void Join(){
+    	spectateMode=false;
     	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
     	if(activeGame!=null&&activeGame.getNumberPlayers()<activeGame.getMaxPlayers()){
     		System.out.println(activeGame.getCreator());
@@ -133,6 +134,15 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     		uiErrorMessage.setText("LOBBY ZIT VOL");
     		uiErrorMessage.setVisible(true);
     	}
+    }
+    
+    public void spectate(){
+    	spectateMode=true;
+    	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
+    	gameId=activeGame.getCreator();
+        openUIScreen("gameUI.fxml");
+        uiLogoutButton.getScene().getWindow().hide();
+        voegAfbeeldingenToe(activeGame.getTheme());
     }
     
 	public ArrayList<ActiveGame> getListActiveGames() {

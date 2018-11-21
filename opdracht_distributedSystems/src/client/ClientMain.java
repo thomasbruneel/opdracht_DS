@@ -32,6 +32,8 @@ public class ClientMain extends Application {
 	
 	public static Map<Integer,String> afbeeldingen=new HashMap();
 	
+	public static boolean spectateMode=false;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {

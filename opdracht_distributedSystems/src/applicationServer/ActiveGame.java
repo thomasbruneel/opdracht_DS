@@ -19,6 +19,7 @@ public class ActiveGame implements Serializable {
 	private boolean changed;
 	boolean theme;
 	private ArrayList<gameControllerInterface> gamecontrollers;
+	private ArrayList<gameControllerInterface> spectatecontrollers;
 	private int beurt;
 	
 	
@@ -34,6 +35,7 @@ public class ActiveGame implements Serializable {
 		this.score=score;
 		this.theme=theme;
 		this.gamecontrollers = new ArrayList<>();
+		this.spectatecontrollers = new ArrayList<>();
 		this.beurt=maxPlayers-1;
 	}
 	
@@ -128,8 +130,20 @@ public class ActiveGame implements Serializable {
     public void setGamecontrollers(ArrayList<gameControllerInterface> gamecontrollers) {
         this.gamecontrollers = gamecontrollers;
     }
+    
+    
 
-    public void increasePlayerCount(boolean bit) {
+    public ArrayList<gameControllerInterface> getSpectatecontrollers() {
+		return spectatecontrollers;
+	}
+
+
+	public void setSpectatecontrollers(ArrayList<gameControllerInterface> spectatecontrollers) {
+		this.spectatecontrollers = spectatecontrollers;
+	}
+
+
+	public void increasePlayerCount(boolean bit) {
 		if(bit){
 			numberPlayers++;
 		}
@@ -168,6 +182,12 @@ public class ActiveGame implements Serializable {
 
 	public void increaseScore(String speler) {
 		score.put(speler, score.get(speler) + 1);
+		
+	}
+
+
+	public void addSpectateController(gameControllerInterface gci) {
+		spectatecontrollers.add(gci);
 		
 	}
 
