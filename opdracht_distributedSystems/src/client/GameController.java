@@ -187,44 +187,45 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     private synchronized void onRelease(MouseEvent mouseEvent) throws RemoteException {
         if(aanZet) {
             if (!(secondpress == null)) {
-                //TODO: Keuze doorgeven aan gameserver
 
                 i2 = GridPane.getRowIndex(secondpress);
                 j2 = GridPane.getColumnIndex(secondpress);
                 System.out.println("release2 " + i2 + "  " + j2);
-                try {
-                    asi.flipCard(activeGame.getCreator(), i2, j2);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
 
-                if (press1 == press2) {
-                    //als juiste match --> punt gescoord
-                    System.out.println("hoera");
-                    asi.increaseScore(gameId, userName);
+                if(!(i1==i2 && j1==j2)) {
 
-                } else {
-                    //als geen juiste match --> kaarten terug omdraaien
-                    Thread t = new Thread(() -> {
-                        try {
-                            System.out.println("voor");
-                            sleep(2000);
-                            System.out.println("na");
-                            asi.flipCard(activeGame.getCreator(), i1, j1);
-                            asi.flipCard(activeGame.getCreator(), i2, j2);
-                            asi.endTurnTest(gameId);
-                            aanZet=false;
-                        } catch (RemoteException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                    t.start();
+                    try {
+                        asi.flipCard(activeGame.getCreator(), i2, j2);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
 
-                }
+                    if (press1 == press2) {
+                        //als juiste match --> punt gescoord
+                        System.out.println("hoera");
+                        asi.increaseScore(gameId, userName);
 
+                    } else {
+                        //als geen juiste match --> kaarten terug omdraaien
+                        Thread t = new Thread(() -> {
+                            try {
+                                System.out.println("voor");
+                                sleep(2000);
+                                System.out.println("na");
+                                asi.flipCard(activeGame.getCreator(), i1, j1);
+                                asi.flipCard(activeGame.getCreator(), i2, j2);
+                                asi.endTurnTest(gameId);
+                                aanZet = false;
+                            } catch (RemoteException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        t.start();
 
-                firstpress = null;
-                secondpress = null;
+                    }
+                    firstpress = null;
+                    secondpress = null;
+                } else secondpress = null;
             } else {
                 i1 = GridPane.getRowIndex(firstpress);
                 j1 = GridPane.getColumnIndex(firstpress);
