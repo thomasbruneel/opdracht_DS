@@ -52,6 +52,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 	@FXML
     Button uiButton;
+	
+    @FXML
+    Label beurt;
     
     Game game = null;
     Bord bord=null;
@@ -91,6 +94,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     public void initialize() throws RemoteException{
+    	beurt.setVisible(false);
     	setupScoreBord();
     	activeGame=asi.getActiveGame(gameId);
         if(!spectateMode){
@@ -102,6 +106,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         	if(activeGame.getMaxPlayers()==activeGame.getNumberPlayers()){
         		System.out.println("ik ben aan beurt");
         		aanZet=true;
+        		beurt.setVisible(true);
+        		beurt.setText("JOUW BEURT");
         	}
         	else{
         		System.out.println("ik ben niet aan beurt");
@@ -234,6 +240,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                         t.start();
 
                     }
+                    beurt.setText("WACHTEN");
                     firstpress = null;
                     secondpress = null;
                 } else secondpress = null;
@@ -348,9 +355,22 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     public void giveTurn() throws RemoteException {
         aanZet=!aanZet;
         System.out.println("Aanzet? : " + aanZet);
+        new Thread(new Runnable() {
+            @Override public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                    	beurt.setVisible(true);
+                        beurt.setText("JOUW BEURT");
+                    }
+                });
+
+            }}).start();
     }
 
-    @Override
+
+
+
+	@Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             initialize();
@@ -384,6 +404,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
     }
+
+
 }
     
     /*

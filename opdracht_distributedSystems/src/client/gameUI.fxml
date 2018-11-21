@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GameController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: green;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GameController">
    <children>
       <SplitPane dividerPositions="0.14589235127478753" layoutX="180.0" layoutY="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -28,6 +28,7 @@
                     </rowConstraints>
                   </GridPane>
                   <Label layoutY="96.0" text="Scorebord:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+                  <Label fx:id="beurt" layoutX="30.0" layoutY="351.0" style="-fx-border-color: #ff0000;" textFill="RED" />
                </children>
             </AnchorPane>
           <AnchorPane fx:id="uiGamePane" maxHeight="1000.0" maxWidth="1000.0" minHeight="1000.0" minWidth="1000.0" prefHeight="1000.0" prefWidth="1000.0">
