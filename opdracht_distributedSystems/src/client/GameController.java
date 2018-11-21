@@ -11,7 +11,9 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -301,9 +303,10 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	}
 	}
     @Override
-    public  void refreshScore(ActiveGame ag){
+    public  void refreshScore(ActiveGame ag) throws RemoteException{
     	ObservableList<Node> nodes = scoreInfo.getChildren();
         int index=0;
+        int punten=0;
         for(Node n:nodes){
         	if(n instanceof Text){
         		Text text=(Text)n ;
@@ -315,18 +318,53 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                 			text.setText(speler);
                 		}
                 		else{
+                			punten=punten+Integer.parseInt(score);
                 			text.setText(score);
                 			index++;
                 		}
-        			
 
-        		
         		}
-
-            	 	
-        			
+	
         	}
         		
+        }
+        int grootte=asi.getActiveGame(gameId).getGame().getBord().getGrootte();
+        if(punten==((grootte*grootte)/2)){
+        	Map<String,Integer>scorelijst=ag.getScore();
+        	int highScore=0;
+        	String winnaar=null;
+        	for (Map.Entry<String,Integer> entry : scorelijst.entrySet()){
+        		if(highScore<entry.getValue()){
+        			highScore=entry.getValue();
+        			winnaar=entry.getKey();
+        		}
+
+        	}
+        	if(winnaar.equals(userName)){
+        	       new Thread(new Runnable() {
+        	            @Override public void run() {
+        	                Platform.runLater(new Runnable() {
+        	                    @Override public void run() {
+        	                    	beurt.setVisible(true);
+        	                        beurt.setText("WINNER");
+        	                    }
+        	                });
+
+        	            }}).start();
+        	}
+        	else{
+        		  new Thread(new Runnable() {
+      	            @Override public void run() {
+      	                Platform.runLater(new Runnable() {
+      	                    @Override public void run() {
+      	                    	beurt.setVisible(true);
+      	                        beurt.setText("LOSER");
+      	                    }
+      	                });
+
+      	            }}).start();
+        		
+        	}
         }
     }
     public ImageView convertStringToImageView(String s) throws RemoteException{

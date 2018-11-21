@@ -23,7 +23,7 @@ public class ScoreRefreshTask extends Task{
 		while(!isCancelled()){
 			//System.out.println("thread");
 			ActiveGame activeGame=asi.getActiveGame(gameId);
-			if (activeGame!=null) Platform.runLater(() -> gameController.refreshScore(activeGame));
+			//if (activeGame!=null) Platform.runLater(() -> gameController.refreshScore(activeGame));
             wait(2000);
 		}
 		return null;
