@@ -88,6 +88,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     
     int press1=-666;
     int press2=-666;
+    
+    ImageView back;
 
     public GameController() throws RemoteException {
         aanZet = false;
@@ -128,6 +130,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	if(game!=null){
     		game.getBord().print();
     	}
+    	
         setupGame();
 
     	//task=new GameRefreshTask(this);
@@ -170,7 +173,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         matrix=bord.getMatrix();
         for(int i=0;i<game.getBord().getGrootte();i++){
         	for(int j=0;j<game.getBord().getGrootte();j++){
-        		gridpane.add(convertStringToImageView("client/images/batman/back2.jpg"), j, i);
+        		gridpane.add(convertStringToImageView(afbeeldingen.get(18)), j, i);
         	}
         }
         //Volledige speelveld gebruiken
@@ -223,6 +226,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                         System.out.println("hoera");
                         asi.increaseScore(gameId, userName);
                         asi.refreshScore(asi.getActiveGame(gameId));
+                    	beurt.setVisible(true);
+                        beurt.setText("JOUW BEURT");
 
                     } else {
                         //als geen juiste match --> kaarten terug omdraaien
@@ -240,9 +245,10 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                             }
                         });
                         t.start();
+                    	beurt.setVisible(true);
+                        beurt.setText("WACHTEN");
 
                     }
-                    beurt.setText("WACHTEN");
                     firstpress = null;
                     secondpress = null;
                 } else secondpress = null;
@@ -279,7 +285,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
                     if (!matrix[row][col].isOmgedraaid()) {
-                        imageView.setImage(new Image("client/images/batman/back2.jpg"));
+                        imageView.setImage(new Image(afbeeldingen.get(18)));
                     } else {
                         imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
                     }
@@ -432,7 +438,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
              ImageView imageView = (ImageView) n;
              matrix[row][col].setOmgedraaid(!matrix[row][col].isOmgedraaid());
              if (!matrix[row][col].isOmgedraaid()) {
-                 imageView.setImage(new Image("client/images/batman/back2.jpg"));
+            	 imageView.setImage(new Image(afbeeldingen.get(18)));
                  System.out.println("back");
                  System.out.println(matrix[i][j].getWaarde()+"    "+matrix[i][j].isOmgedraaid());
              } else {

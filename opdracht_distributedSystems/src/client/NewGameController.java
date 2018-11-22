@@ -100,6 +100,9 @@ public class NewGameController {
     	if(radioButtonBatman.isSelected()==true){
     		theme=true;
     	}
+    	if(radioButtonPokemon.isSelected()==true){
+    		theme=false;
+    	}
     	voegAfbeeldingenToe(theme);
     	
     	Game game=new Game(size);
@@ -121,26 +124,38 @@ public class NewGameController {
     }
     
     private void voegAfbeeldingenToe(boolean bit) {
+    	String theme=null;
+    	String file=null;
     	if(bit){
-	    	afbeeldingen.put(0,"client/images/batman/0.jpg");
-	    	afbeeldingen.put(1, "client/images/batman/1.jpg");
-	    	afbeeldingen.put(2, "client/images/batman/2.jpg");
-	    	afbeeldingen.put(3, "client/images/batman/3.jpg");
-	    	afbeeldingen.put(4, "client/images/batman/4.jpg");
-	    	afbeeldingen.put(5, "client/images/batman/5.jpg");
-	    	afbeeldingen.put(6, "client/images/batman/6.jpg");
-	    	afbeeldingen.put(7, "client/images/batman/7.jpg");
-	    	afbeeldingen.put(8, "client/images/batman/8.jpg");
-	    	afbeeldingen.put(9, "client/images/batman/9.jpg");
-	    	afbeeldingen.put(10, "client/images/batman/10.jpg");
-	    	afbeeldingen.put(11, "client/images/batman/11.jpg");
-	    	afbeeldingen.put(12, "client/images/batman/12.jpg");
-	    	afbeeldingen.put(13, "client/images/batman/13.jpg");
-	    	afbeeldingen.put(14, "client/images/batman/14.jpg");
-	    	afbeeldingen.put(15, "client/images/batman/15.jpg");
-	    	afbeeldingen.put(16, "client/images/batman/16.jpg");
-	    	afbeeldingen.put(17, "client/images/batman/17.jpg");
+    		theme="batman";
+    		file=".jpg";
     	}
+    	else{
+    		theme="pokemon";
+    		file=".png";
+    	}
+ 
+	    afbeeldingen.put(0,"client/images/"+theme+"/0"+file);
+	    afbeeldingen.put(1, "client/images/"+theme+"/1"+file);
+	    afbeeldingen.put(2, "client/images/"+theme+"/2"+file);
+	    afbeeldingen.put(3, "client/images/"+theme+"/3"+file);
+	    afbeeldingen.put(4, "client/images/"+theme+"/4"+file);
+	    afbeeldingen.put(5, "client/images/"+theme+"/5"+file);
+	    afbeeldingen.put(6, "client/images/"+theme+"/6"+file);
+	    afbeeldingen.put(7, "client/images/"+theme+"/7"+file);
+	    afbeeldingen.put(8, "client/images/"+theme+"/8"+file);
+	    afbeeldingen.put(9, "client/images/"+theme+"/9"+file);
+	    afbeeldingen.put(10, "client/images/"+theme+"/10"+file);
+	    afbeeldingen.put(11, "client/images/"+theme+"/11"+file);
+	    afbeeldingen.put(12, "client/images/"+theme+"/12"+file);
+	    afbeeldingen.put(13, "client/images/"+theme+"/13"+file);
+	    afbeeldingen.put(14, "client/images/"+theme+"/14"+file);
+	    afbeeldingen.put(15, "client/images/"+theme+"/15"+file);
+	    afbeeldingen.put(16, "client/images/"+theme+"/16"+file);
+	    afbeeldingen.put(17, "client/images/"+theme+"/17"+file);
+	    
+	    afbeeldingen.put(18, "client/images/"+theme+"/back"+file);
+
 		
 	}
     
