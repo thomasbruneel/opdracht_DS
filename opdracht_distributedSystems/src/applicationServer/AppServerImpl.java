@@ -283,15 +283,19 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		}
 		if (activeGame != null && gci != null) {
 			activeGame.addSpectateController(gci);
-			/*
+
 			Kaart[][] huidigspel = activeGame.getGame().getBord().getMatrix();
 			int gamesize = activeGame.getGame().getBord().getGrootte();
 			for(int i = 0; i<gamesize; i++){
 				for (int j = 0; j<gamesize; j++){
-					if (huidigspel[i][j].isOmgedraaid()) gci.refreshBord2(i,j);
+					if (huidigspel[i][j].isOmgedraaid()) {
+					    gci.refreshBord2(i,j);
+					    gci.refreshBord2(i,j);
+                    }
 				}
-			}*/ //Geeft nullpointer later debuggen
+			} //doet niet wat het moet
 		}
+
 		
 	}
 

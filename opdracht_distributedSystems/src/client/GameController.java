@@ -101,6 +101,13 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     	beurt.setVisible(false);
     	setupScoreBord();
     	activeGame=asi.getActiveGame(gameId);
+        game=activeGame.getGame();
+        if(game!=null){
+            game.getBord().print();
+        }
+
+        setupGame();
+
         if(!spectateMode){
             asi.addGameController(gameId, this);
         	asi.addPlayer(gameId, userName); // ook initialiseren score
@@ -126,12 +133,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         
     	asi.updateLobby();//refreshen lobby
     	
-    	game=activeGame.getGame();
-    	if(game!=null){
-    		game.getBord().print();
-    	}
-    	
-        setupGame();
+
 
     	//task=new GameRefreshTask(this);
     	//gameRefreshThread = new Thread(task);
@@ -145,6 +147,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 	public void backToLobby() throws RemoteException{
     	//als de creator het spel verlaat, wordt het spel beeindigd
+        //todo: Wanneer speler met de beurt spel verlaat, dan loopt het spel vast
 		if(!spectateMode){
 	    	if(activeGame.getCreator().equals(userName)){
 	    		asi.removeActiveGame(activeGame);
