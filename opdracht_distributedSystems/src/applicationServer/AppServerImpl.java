@@ -8,6 +8,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.List;
 
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
@@ -309,6 +310,17 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     		System.out.println("interface");
     		gci.refreshScore(activeGame);
     	}
+		
+	}
+
+	@Override
+	public List<Leaderbord> getLeaderBord() throws RemoteException {
+		return dsi.getAllLeaderbord();
+	}
+
+	@Override
+	public void increaseWin(String userName) throws RemoteException {
+		dsi.increaseWin(userName);
 		
 	}
 

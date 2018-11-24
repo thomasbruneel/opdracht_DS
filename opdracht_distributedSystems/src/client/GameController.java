@@ -358,7 +358,11 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         	                        beurt.setText("WINNER");
         	                    }
         	                });
-
+        	                try {
+								asi.increaseWin(userName);
+							} catch (RemoteException e) {
+								e.printStackTrace();
+							}
         	            }}).start();
         	}
         	else{

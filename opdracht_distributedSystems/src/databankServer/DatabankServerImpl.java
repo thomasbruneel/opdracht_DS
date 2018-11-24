@@ -9,9 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.Leaderbord;
 import interfaces.DatabankServerInterface;
 
 
@@ -57,7 +60,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	        }
-	
+		createLeaderbord(naam);
 
     }
 	
@@ -187,6 +190,59 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 
     }
 	
+	//---------------------Data Table LeaderBord---------------------
+	@Override
+	public void increaseWin(String userName){
+		String sql="UPDATE Leaderbord SET wins= wins+1 WHERE userName = ?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, userName);
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		
+		
+	}
+	@Override
+	public void createLeaderbord(String userName) {
+		String sql = "INSERT INTO Leaderbord(userName,wins) VALUES(?,?)";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, userName);
+	           pstmt.setInt(2,0);
+
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	
+
+    }
+
+	@Override
+	public List<Leaderbord> getAllLeaderbord() throws RemoteException {
+        String sql = "SELECT * FROM LEADERBORD";
+        List<Leaderbord>leaderbordlist=new ArrayList<Leaderbord>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                String userName=rs.getString("userName");
+                int wins=rs.getInt("wins");
+                
+                Leaderbord leaderbord=new Leaderbord(userName,wins);
+                leaderbordlist.add(leaderbord);
+                                   
+                                   
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+		return leaderbordlist;
+	}
 	
 
 	

@@ -3,8 +3,10 @@ package interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.Leaderbord;
 import client.LobbyController;
 
 public interface AppServerInterface extends Remote{
@@ -48,5 +50,9 @@ public interface AppServerInterface extends Remote{
 	void addSpectateController(String gameId, gameControllerInterface gameController) throws RemoteException;
 
 	void refreshScore(ActiveGame activeGame) throws RemoteException;
+
+	List<Leaderbord> getLeaderBord()throws RemoteException;
+
+	void increaseWin(String userName) throws RemoteException;
 
 }

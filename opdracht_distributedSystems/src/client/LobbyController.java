@@ -204,6 +204,11 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
 		uiTabel.getItems().setAll(games);
 		
 	}
+	
+	public void goToLeaderbord(){
+		openUIScreen("leaderbordUI.fxml");
+		uiLogoutButton.getScene().getWindow().hide();
+	}
     
 
 }

@@ -2,8 +2,10 @@ package interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.Leaderbord;
 
 public interface DatabankServerInterface extends Remote{
 	
@@ -18,6 +20,12 @@ public interface DatabankServerInterface extends Remote{
 	void createActiveGame(ActiveGame activeGame, String string, String string2)throws RemoteException;
 
 	void removeActiveGame(String creator)throws RemoteException;
+
+	void increaseWin(String userName) throws RemoteException;
+
+	void createLeaderbord(String userName) throws RemoteException;
+	
+	List<Leaderbord> getAllLeaderbord() throws RemoteException;
 
 
 }
