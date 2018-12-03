@@ -66,6 +66,7 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     @FXML
     public void initialize() throws RemoteException{
     	//uiTabel.getItems().remove(true);
+    	gameId=null;
     	uiErrorMessage.setVisible(false);
         uiWelcomeUser.setText(userName);
         listActiveGames=asi.getActiveGames();

@@ -154,6 +154,10 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 	    	asi.updateLobby();//refreshen lobby
 
 		}
+		else{
+			openUIScreen("lobbyUI.fxml");
+        	uiButton.getScene().getWindow().hide();
+		}
     	
     }
 	@Override
