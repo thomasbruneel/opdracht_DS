@@ -55,4 +55,8 @@ public interface AppServerInterface extends Remote{
 
 	void increaseWin(String userName) throws RemoteException;
 
+	void leaveGame(String gameId) throws RemoteException;
+
+	void removeLobbyController(LobbyControllerInterface lobbyController)throws RemoteException;
+
 }

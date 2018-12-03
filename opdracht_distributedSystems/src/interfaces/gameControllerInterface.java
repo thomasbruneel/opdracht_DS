@@ -11,4 +11,6 @@ public interface gameControllerInterface extends Remote{
     void refreshBord2(int i,int j) throws RemoteException;
 
 	void refreshScore(ActiveGame ag) throws RemoteException;
+
+	void backToLobby() throws RemoteException;
 }

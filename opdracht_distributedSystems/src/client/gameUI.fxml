@@ -14,7 +14,7 @@
         <items>
           <AnchorPane fx:id="uiGameInfo" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="uiButton" mnemonicParsing="false" onAction="#backToLobby" text="Exit" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="uiButton" mnemonicParsing="false" onAction="#leaveGame" text="Exit" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#setupGame" text="Start Game" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                   <GridPane fx:id="scoreInfo" layoutY="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0">
                     <columnConstraints>

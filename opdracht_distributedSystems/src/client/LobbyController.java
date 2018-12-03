@@ -114,6 +114,12 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     }
     
     public void createNewGame(){
+    	try {
+			asi.removeLobbyController(this);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	openUIScreen("newGameUI.fxml");
     	uiLogoutButton.getScene().getWindow().hide();
     	//task.cancel();
@@ -128,7 +134,12 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
         	voegAfbeeldingenToe(activeGame.getTheme());
         	openUIScreen("gameUI.fxml");
         	uiLogoutButton.getScene().getWindow().hide();
-        	//task.cancel();
+        	try {
+				asi.removeLobbyController(this);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     	else{
     		uiErrorMessage.setText("LOBBY ZIT VOL");

@@ -145,23 +145,30 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     }
 
 
-	public void backToLobby() throws RemoteException{
+	public void leaveGame() throws RemoteException{
     	//als de creator het spel verlaat, wordt het spel beeindigd
         //todo: Wanneer speler met de beurt spel verlaat, dan loopt het spel vast
 		if(!spectateMode){
-	    	if(activeGame.getCreator().equals(userName)){
-	    		asi.removeActiveGame(activeGame);
-	    	}
-	    	else{
-	    		asi.removePlayer(gameId,userName);
-	    	}
-	    	asi.increasePlayerCount(gameId,false);
+	    	asi.leaveGame(gameId);
+			asi.removeActiveGame(activeGame);
 	    	asi.updateLobby();//refreshen lobby
+
 		}
+    	
+    }
+	@Override
+	public void backToLobby() throws RemoteException{
+		System.out.println("somone left the game");
+		 new Thread(new Runnable() {
+	            @Override public void run() {
+	                Platform.runLater(new Runnable() {
+	                    @Override public void run() {
+	                    	openUIScreen("lobbyUI.fxml");
+	                    	uiButton.getScene().getWindow().hide();
 
-
-    	openUIScreen("lobbyUI.fxml");
-    	uiButton.getScene().getWindow().hide();
+	                    }
+	                });
+	            }}).start();
     	
     }
 

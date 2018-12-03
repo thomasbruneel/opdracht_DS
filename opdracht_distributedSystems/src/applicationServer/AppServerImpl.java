@@ -10,6 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.LobbyController;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import interfaces.LobbyControllerInterface;
@@ -321,6 +322,32 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void increaseWin(String userName) throws RemoteException {
 		dsi.increaseWin(userName);
+		
+	}
+
+	@Override
+	public void leaveGame(String gameId) throws RemoteException {
+		ActiveGame activeGame=null;
+		for(ActiveGame ag:activeGames){
+			if(ag.getCreator().equals(gameId)){
+				activeGame=ag;
+                
+			}
+		}
+		for(gameControllerInterface gci:activeGame.getGamecontrollers()){
+			System.out.println("gamecontroller");
+    		gci.backToLobby();
+    	}
+    	
+    	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
+    		gci.backToLobby();
+    	}
+		
+	}
+
+	@Override
+	public void removeLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
+		lobbyControllers.remove(lobbyController);
 		
 	}
 
