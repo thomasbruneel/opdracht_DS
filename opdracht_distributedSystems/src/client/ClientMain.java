@@ -1,5 +1,8 @@
 package client;
 	
+import static client.ClientMain.asi;
+import static client.ClientMain.gameId;
+import static client.ClientMain.spectateMode;
 import static client.ClientMain.token;
 import static client.ClientMain.userName;
 
@@ -50,14 +53,22 @@ public class ClientMain extends Application {
 	
 	@Override
 	public void stop() throws RemoteException{
-    	asi.removeactiveGameById(userName);
+		if(!spectateMode&&gameId!=null){
+	    	asi.leaveGame(gameId);
+			asi.removeactiveGameById(gameId);
+	    	asi.updateLobby();//refreshen lobby
+
+		}
 		userName=token=null;
 	    System.out.println("Stage is closing");
 	}
 	
 	public static void openUIScreen(String screen){
 		AnchorPane root = null;
-		boolean checkToken=TokenGenerator.CheckExpiration(token);
+		boolean checkToken=false;
+		if(token!=null){
+			checkToken=TokenGenerator.CheckExpiration(token);
+		}
 		if(checkToken){
 	        try {
 	            root = FXMLLoader.load(ClientMain.class.getResource(screen));
