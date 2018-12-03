@@ -352,16 +352,17 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         if(punten==((grootte*grootte)/2)){
         	Map<String,Integer>scorelijst=ag.getScore();
         	int highScore=0;
-        	String winnaar=null;
+        	ArrayList<String> winnaar=new ArrayList<String>();
         	for (Map.Entry<String,Integer> entry : scorelijst.entrySet()){
-        		if(highScore<entry.getValue()){
+        		if(highScore<=entry.getValue()){
         			highScore=entry.getValue();
-        			winnaar=entry.getKey();
+        			winnaar.add(entry.getKey());
         		}
 
         	}
-        	if(winnaar.equals(userName)){
-        	       new Thread(new Runnable() {
+        	for(String s:winnaar){
+        		if(s.equals(userName)){
+        			new Thread(new Runnable() {
         	            @Override public void run() {
         	                Platform.runLater(new Runnable() {
         	                    @Override public void run() {
@@ -375,20 +376,24 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 								e.printStackTrace();
 							}
         	            }}).start();
-        	}
-        	else{
-        		  new Thread(new Runnable() {
-      	            @Override public void run() {
-      	                Platform.runLater(new Runnable() {
-      	                    @Override public void run() {
-      	                    	beurt.setVisible(true);
-      	                        beurt.setText("LOSER");
-      	                    }
-      	                });
+        			break;
+        		}
+        		else{
+        			 new Thread(new Runnable() {
+           	            @Override public void run() {
+           	                Platform.runLater(new Runnable() {
+           	                    @Override public void run() {
+           	                    	beurt.setVisible(true);
+           	                        beurt.setText("LOSER");
+           	                    }
+           	                });
 
-      	            }}).start();
-        		
+           	            }}).start();
+        		}
         	}
+        	
+        
+        
         }
     }
     public ImageView convertStringToImageView(String s) throws RemoteException{

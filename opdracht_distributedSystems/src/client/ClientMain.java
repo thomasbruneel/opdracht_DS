@@ -59,6 +59,7 @@ public class ClientMain extends Application {
 	    	asi.updateLobby();//refreshen lobby
 
 		}
+		asi.removeLobbyControllerByID(userName);
 		userName=token=null;
 	    System.out.println("Stage is closing");
 	}

@@ -261,7 +261,10 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.add(lobbyController);
-		System.out.println("aantal lobbycontroller :"+lobbyControllers.size());
+		System.out.println("frodo beggings");
+		for(LobbyControllerInterface lci:lobbyControllers){
+			System.out.println("aap "+lci.getIdController());
+		}
 		
 	}
 
@@ -348,6 +351,21 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void removeLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.remove(lobbyController);
+		
+	}
+
+	@Override
+	public void removeLobbyControllerByID(String id) throws RemoteException {
+		LobbyControllerInterface lobbyControllerInterface=null;
+		for(LobbyControllerInterface lci:lobbyControllers){
+			if(lci.getIdController().equals(id)){
+				lobbyControllerInterface=lci;
+			}
+		}
+		if(lobbyControllerInterface!=null){
+			System.out.println("removed lci met id  "+lobbyControllerInterface.getIdController());
+			lobbyControllers.remove(lobbyControllerInterface);
+		}
 		
 	}
 

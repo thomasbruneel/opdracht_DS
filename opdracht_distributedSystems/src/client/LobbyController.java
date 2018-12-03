@@ -62,11 +62,13 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
    // private LobbyRefreshTask task;
     
     //private boolean running=true;
+    private String idController;
     
     @FXML
     public void initialize() throws RemoteException{
     	//uiTabel.getItems().remove(true);
     	gameId=null;
+    	idController=userName;
     	uiErrorMessage.setVisible(false);
         uiWelcomeUser.setText(userName);
         listActiveGames=asi.getActiveGames();
@@ -221,6 +223,16 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
 		openUIScreen("leaderbordUI.fxml");
 		uiLogoutButton.getScene().getWindow().hide();
 	}
+	@Override
+	public String getIdController() throws RemoteException{
+		return idController;
+	}
+
+	public void setIdController(String idController) {
+		this.idController = idController;
+	}
+	
+	
     
 
 }

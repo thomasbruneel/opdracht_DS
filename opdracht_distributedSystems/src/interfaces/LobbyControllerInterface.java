@@ -11,4 +11,6 @@ public interface LobbyControllerInterface extends Remote {
 	
 	void updateLobby(ArrayList<ActiveGame> games) throws RemoteException;
 
+	String getIdController() throws RemoteException;
+
 }
