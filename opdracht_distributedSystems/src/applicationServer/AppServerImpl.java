@@ -98,7 +98,6 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	
 	@Override
 	public ActiveGame getActiveGame(String id)throws RemoteException {
-		//System.out.println("Opgeroepen");
 		ActiveGame activeGame=null;
     	for(ActiveGame ag:activeGames){
     		if(ag.getCreator().equals(id)){
@@ -261,10 +260,6 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.add(lobbyController);
-		System.out.println("frodo beggings");
-		for(LobbyControllerInterface lci:lobbyControllers){
-			System.out.println("aap "+lci.getIdController());
-		}
 		
 	}
 
@@ -363,7 +358,6 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			}
 		}
 		if(lobbyControllerInterface!=null){
-			System.out.println("removed lci met id  "+lobbyControllerInterface.getIdController());
 			lobbyControllers.remove(lobbyControllerInterface);
 		}
 		
