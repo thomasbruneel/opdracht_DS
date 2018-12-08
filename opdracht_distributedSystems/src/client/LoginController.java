@@ -52,6 +52,8 @@ public class LoginController{
         if(t!=null){
         	token=t;
         	userName=gebruikersNaam;
+        	imagesBatman=asi.getImagesByTheme("batman");
+        	imagesPokemon=asi.getImagesByTheme("pokemon");
         	openUIScreen("lobbyUI.fxml");
         	uiButton.getScene().getWindow().hide();
         }

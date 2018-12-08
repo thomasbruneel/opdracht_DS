@@ -61,4 +61,6 @@ public interface AppServerInterface extends Remote{
 	
 	void removeLobbyControllerByID(String id)throws RemoteException;
 
+	List<byte[]> getImagesByTheme(String theme) throws RemoteException;
+
 }

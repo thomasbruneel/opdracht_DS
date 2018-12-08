@@ -44,6 +44,8 @@ import memoryGame.Kaart;
 import static client.ClientMain.*;
 import static java.lang.Thread.sleep;
 
+import java.io.ByteArrayInputStream;
+
 public class GameController extends UnicastRemoteObject implements gameControllerInterface, Initializable {
 
 	@FXML
@@ -89,7 +91,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     int press1=-666;
     int press2=-666;
     
-    ImageView back;
+    List<byte[]> afbeeldingen;
 
     public GameController() throws RemoteException {
         aanZet = false;
@@ -98,6 +100,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
     @FXML
     public void initialize() throws RemoteException{
+    	
     	beurt.setVisible(false);
     	setupScoreBord();
     	activeGame=asi.getActiveGame(gameId);
@@ -105,7 +108,13 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         if(game!=null){
             game.getBord().print();
         }
-
+        afbeeldingen=new ArrayList<>();
+        if(activeGame.getTheme().equals("batman")){
+        	afbeeldingen=imagesBatman;
+        }
+        else if(activeGame.getTheme().equals("pokemon")){
+        	afbeeldingen=imagesPokemon;
+        }
         setupGame();
 
         if(!spectateMode){
@@ -299,9 +308,9 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 
                     if (!matrix[row][col].isOmgedraaid()) {
-                        imageView.setImage(new Image(afbeeldingen.get(18)));
+                        imageView.setImage(new Image(new ByteArrayInputStream(afbeeldingen.get(18))));
                     } else {
-                        imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
+                        imageView.setImage(new Image(new ByteArrayInputStream(afbeeldingen.get(matrix[row][col].getWaarde()))));
                     }
                 }
     			
@@ -396,8 +405,8 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         
         }
     }
-    public ImageView convertStringToImageView(String s) throws RemoteException{
-    	Image image=new Image(s);
+    public ImageView convertStringToImageView(byte[] byteArray) throws RemoteException{
+    	Image image=new Image(new ByteArrayInputStream(byteArray));
     	ImageView imageView=new ImageView(image);
     	imageView.setFitWidth(width/bord.getGrootte());
     	imageView.setFitHeight(height/bord.getGrootte());
@@ -461,11 +470,11 @@ public class GameController extends UnicastRemoteObject implements gameControlle
              ImageView imageView = (ImageView) n;
              matrix[row][col].setOmgedraaid(!matrix[row][col].isOmgedraaid());
              if (!matrix[row][col].isOmgedraaid()) {
-            	 imageView.setImage(new Image(afbeeldingen.get(18)));
+            	 imageView.setImage(new Image(new ByteArrayInputStream(afbeeldingen.get(18))));
                  System.out.println("back");
                  System.out.println(matrix[i][j].getWaarde()+"    "+matrix[i][j].isOmgedraaid());
              } else {
-                 imageView.setImage(new Image(afbeeldingen.get(matrix[row][col].getWaarde())));
+                 imageView.setImage(new Image(new ByteArrayInputStream(afbeeldingen.get(matrix[row][col].getWaarde()))));
                  System.out.println("front");
              }
 

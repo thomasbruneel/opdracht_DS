@@ -17,14 +17,14 @@ public class ActiveGame implements Serializable {
 	private ArrayList<String>spelers;
 	private Map<String,Integer> score;
 	private boolean changed;
-	boolean theme;
+	String theme;
 	private ArrayList<gameControllerInterface> gamecontrollers;
 	private ArrayList<gameControllerInterface> spectatecontrollers;
 	private int beurt;
 	
 	
 	//constructor
-	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers,Map<String,Integer>score, boolean theme) {
+	public ActiveGame(String creator, int numberPlayers,int maxPlayers, int size,Game game,ArrayList<String>spelers,Map<String,Integer>score, String theme) {
 		this.creator = creator;
 		this.numberPlayers = numberPlayers;
 		this.maxPlayers=maxPlayers;
@@ -110,18 +110,15 @@ public class ActiveGame implements Serializable {
 	}
 	
 
-	public boolean getTheme() {
+	public String getTheme() {
 		return theme;
 	}
 
 
-	public void setTheme(boolean theme) {
+	public void setTheme(String theme) {
 		this.theme = theme;
 	}
 
-    public boolean isTheme() {
-        return theme;
-    }
 
     public ArrayList<gameControllerInterface> getGamecontrollers() {
         return gamecontrollers;

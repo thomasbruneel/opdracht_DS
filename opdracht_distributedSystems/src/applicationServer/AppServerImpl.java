@@ -265,8 +265,9 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	@Override
 	public void updateLobby() throws RemoteException {
-		
+		System.out.println("aantal lobbycontrollers "+lobbyControllers.size());
 		for(LobbyControllerInterface lobbyController:lobbyControllers){
+			System.out.println("lobbycontroller "+lobbyController.getIdController());
 			lobbyController.updateLobby(activeGames);
 		}
 		
@@ -360,6 +361,13 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		if(lobbyControllerInterface!=null){
 			lobbyControllers.remove(lobbyControllerInterface);
 		}
+		
+	}
+	
+	@Override
+	public List<byte[]> getImagesByTheme(String theme) throws RemoteException {
+		return dsi.getImagesByTheme(theme);
+		
 		
 	}
 

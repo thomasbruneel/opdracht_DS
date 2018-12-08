@@ -11,7 +11,9 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import applicationServer.TokenGenerator;
@@ -33,7 +35,9 @@ public class ClientMain extends Application {
 	
 	public static String gameId;
 	
-	public static Map<Integer,String> afbeeldingen=new HashMap();
+	public static List<byte[]> imagesBatman=new ArrayList<>();
+	public static List<byte[]> imagesPokemon=new ArrayList<>();
+	
 	
 	public static boolean spectateMode=false;
 	

@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import applicationServer.ActiveGame;
 import applicationServer.Leaderbord;
@@ -156,16 +158,16 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 
 	@Override
 	public void createActiveGame(ActiveGame activeGame,String bord,String omgedraaid){
-		String sql = "INSERT INTO ActiveGame(creator,numberPlayers,maxPlayers,size,bord,omgedraaid) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO ActiveGame(creator,numberPlayers,maxPlayers,size,theme,bord,omgedraaid) VALUES(?,?,?,?,?,?,?)";
 		try (Connection conn = this.connect();
 	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	           pstmt.setString(1, activeGame.getCreator());
 	           pstmt.setInt(2, activeGame.getNumberPlayers());
 	           pstmt.setInt(3, activeGame.getMaxPlayers());
 	           pstmt.setInt(4,activeGame.getSize());
-	           
-	           pstmt.setString(5,bord);
-	           pstmt.setString(6,omgedraaid);
+	           pstmt.setString(5,activeGame.getTheme());
+	           pstmt.setString(6,bord);
+	           pstmt.setString(7,omgedraaid);
 	         
 	           pstmt.executeUpdate();
 	        } catch (SQLException e) {
@@ -242,6 +244,32 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
             System.out.println(e.getMessage());
         }
 		return leaderbordlist;
+	}
+	
+	//---------------------Data Table images---------------------
+	
+	public List<byte[]> getImagesByTheme(String theme) throws RemoteException{
+		List<byte[]> images=new ArrayList<>();
+	      String sql = "SELECT image FROM images WHERE theme = ?";
+	        List<Leaderbord>leaderbordlist=new ArrayList<Leaderbord>();
+	        try (Connection conn = this.connect();
+	        		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		           	pstmt.setString(1, theme);
+		           	ResultSet rs=pstmt.executeQuery();
+
+	            
+	            // loop through the result set
+	            while (rs.next()) {
+	               images.add(rs.getBytes("image"));
+
+	                                   
+	                                   
+	            }
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	        return images;
+		
 	}
 	
 

@@ -26,6 +26,8 @@ public interface DatabankServerInterface extends Remote{
 	void createLeaderbord(String userName) throws RemoteException;
 	
 	List<Leaderbord> getAllLeaderbord() throws RemoteException;
+	
+	public List<byte[]> getImagesByTheme(String theme) throws RemoteException;
 
 
 }
