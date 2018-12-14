@@ -35,6 +35,18 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		}
 		
 	}
+	// nieuw..
+	public AppServerImpl(int DBportNumber) throws RemoteException{
+		lobbyControllers=new ArrayList<LobbyControllerInterface>();
+		activeGames=new ArrayList<ActiveGame>();
+		Registry registry=LocateRegistry.getRegistry("localhost",DBportNumber);
+		try {
+			dsi=(DatabankServerInterface) registry.lookup("DataBankService");
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	@Override
 	public void register(String naam, String pwd) throws RemoteException {

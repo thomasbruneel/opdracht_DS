@@ -30,7 +30,11 @@ public class Dispatcher {
 			e.printStackTrace();
 		}
 		startDBservers();
+		startAppServer(appServers.get(0));
 	}
+
+
+
 
 
 
@@ -62,6 +66,20 @@ public class Dispatcher {
 			ds.setOnline(true);
 		}
 	
+		
+	}
+	
+
+	private static void startAppServer(AppServer appServer) {
+		try{
+			
+			Registry appRegistry=LocateRegistry.createRegistry(appServer.getPoortnummer());
+			appRegistry.rebind("AppService", new AppServerImpl(appServer.getDBportnummer()));
+			System.out.println("appserver started with portnumber "+appServer.getPoortnummer()+" connected with dbportnumber "+appServer.getDBportnummer());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 
