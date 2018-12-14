@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="769.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dispatcher.DispatcherController">
+   <children>
+      <TableView fx:id="uiTabelDB" layoutX="24.0" layoutY="164.0" prefHeight="434.0" prefWidth="375.0">
+        <columns>
+          <TableColumn fx:id="uiTabelDBIP" prefWidth="108.0" text="IP-ADRES" />
+          <TableColumn fx:id="uiTabelDBPort" prefWidth="130.0" text="PORTNUMBER" />
+            <TableColumn fx:id="uiTabelDBOnline" minWidth="0.0" prefWidth="136.0" text="ONLINE" />
+        </columns>
+      </TableView>
+      <Label layoutX="428.0" layoutY="14.0" text="DISPATCHER">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="158.0" layoutY="133.0" text="DATABANKSERVERS" />
+      <TableView fx:id="uiTabelAPP" layoutX="655.0" layoutY="164.0" prefHeight="442.0" prefWidth="329.0">
+        <columns>
+          <TableColumn fx:id="uiTabelAPPIP" prefWidth="75.0" text="IP-ADRES" />
+          <TableColumn fx:id="uiTabelAPPPort" prefWidth="113.0" text="PORTNUMBER" />
+            <TableColumn fx:id="uiTabelAPPConnectDB" prefWidth="140.0" text="DB-PORTNUMBER" />
+        </columns>
+      </TableView>
+      <Label layoutX="780.0" layoutY="133.0" text="APLICATIONSERVERS" />
+   </children>
+</AnchorPane>

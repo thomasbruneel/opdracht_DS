@@ -1,21 +1,28 @@
 package dispatcher;
 
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import applicationServer.AppServerImpl;
-
-public class DispatcherMain {
-	public static void main(String[]args){
-		try{
-			System.out.println("dispatcher started...");
-			Registry dispatcherRegistry=LocateRegistry.createRegistry(3333);
-			dispatcherRegistry.rebind("DispathcerService", new DispathcherImpl());
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+public class DispatcherMain extends Application {
+		@Override
+		public void start(Stage primaryStage) {
+			try {
+				AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("dispatcherUI.fxml"));
+				Scene scene = new Scene(root,1074,769);
+				primaryStage.setScene(scene);
+				primaryStage.setResizable(false);
+				primaryStage.show();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		
+		public static void main(String[] args) {
+			launch(args);
 		}
+		
 	}
-
-}
+	

@@ -247,7 +247,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	}
 	
 	//---------------------Data Table images---------------------
-	
+	@Override
 	public List<byte[]> getImagesByTheme(String theme) throws RemoteException{
 		List<byte[]> images=new ArrayList<>();
 	      String sql = "SELECT image FROM images WHERE theme = ?";

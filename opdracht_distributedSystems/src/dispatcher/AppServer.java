@@ -5,43 +5,66 @@ import java.io.Serializable;
 import interfaces.AppServerInterface;
 
 public class AppServer implements Serializable {
-	private int ID;
 	private String ipAdres;
 	private int poortnummer;
-	private AppServerInterface asi;
+	
+	private DatabankServer dbserver;
+	private int DBportnummer;
 	
 	
-	public AppServer(int iD, String ipAdres, int poortnummer, AppServerInterface asi) {
-		this.ID = iD;
+	public AppServer(String ipAdres, int poortnummer, DatabankServer dbserver) {
 		this.ipAdres = ipAdres;
 		this.poortnummer = poortnummer;
-		this.asi = asi;
+		this.dbserver=dbserver;
+		this.DBportnummer=dbserver.getPoortnummer();
 	}
-	
-	public int getID() {
-		return ID;
-	}
-	public void setID(int iD) {
-		this.ID = iD;
-	}
+
+
 	public String getIpAdres() {
 		return ipAdres;
 	}
+
+
 	public void setIpAdres(String ipAdres) {
 		this.ipAdres = ipAdres;
 	}
+
+
 	public int getPoortnummer() {
 		return poortnummer;
 	}
+
+
 	public void setPoortnummer(int poortnummer) {
 		this.poortnummer = poortnummer;
 	}
-	public AppServerInterface getAsi() {
-		return asi;
+
+
+	public DatabankServer getDbserver() {
+		return dbserver;
 	}
-	public void setAsi(AppServerInterface asi) {
-		this.asi = asi;
+
+
+	public void setDbserver(DatabankServer dbserver) {
+		this.dbserver = dbserver;
 	}
+
+
+	public int getDBportnummer() {
+		return DBportnummer;
+	}
+
+
+	public void setDBportnummer(int dBportnummer) {
+		DBportnummer = dBportnummer;
+	}
+	
+	
+	
+	
+	
+	
+
 	
 	
 	

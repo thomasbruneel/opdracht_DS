@@ -6,25 +6,17 @@ import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 
 public class DatabankServer implements Serializable {
-	private int ID;
 	private String ipAdres;
 	private int poortnummer;
-	private DatabankServerInterface dsi;
+	private boolean online;
 	
 	
-	public DatabankServer(int iD, String ipAdres, int poortnummer, DatabankServerInterface dsi) {
-		this.ID = iD;
+	public DatabankServer(String ipAdres, int poortnummer) {
 		this.ipAdres = ipAdres;
 		this.poortnummer = poortnummer;
-		this.dsi = dsi;
+		this.online=false;
 	}
 	
-	public int getID() {
-		return ID;
-	}
-	public void setID(int iD) {
-		this.ID = iD;
-	}
 	public String getIpAdres() {
 		return ipAdres;
 	}
@@ -37,15 +29,15 @@ public class DatabankServer implements Serializable {
 	public void setPoortnummer(int poortnummer) {
 		this.poortnummer = poortnummer;
 	}
-	public DatabankServerInterface getDsi() {
-		return dsi;
+
+	public boolean isOnline() {
+		return online;
 	}
-	public void setDsi(DatabankServerInterface dsi) {
-		this.dsi = dsi;
+
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
-	
-	
-	
-	
+
+
 
 }
