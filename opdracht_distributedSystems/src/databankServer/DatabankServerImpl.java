@@ -23,7 +23,6 @@ import java.util.Map;
 import applicationServer.ActiveGame;
 import applicationServer.Leaderbord;
 import client.User;
-import com.sun.corba.se.spi.activation.Server;
 import interfaces.DatabankServerInterface;
 import memoryGame.Kaart;
 
@@ -32,6 +31,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	BCrypt bcrypt;
 	List<DatabankServerInterface> databanken = new ArrayList<>();
 	int id;
+	int counter=0;
 
 	List<ActiveGame> activeGames_updateQueue = new ArrayList<>();
 	List<User> user_updateQueue = new ArrayList<>();
@@ -393,5 +393,15 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
             System.out.println(e.getMessage());
         }
     }
+	@Override
+	public void aanmelden() throws RemoteException {
+		counter++;
+	}
+	@Override
+	public int getCount() throws RemoteException {
+		return counter;
+	}
+	
+	
 
 }

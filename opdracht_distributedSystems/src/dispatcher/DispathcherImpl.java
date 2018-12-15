@@ -45,7 +45,7 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 			System.out.println("make new server");
 			int newPortNumber= Constanten.APPSERVER_POORTRANGE_START+appCounter;
 			appCounter++;
-			int newDbportNumber=appServers.get(appServers.size()-1).getDBportnummer();  //TODO: loadbalancing
+			int newDbportNumber=findDBport();  //TODO: loadbalancing
 			appServers.add(new AppServer("localhost", newPortNumber, newDbportNumber));
 			
 			String[] args = new String[2];
@@ -59,6 +59,22 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 		return appServers.get(asis.size()-1).getPoortnummer();
 	}
 	
+	private int findDBport() throws RemoteException, NotBoundException {	//loadbalancing
+		int dbport=4000;
+		int max=Integer.MAX_VALUE;
+		for(DatabankServer ds:databankServers){
+			Registry reg = LocateRegistry.getRegistry(ds.getIpAdres(), ds.getPoortnummer());
+	        DatabankServerInterface dsimpl = (DatabankServerInterface) reg.lookup("DataBankService");
+	        if(dsimpl.getCount()<max){
+	        	max=dsimpl.getCount();
+	        	dbport=ds.getPoortnummer();
+	        }
+	        
+		}
+	
+		return dbport;
+	}
+
 	@Override
 	public void addAsi(AppServerInterface asi) throws RemoteException {
 		asis.add(asi);
