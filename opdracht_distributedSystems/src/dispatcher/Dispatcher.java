@@ -9,7 +9,9 @@ import java.util.List;
 
 import Constanten.Constanten;
 import applicationServer.AppServerImpl;
+import applicationServer.AppServerMain;
 import databankServer.DatabankServerImpl;
+import databankServer.DatabankServerMain;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import interfaces.DispatcherInterface;
@@ -68,9 +70,12 @@ public class Dispatcher {
 		int id=0;
 		for(DatabankServer ds:databankServers){
 			try{
-				
-				Registry dataBankRegistry=LocateRegistry.createRegistry(ds.getPoortnummer());
-				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(dBcounter++));
+				String[] args = new String[2];
+	            args[0] = String.valueOf(ds.getPoortnummer());
+	            args[1] = String.valueOf(dBcounter++);
+				//Registry dataBankRegistry=LocateRegistry.createRegistry(ds.getPoortnummer());
+				//dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(dBcounter++));
+	            DatabankServerMain.main(args);
 				System.out.println("dataserver started with portnumber "+ds.getPoortnummer());
 			}
 			catch(Exception e){
@@ -111,9 +116,12 @@ public class Dispatcher {
 
 	private static void startAppServer(AppServer appServer) throws Exception {
 		try{
-			
-			Registry appRegistry=LocateRegistry.createRegistry(appServer.getPoortnummer());
-			appRegistry.rebind("AppService", new AppServerImpl(appServer.getDBportnummer()));
+			String[] args = new String[2];
+            args[0] = String.valueOf(appServer.getPoortnummer());
+            args[1] = String.valueOf(appServer.getDBportnummer());
+			//Registry appRegistry=LocateRegistry.createRegistry(appServer.getPoortnummer());
+			//appRegistry.rebind("AppService", new AppServerImpl(appServer.getDBportnummer()));
+            AppServerMain.main(args);
 			System.out.println("appserver started with portnumber "+appServer.getPoortnummer()+" connected with dbportnumber "+appServer.getDBportnummer());
 		}
 		catch(Exception e){
