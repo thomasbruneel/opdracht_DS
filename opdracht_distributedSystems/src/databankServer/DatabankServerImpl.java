@@ -421,7 +421,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	}
     @Override
     public void persistActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException {
-        String sql = "INSERT INTO ActiveGameInfo(creator,numberPlayers,maxPlayers,appServerId) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO ActiveGameInfo(creator,numberPlayers,maxPlayers,size,appServerId) VALUES(?,?,?,?,?)";
 
     
 
