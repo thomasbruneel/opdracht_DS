@@ -7,6 +7,8 @@ public interface DispatcherInterface extends Remote{
 	
 
 	int getPortNumberAppServer() throws RemoteException;
+
+	void addAsi(AppServerInterface asi) throws RemoteException;
 	
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import Constanten.Constanten;
 import applicationServer.AppServerImpl;
 import databankServer.DatabankServerImpl;
+import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import interfaces.DispatcherInterface;
 
@@ -21,10 +22,13 @@ public class Dispatcher {
 	
 	public static DispathcherImpl dispathcherImpl;
 	
+	public static List<AppServerInterface> asis=new ArrayList<>();
 	
 	
 	
-	public static void initDispatcher() throws RemoteException{
+	
+	public static void initDispatcher() throws Exception{
+		
 
 		createDBservers();
 		createAppServer();
@@ -106,7 +110,7 @@ public class Dispatcher {
 	}
 	
 
-	private static void startAppServer(AppServer appServer) {
+	private static void startAppServer(AppServer appServer) throws Exception {
 		try{
 			
 			Registry appRegistry=LocateRegistry.createRegistry(appServer.getPoortnummer());
@@ -116,6 +120,17 @@ public class Dispatcher {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		try {
+			Registry reg = LocateRegistry.getRegistry(appServer.getIpAdres(), appServer.getPoortnummer());
+			asis.add((AppServerInterface) reg.lookup("AppService"));
+			
+			dispathcherImpl.addAsi((AppServerInterface) reg.lookup("AppService"));
+		} catch (RemoteException | NotBoundException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 

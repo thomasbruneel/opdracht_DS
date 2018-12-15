@@ -58,13 +58,13 @@ public class DispatcherController extends UnicastRemoteObject implements Seriali
     @FXML
     public void initialize() throws Exception{
     		dispatcher.initDispatcher();
-    		updateTAbles();
+    		updateTables();
 
     }
 
 
 
-	private void updateTAbles() {
+	private void updateTables() {
 
         uiTabelDB.getItems().setAll(dispatcher.getDatabankServers());
         uiTabelDBIP.setCellValueFactory(new PropertyValueFactory<>("ipAdres"));
@@ -77,14 +77,21 @@ public class DispatcherController extends UnicastRemoteObject implements Seriali
         uiTabelAPPConnectDB.setCellValueFactory(new PropertyValueFactory<>("DBportnummer"));
 		
 	}
+
+   
+	
+	public void putDBOffline(){
+		DatabankServer ds=uiTabelDB.getSelectionModel().getSelectedItem();
+		ds.setOnline(!ds.isOnline());
+		updateTables();
+		
+	}
+	
 	
 	
 	public void refreshen(){
-		updateTAbles();
+		updateTables();
 	}
-   
-	
-	
-    
+
 
 }
