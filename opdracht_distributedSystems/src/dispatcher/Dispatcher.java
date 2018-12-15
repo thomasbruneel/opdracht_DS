@@ -20,7 +20,7 @@ public class Dispatcher {
 	public static List<AppServer> appServers;
 	public static List<DatabankServer> databankServers;
 	static int dBcounter = 0;
-	int appcounter = 0;
+	static int appcounter = 0;
 	
 	public static DispathcherImpl dispathcherImpl;
 	
@@ -34,7 +34,7 @@ public class Dispatcher {
 
 		createDBservers();
 		createAppServer();
-		dispathcherImpl=new DispathcherImpl(appServers, databankServers);
+		dispathcherImpl=new DispathcherImpl(appServers, databankServers, dBcounter, appcounter);
 		try{
 			System.out.println("dispatcher started...");
 			Registry dispatcherRegistry=LocateRegistry.createRegistry(9999);
@@ -63,7 +63,7 @@ public class Dispatcher {
 	private static void createAppServer() {
 		appServers=new ArrayList<>();
 		appServers.add(new AppServer("localhost",5000,databankServers.get(0).getPoortnummer()));
-		
+		appcounter++;
 	}
 
 	private static void startDBservers() {

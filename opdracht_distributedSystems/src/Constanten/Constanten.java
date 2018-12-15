@@ -10,7 +10,7 @@ public class Constanten {
     public static final int DATABANK_POORTRANGE_EIND = 6700;
 
     public static final String APPSERVER_IP = "localhost";
-    public static final int APPSERVER_POORTRANGE_START = 6707;
+    public static final int APPSERVER_POORTRANGE_START = 5000;
     public static final int APPSERVER_POORTRANGE_EIND = 6777;       //=> max 70 appservers
 
 

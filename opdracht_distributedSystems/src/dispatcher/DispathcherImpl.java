@@ -9,6 +9,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import Constanten.Constanten;
 import applicationServer.ActiveGame;
 import applicationServer.AppServerMain;
 import interfaces.AppServerInterface;
@@ -21,11 +22,17 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 	public List<DatabankServer> databankServers;
 	
 	public List<AppServerInterface> asis;
+
+	int dbCounter;
+	int appCounter;
+
 	
-	public DispathcherImpl(List<AppServer> appServers,List<DatabankServer> databankServers) throws RemoteException{
+	public DispathcherImpl(List<AppServer> appServers,List<DatabankServer> databankServers, int dBcounter, int appCounter) throws RemoteException{
 		this.appServers=appServers;
 		this.databankServers=databankServers;
 		asis=new ArrayList<>();
+		this.dbCounter = dBcounter;
+		this.appCounter = appCounter;
 	}
 	
 	@Override
@@ -36,8 +43,9 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 		System.out.println("aantal games op laatste appserver "+asis.get(asis.size()-1).getActiveGames().size());
 		if(asis.get(asis.size()-1).getActiveGames().size()>0){
 			System.out.println("make new server");
-			int newPortNumber=appServers.get(appServers.size()-1).getPoortnummer()+1;
-			int newDbportNumber=appServers.get(appServers.size()-1).getDBportnummer();
+			int newPortNumber= Constanten.APPSERVER_POORTRANGE_START+appCounter;
+			appCounter++;
+			int newDbportNumber=appServers.get(appServers.size()-1).getDBportnummer();  //TODO: loadbalancing
 			appServers.add(new AppServer("localhost", newPortNumber, newDbportNumber));
 			
 			String[] args = new String[2];
