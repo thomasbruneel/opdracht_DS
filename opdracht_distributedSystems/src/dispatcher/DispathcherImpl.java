@@ -16,10 +16,21 @@ import interfaces.DispatcherInterface;
 
 public class DispathcherImpl extends UnicastRemoteObject implements DispatcherInterface,Serializable {
 	
+	public static List<AppServer> appServers;
+	public static List<DatabankServer> databankServers;
 	
-	public DispathcherImpl() throws RemoteException{
+	
+	public DispathcherImpl(List<AppServer> appServers,List<DatabankServer> databankServers) throws RemoteException{
+		this.appServers=appServers;
+		this.databankServers=databankServers;
 	
 	}
+	
+	@Override
+	public int getPortNumberAppServer() throws RemoteException {
+		return appServers.get(appServers.size()-1).getPoortnummer();
+	} 
+
 	
 
 	

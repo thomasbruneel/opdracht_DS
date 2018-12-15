@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 import applicationServer.TokenGenerator;
+import dispatcher.DispathcherImpl;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
+import interfaces.DispatcherInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -136,16 +138,16 @@ public class ClientMain extends Application {
 	
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		System.out.println("client started...");
+		Registry registry=LocateRegistry.getRegistry("localhost",9999);
+		DispatcherInterface disImpl=(DispatcherInterface) registry.lookup("DispathcerService");
 		
-    	try {
-    		System.out.println("client started...");
-    		Registry registry=LocateRegistry.getRegistry("localhost",1111);
-			asi=(AppServerInterface) registry.lookup("AppService");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		int appPortnumber=disImpl.getPortNumberAppServer();
+		
+		Registry registry2=LocateRegistry.getRegistry("localhost",appPortnumber);
+		asi=(AppServerInterface) registry2.lookup("AppService");
+		
 		launch(args);
 	}
 }

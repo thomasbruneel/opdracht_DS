@@ -19,16 +19,20 @@ public class Dispatcher {
 	static int dBcounter = 0;
 	int appcounter = 0;
 	
+	public static DispathcherImpl dispathcherImpl;
 	
 	
-	public static void initDispatcher(){
+	
+	
+	public static void initDispatcher() throws RemoteException{
+
 		createDBservers();
 		createAppServer();
-		
+		dispathcherImpl=new DispathcherImpl(appServers, databankServers);
 		try{
 			System.out.println("dispatcher started...");
 			Registry dispatcherRegistry=LocateRegistry.createRegistry(9999);
-			dispatcherRegistry.rebind("DispathcerService", new DispathcherImpl());
+			dispatcherRegistry.rebind("DispathcerService", dispathcherImpl);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -57,17 +61,23 @@ public class Dispatcher {
 	}
 
 	private static void startDBservers() {
+		int id=0;
 		for(DatabankServer ds:databankServers){
 			try{
 				
 				Registry dataBankRegistry=LocateRegistry.createRegistry(ds.getPoortnummer());
+<<<<<<< HEAD
 				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(dBcounter++));
+=======
+				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(id));
+>>>>>>> 65f09125c0d0088cb213ad392038bad040ec3526
 				System.out.println("dataserver started with portnumber "+ds.getPoortnummer());
 			}
 			catch(Exception e){
 				e.printStackTrace();
 			}
 			ds.setOnline(true);
+			id++;
 		}
 
         for(DatabankServer ds : databankServers){

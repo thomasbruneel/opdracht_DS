@@ -2,6 +2,8 @@ package databankServer;
 
 import java.io.*;
 import java.rmi.NotBoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -37,8 +39,8 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 		File file = new File("databasepath.txt");
 		String url = null;
 		try {
-			 BufferedReader br = new BufferedReader(new FileReader(file));
-			url = br.readLine();
+			url=Files.readAllLines(Paths.get("databasepath.txt")).get(id);
+			System.out.println(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

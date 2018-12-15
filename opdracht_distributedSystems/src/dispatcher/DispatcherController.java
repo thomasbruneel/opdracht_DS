@@ -56,7 +56,7 @@ public class DispatcherController extends UnicastRemoteObject implements Seriali
 
     
     @FXML
-    public void initialize() throws RemoteException{
+    public void initialize() throws Exception{
     		dispatcher.initDispatcher();
     		updateTAbles();
 
@@ -76,6 +76,11 @@ public class DispatcherController extends UnicastRemoteObject implements Seriali
         uiTabelAPPPort.setCellValueFactory(new PropertyValueFactory<>("poortnummer"));
         uiTabelAPPConnectDB.setCellValueFactory(new PropertyValueFactory<>("DBportnummer"));
 		
+	}
+	
+	
+	public void refreshen(){
+		updateTAbles();
 	}
    
 	
