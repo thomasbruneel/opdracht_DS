@@ -397,5 +397,10 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
         return id;
     }
 
+    @Override
+    public int getActiveGamessize() throws RemoteException {
+        return activeGames.size();
+    }
+
 
 }

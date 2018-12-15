@@ -12,6 +12,7 @@ public class Constanten {
     public static final String APPSERVER_IP = "localhost";
     public static final int APPSERVER_POORTRANGE_START = 5000;
     public static final int APPSERVER_POORTRANGE_EIND = 6777;       //=> max 70 appservers
+    public static final int ACTIVEGAMES_PER_APPSERVER = 1;
 
 
 

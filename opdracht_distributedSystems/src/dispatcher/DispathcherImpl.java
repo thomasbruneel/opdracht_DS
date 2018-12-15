@@ -38,10 +38,21 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 	@Override
 	public int getPortNumberAppServer() throws RemoteException, NotBoundException {
 		for (AppServerInterface asi:asis){
-			System.out.println("aantal games op server "+asi.getActiveGames().size());
+			System.out.println("aantal games op server "+asi.getActiveGames().size());  //for debugging
 		}
-		System.out.println("aantal games op laatste appserver "+asis.get(asis.size()-1).getActiveGames().size());
-		if(asis.get(asis.size()-1).getActiveGames().size()>0){
+
+		AppServerInterface a = asis.get(0);
+        int leastGames = a.getActiveGamessize();
+        if (asis.size() > 1) {
+            for (AppServerInterface aa : asis.subList(1, asis.size() - 1)) {
+                if (aa.getActiveGamessize()<leastGames){
+                    leastGames = aa.getActiveGamessize();
+                    a = aa;
+                }
+            }
+        }
+
+		if(leastGames>=Constanten.ACTIVEGAMES_PER_APPSERVER){
 			System.out.println("make new server");
 			int newPortNumber= Constanten.APPSERVER_POORTRANGE_START+appCounter;
 			appCounter++;
@@ -55,8 +66,11 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
             
             Registry reg = LocateRegistry.getRegistry("localhost", newPortNumber);
 			asis.add((AppServerInterface) reg.lookup("AppService"));
-		}
-		return appServers.get(asis.size()-1).getPoortnummer();
+            return appServers.get(asis.size()-1).getPoortnummer();
+		} else {
+		    return a.getServerid();
+        }
+
 	}
 	
 	private int findDBport() throws RemoteException, NotBoundException {	//loadbalancing

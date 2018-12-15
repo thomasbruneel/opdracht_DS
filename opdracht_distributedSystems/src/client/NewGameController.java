@@ -112,7 +112,7 @@ public class NewGameController {
     	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers,score,theme);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
     	asi.addActiveGame(activeGame);
     	
-    	asi.addActiveGameInfo(new ActiveGameInfo(userName, 0, players,size, 1220));
+    	asi.addActiveGameInfo(new ActiveGameInfo(userName, 0, players,size, asi.getServerid()));
     	
 
     	gameId=userName;
