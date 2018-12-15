@@ -208,21 +208,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 
 
     }
-	
-	@Override
-	public void removeActiveGame(String creator){
-		String sql = "DELETE FROM ActiveGame WHERE creator=?";
-		try (Connection conn = this.connect();
-	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	          pstmt.setString(1, creator);
-	         
-	           pstmt.executeUpdate();
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	        }
-	
 
-    }
 	
 
 	
@@ -410,13 +396,14 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	//-------------------- GAMEINFO-----------------------------
 	@Override
 	public void createActiveGameInfo(ActiveGameInfo activeGameInfo) {
-		String sql = "INSERT INTO ActiveGameInfo(creator,numberPlayers,maxPlayers,appServerId) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO ActiveGameInfo(creator,numberPlayers,maxPlayers,size,appServerId) VALUES(?,?,?,?,?)";
 		try (Connection conn = this.connect();
 	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	           pstmt.setString(1, activeGameInfo.getCreator());
 	           pstmt.setInt(2, activeGameInfo.getNumberPlayers());
 	           pstmt.setInt(3, activeGameInfo.getMaxPlayers());
-	           pstmt.setInt(4,activeGameInfo.getAppServerId());
+	           pstmt.setInt(4, activeGameInfo.getSize());
+	           pstmt.setInt(5,activeGameInfo.getAppServerId());
 	        
 	         
 	           pstmt.executeUpdate();
@@ -424,7 +411,33 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	            System.out.println(e.getMessage());
 	        }
 		
+		 for(DatabankServerInterface d : databanken)
+	            try {
+	                d.persistActiveGameInfo(activeGameInfo);
+	            } catch (RemoteException e) {
+	                e.printStackTrace();
+	            }
+		
 	}
+    @Override
+    public void persistActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException {
+        String sql = "INSERT INTO ActiveGameInfo(creator,numberPlayers,maxPlayers,appServerId) VALUES(?,?,?,?)";
+
+    
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, activeGameInfo.getCreator());
+            pstmt.setInt(2, activeGameInfo.getNumberPlayers());
+            pstmt.setInt(3, activeGameInfo.getMaxPlayers());
+            pstmt.setInt(4, activeGameInfo.getMaxPlayers());
+            pstmt.setInt(5,activeGameInfo.getAppServerId());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 	
 	@Override
 	public ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException {
@@ -438,8 +451,9 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
             	String creator=rs.getString("creator");
             	int numberPlayers=Integer.parseInt(rs.getString("numberPlayers"));
             	int maxPlayers=Integer.parseInt(rs.getString("maxPlayers"));
+            	int size=Integer.parseInt(rs.getString("size"));
             	int appServerId=Integer.parseInt(rs.getString("appServerId"));
-            	ActiveGameInfo activeGameInfo=new ActiveGameInfo(creator, numberPlayers, maxPlayers, appServerId);
+            	ActiveGameInfo activeGameInfo=new ActiveGameInfo(creator, numberPlayers, maxPlayers,size, appServerId);
             	activeGameInfos.add(activeGameInfo);                                      
             }
         } catch (SQLException e) {
@@ -447,6 +461,44 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
         }
 		return activeGameInfos;
     }
+	
+	@Override
+	public void removeActiveGameInfo(String creator) throws RemoteException{
+		String sql = "DELETE FROM ActiveGameInfo WHERE creator=?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	          pstmt.setString(1, creator);
+	         
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+
+		 for(DatabankServerInterface d : databanken)
+	            try {
+	                d.removeActiveGameInfoToOtherDbs(creator);
+	            } catch (RemoteException e) {
+	                e.printStackTrace();
+	            }
+	           
+    }
+	
+	@Override
+	public void removeActiveGameInfoToOtherDbs(String creator) throws RemoteException{
+		String sql = "DELETE FROM ActiveGameInfo WHERE creator=?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	          pstmt.setString(1, creator);
+	         
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+
+
+	           
+    }
+	
 
 
 	

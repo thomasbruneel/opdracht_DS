@@ -22,8 +22,6 @@ public interface DatabankServerInterface extends Remote{
 
 	void createActiveGame(ActiveGame activeGame)throws RemoteException;
 
-	void removeActiveGame(String creator)throws RemoteException;
-
 	void increaseWin(String userName) throws RemoteException;
 
 	void createLeaderbord(String userName) throws RemoteException;
@@ -56,5 +54,11 @@ public interface DatabankServerInterface extends Remote{
 	ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException;
 
 	void createActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException;
+
+	void persistActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException;
+
+	void removeActiveGameInfoToOtherDbs(String creator) throws RemoteException;
+	
+	void removeActiveGameInfo(String creator)throws RemoteException;
 
 }
