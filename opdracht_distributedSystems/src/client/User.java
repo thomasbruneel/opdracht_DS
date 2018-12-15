@@ -13,8 +13,14 @@ public class User {
         this.naam = naam;
     }
 
+    public User(User user) {
+        naam = user.naam;
+        wachtwoord = user.wachtwoord;
+    }
+
     public String getWachtwoord() {
         return wachtwoord;
+
     }
 
     public void setWachtwoord(String wachtwoord) {

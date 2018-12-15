@@ -6,6 +6,7 @@ import java.util.List;
 
 import applicationServer.ActiveGame;
 import applicationServer.Leaderbord;
+import client.User;
 
 public interface DatabankServerInterface extends Remote{
 	
@@ -34,4 +35,14 @@ public interface DatabankServerInterface extends Remote{
 	String pingAnderen() throws RemoteException;
 
 	String pingResult() throws RemoteException;
+
+	void verwerkQueues() throws RemoteException;
+
+	List<User> getUserQueue() throws RemoteException;
+
+	List<ActiveGame> getActivegames() throws RemoteException;
+
+	void clearQueues() throws RemoteException;
+
+	String getid() throws  RemoteException;
 }

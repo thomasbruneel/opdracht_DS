@@ -94,13 +94,12 @@ public class Dispatcher {
             }
         }
 
-        //connectie testen
         for(DatabankServer ds : databankServers) {
             Registry reg = null;
             try {
                 reg = LocateRegistry.getRegistry(ds.getIpAdres(), ds.getPoortnummer());
                 DatabankServerInterface dsimpl = (DatabankServerInterface) reg.lookup("DataBankService");
-                System.out.println("Ping from " + dsimpl.pingResult() + ": " + dsimpl.pingAnderen());
+                dsimpl.verwerkQueues();
 
             } catch (RemoteException | NotBoundException e) {
                 e.printStackTrace();
