@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.AppServerMain;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
 import interfaces.DispatcherInterface;
@@ -30,7 +31,7 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 	}
 	
 	@Override
-	public int getPortNumberAppServer() throws RemoteException {
+	public int getPortNumberAppServer() throws RemoteException, NotBoundException {
 		for (AppServerInterface asi:asis){
 			System.out.println("aantal games op server "+asi.getActiveGames().size());
 		}
@@ -40,6 +41,14 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 			int newPortNumber=appServers.get(appServers.size()-1).getPoortnummer()+1;
 			int newDbportNumber=appServers.get(appServers.size()-1).getDBportnummer();
 			appServers.add(new AppServer("localhost", newPortNumber, newDbportNumber));
+			
+			String[] args = new String[2];
+            args[0] = String.valueOf(newPortNumber);
+            args[1] = String.valueOf(newDbportNumber);
+            AppServerMain.main(args);
+            
+            Registry reg = LocateRegistry.getRegistry("localhost", newPortNumber);
+			asis.add((AppServerInterface) reg.lookup("AppService"));
 		}
 		return appServers.get(asis.size()-1).getPoortnummer();
 	}
