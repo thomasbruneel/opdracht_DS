@@ -66,11 +66,7 @@ public class Dispatcher {
 			try{
 				
 				Registry dataBankRegistry=LocateRegistry.createRegistry(ds.getPoortnummer());
-<<<<<<< HEAD
 				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(dBcounter++));
-=======
-				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(id));
->>>>>>> 65f09125c0d0088cb213ad392038bad040ec3526
 				System.out.println("dataserver started with portnumber "+ds.getPoortnummer());
 			}
 			catch(Exception e){
