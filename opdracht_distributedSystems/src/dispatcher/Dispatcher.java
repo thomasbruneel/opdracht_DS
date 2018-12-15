@@ -62,7 +62,7 @@ public class Dispatcher {
 	
 	private static void createAppServer() {
 		appServers=new ArrayList<>();
-		appServers.add(new AppServer("localhost",5000,databankServers.get(0)));
+		appServers.add(new AppServer("localhost",5000,databankServers.get(0).getPoortnummer()));
 		
 	}
 
@@ -145,26 +145,14 @@ public class Dispatcher {
 
 
 	public static List<AppServer> getAppServers() {
-		return appServers;
+		return dispathcherImpl.getAppServers();
 	}
-
-
-
-	public static void setAppServers(List<AppServer> appServers) {
-		Dispatcher.appServers = appServers;
-	}
-
-
 
 	public static List<DatabankServer> getDatabankServers() {
-		return databankServers;
+		return dispathcherImpl.getDatabankServers();
 	}
 
 
-
-	public static void setDatabankServers(List<DatabankServer> databankServers) {
-		Dispatcher.databankServers = databankServers;
-	}
 	
 	
 

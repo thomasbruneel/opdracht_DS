@@ -34,7 +34,14 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 		for (AppServerInterface asi:asis){
 			System.out.println("aantal games op server "+asi.getActiveGames().size());
 		}
-		return appServers.get(appServers.size()-1).getPoortnummer();
+		System.out.println("aantal games op laatste appserver "+asis.get(asis.size()-1).getActiveGames().size());
+		if(asis.get(asis.size()-1).getActiveGames().size()>0){
+			System.out.println("make new server");
+			int newPortNumber=appServers.get(appServers.size()-1).getPoortnummer()+1;
+			int newDbportNumber=appServers.get(appServers.size()-1).getDBportnummer();
+			appServers.add(new AppServer("localhost", newPortNumber, newDbportNumber));
+		}
+		return appServers.get(asis.size()-1).getPoortnummer();
 	}
 
 	
