@@ -16,17 +16,15 @@ import interfaces.DispatcherInterface;
 
 public class DispathcherImpl extends UnicastRemoteObject implements DispatcherInterface,Serializable {
 	
-	public static List<AppServer> appServers;
-	public static List<DatabankServer> databankServers;
+	public List<AppServer> appServers;
+	public List<DatabankServer> databankServers;
 	
-	public static List<AppServerInterface> asis;
-	
+	public List<AppServerInterface> asis;
 	
 	public DispathcherImpl(List<AppServer> appServers,List<DatabankServer> databankServers) throws RemoteException{
 		this.appServers=appServers;
 		this.databankServers=databankServers;
 		asis=new ArrayList<>();
-	
 	}
 	
 	@Override
@@ -36,51 +34,34 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 		}
 		return appServers.get(appServers.size()-1).getPoortnummer();
 	}
-
 	
 	@Override
 	public void addAsi(AppServerInterface asi) throws RemoteException {
 		asis.add(asi);
-	} 
+	}
 	
-	
-	
-	
-	public static List<AppServer> getAppServers() {
+	public List<AppServer> getAppServers() {
 		return appServers;
 	}
 
-	public static void setAppServers(List<AppServer> appServers) {
-		DispathcherImpl.appServers = appServers;
+	public void setAppServers(List<AppServer> appServers) {
+		this.appServers = appServers;
 	}
 
-	public static List<DatabankServer> getDatabankServers() {
+	public List<DatabankServer> getDatabankServers() {
 		return databankServers;
 	}
 
-	public static void setDatabankServers(List<DatabankServer> databankServers) {
-		DispathcherImpl.databankServers = databankServers;
+	public void setDatabankServers(List<DatabankServer> databankServers) {
+		this.databankServers = databankServers;
 	}
 
-	public static List<AppServerInterface> getAsis() {
+	public List<AppServerInterface> getAsis() {
 		return asis;
 	}
 
-	public static void setAsis(List<AppServerInterface> asis) {
-		DispathcherImpl.asis = asis;
+	public void setAsis(List<AppServerInterface> asis) {
+		this.asis = asis;
 	}
-
-
-
-	
-
-	
-	
-	
-	
-
-	
-
-
 
 }
