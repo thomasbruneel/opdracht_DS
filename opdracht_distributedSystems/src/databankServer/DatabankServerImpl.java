@@ -23,6 +23,7 @@ import java.util.Map;
 import applicationServer.ActiveGame;
 import applicationServer.Leaderbord;
 import client.User;
+import com.sun.corba.se.spi.activation.Server;
 import interfaces.DatabankServerInterface;
 import memoryGame.Kaart;
 
@@ -320,5 +321,40 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
         return String.valueOf(id);
     }
 
+    @Override
+    public void verwerkQueues() throws RemoteException {
+        for(DatabankServerInterface di: databanken){
+            List<User> clients_te_verwerken = di.getUserQueue();
+            List<ActiveGame> activeGames = di.getActivegames();
+
+            for(User u : clients_te_verwerken) register(u.getNaam(), u.getWachtwoord());
+            for(ActiveGame a : activeGames) createActiveGame(a);
+
+            di.clearQueues();
+
+            System.out.println("Server: " + id + " verwerkte queues van server: " + di.getid());
+        }
+    }
+
+    @Override
+    public List<User> getUserQueue() throws RemoteException {
+        return user_updateQueue;
+    }
+
+    @Override
+    public List<ActiveGame> getActivegames() throws RemoteException {
+        return activeGames_updateQueue;
+    }
+
+    @Override
+    public void clearQueues() throws RemoteException {
+        user_updateQueue.clear();
+        activeGames_updateQueue.clear();
+    }
+
+    @Override
+    public String getid() throws RemoteException {
+        return String.valueOf(id);
+    }
 
 }
