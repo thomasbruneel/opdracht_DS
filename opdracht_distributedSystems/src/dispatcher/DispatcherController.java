@@ -56,7 +56,7 @@ public class DispatcherController extends UnicastRemoteObject implements Seriali
 
     
     @FXML
-    public void initialize() throws RemoteException{
+    public void initialize() throws Exception{
     		dispatcher.initDispatcher();
     		updateTAbles();
 

@@ -24,12 +24,8 @@ import interfaces.DatabankServerInterface;
 
 public class DatabankServerImpl extends UnicastRemoteObject implements DatabankServerInterface {
 	BCrypt bcrypt;
-	int id;
 	
-	public DatabankServerImpl(int id ) throws RemoteException{
-		this.id=id;
-
-    }
+	public DatabankServerImpl() throws RemoteException{}
 	
 	public Connection connect() {
 	    // SQLite connection string
