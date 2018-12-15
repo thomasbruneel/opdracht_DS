@@ -19,12 +19,12 @@ import memoryGame.Kaart;
 
 public class AppServerImpl extends UnicastRemoteObject implements AppServerInterface{
 	private DatabankServerInterface dsi;
-	
+	private int id;
 	private ArrayList<ActiveGame>activeGames;
 	private ArrayList<ActiveGameInfo>activeGamesInfo;
-	
+
 	//private ArrayList<LobbyControllerInterface> lobbyControllers;
-	
+
 	public AppServerImpl() throws RemoteException{
 		//lobbyControllers=new ArrayList<LobbyControllerInterface>();
 		activeGames=new ArrayList<ActiveGame>();
@@ -34,12 +34,13 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	// nieuw..
-	public AppServerImpl(int DBportNumber) throws RemoteException{
-		//lobbyControllers=new ArrayList<LobbyControllerInterface>();
+	public AppServerImpl(int DBportNumber, int id) throws RemoteException{
+		lobbyControllers=new ArrayList<LobbyControllerInterface>();
 		activeGames=new ArrayList<ActiveGame>();
+		this.id = id;
 		Registry registry=LocateRegistry.getRegistry("localhost",DBportNumber);
 		try {
 			dsi=(DatabankServerInterface) registry.lookup("DataBankService");
@@ -47,13 +48,13 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
 	public void register(String naam, String pwd) throws RemoteException {
 		dsi.register(naam, pwd);
-		
+
 	}
 
 	@Override
@@ -62,12 +63,12 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			String token=TokenGenerator.generate(userName);
 			dsi.updateToken(userName,token);
 			return token;
-			
+
 		}
 		else{
 			return null;
 		}
-		
+
 	}
 
 	@Override
@@ -80,9 +81,9 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		activeGames.add(activeGame);
 
 		dsi.createActiveGame(activeGame);
-		
+
 	}
-	
+
 	@Override
 	public void removeActiveGame(ActiveGame activeGame) throws RemoteException {
 		ActiveGame tmp = null;
@@ -93,15 +94,15 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		}
 		dsi.removeActiveGame(tmp.getCreator());
 		activeGames.remove(tmp);
-		
 
-		
+
+
 	}
 	@Override
 	public  ArrayList<ActiveGame> getActiveGames() throws RemoteException {
 		return activeGames;
 	}
-	
+
 	@Override
 	public ActiveGame getActiveGame(String id)throws RemoteException {
 		ActiveGame activeGame=null;
@@ -111,7 +112,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     		}
     	}
 		return activeGame;
-		
+
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     			ag.increasePlayerCount(bit);
     		}
     	}
-		
+
 	}
 
 	@Override
@@ -136,12 +137,12 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		if(tmp!=null){
 			dsi.removeActiveGame(tmp.getCreator());
 			activeGames.remove(tmp);
-			
+
 		}
-		
-		
+
+
 	}
-	
+
 	@Override
 	public void flipCard(String creator,int x,int y)throws RemoteException{
 		System.out.println("flipcard");
@@ -159,7 +160,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     		System.out.println("interface");
     		gci.refreshBord2(x, y);
     	}
-    	
+
     	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
     		System.out.println("interface");
     		gci.refreshBord2(x, y);
@@ -179,7 +180,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	}
     	activeGame.addPlayer(player);
     	activeGame.initializeScore(player,0);
-    	
+
 
 	}
 
@@ -220,11 +221,11 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		for(ActiveGame ag:activeGames){
 			if(ag.getCreator().equals(gameId)){
 				activeGame=ag;
-                
+
 			}
 		}
 		activeGame.increaseScore(speler);
-		
+
 	}
 
 	@Override
@@ -233,7 +234,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		for(ActiveGame ag:activeGames){
 			if(ag.getCreator().equals(gameId)){
 				activeGame=ag;
-                
+
 			}
 		}
 		if (activeGame != null && gci != null) {
@@ -266,7 +267,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.add(lobbyController);
-		
+
 	}
 
 	@Override
@@ -276,7 +277,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			System.out.println("lobbycontroller "+lobbyController.getIdController());
 			lobbyController.updateLobby(activeGames);
 		}
-		
+
 	}
 	*/
 
@@ -286,7 +287,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		for(ActiveGame ag:activeGames){
 			if(ag.getCreator().equals(gameId)){
 				activeGame=ag;
-                
+
 			}
 		}
 		if (activeGame != null && gci != null) {
@@ -304,7 +305,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			} //doet niet wat het moet
 		}
 
-		
+
 	}
 
 	@Override
@@ -312,12 +313,12 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	for(gameControllerInterface gci:activeGame.getGamecontrollers()){
     		gci.refreshScore(activeGame);
     	}
-    	
+
     	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
     		System.out.println("interface");
     		gci.refreshScore(activeGame);
     	}
-		
+
 	}
 
 	@Override
@@ -328,7 +329,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void increaseWin(String userName) throws RemoteException {
 		dsi.increaseWin(userName);
-		
+
 	}
 
 	@Override
@@ -337,24 +338,24 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		for(ActiveGame ag:activeGames){
 			if(ag.getCreator().equals(gameId)){
 				activeGame=ag;
-                
+
 			}
 		}
 		for(gameControllerInterface gci:activeGame.getGamecontrollers()){
 			System.out.println("gamecontroller");
     		gci.backToLobby();
     	}
-    	
+
     	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
     		gci.backToLobby();
     	}
-		
+
 	}
 /*
 	@Override
 	public void removeLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.remove(lobbyController);
-		
+
 	}
 */
 	/*
@@ -369,36 +370,28 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		if(lobbyControllerInterface!=null){
 			lobbyControllers.remove(lobbyControllerInterface);
 		}
-		
+
 	}
 	*/
-	
+
 	@Override
 	public List<byte[]> getImagesByTheme(String theme) throws RemoteException {
 		return dsi.getImagesByTheme(theme);
-		
-		
+
+
 	}
 	@Override
 	public ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException {
-		
+
 		return (ArrayList<ActiveGameInfo>) dsi.getAllActiveGamesInfo();
 	}
 	@Override
 	public void addActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException {
 		dsi.createActiveGameInfo(activeGameInfo);
-		
+
 	}
-	
+
 
 
 
 }
-	
-	
-	
-	
-
-
-
-
