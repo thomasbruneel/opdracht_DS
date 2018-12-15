@@ -16,20 +16,16 @@ import interfaces.DatabankServerInterface;
 import interfaces.DispatcherInterface;
 
 public class DispathcherImpl extends UnicastRemoteObject implements DispatcherInterface,Serializable {
-
+	
 	public List<AppServer> appServers;
 	public List<DatabankServer> databankServers;
-    int dBcounter;
-    int appcounter;
+	
 	public List<AppServerInterface> asis;
-
-
-	public DispathcherImpl(Dispatcher dispatcher) throws RemoteException{
-	    this.appServers = dispatcher.getAppServers();
-	    this.databankServers = dispatcher.getDatabankServers();
-		asis = dispatcher.getAsis();
-		dBcounter = dispatcher.getdBcounter();
-		appcounter = dispatcher.getAppcounter();
+	
+	public DispathcherImpl(List<AppServer> appServers,List<DatabankServer> databankServers) throws RemoteException{
+		this.appServers=appServers;
+		this.databankServers=databankServers;
+		asis=new ArrayList<>();
 	}
 	
 	@Override

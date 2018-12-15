@@ -20,18 +20,21 @@ public class Dispatcher {
 	public static List<AppServer> appServers;
 	public static List<DatabankServer> databankServers;
 	static int dBcounter = 0;
-	static int appcounter = 0;
+	int appcounter = 0;
 	
 	public static DispathcherImpl dispathcherImpl;
 	
 	public static List<AppServerInterface> asis=new ArrayList<>();
-
-	public void initDispatcher() throws Exception{
+	
+	
+	
+	
+	public static void initDispatcher() throws Exception{
 		
 
 		createDBservers();
 		createAppServer();
-		dispathcherImpl=new DispathcherImpl(this);
+		dispathcherImpl=new DispathcherImpl(appServers, databankServers);
 		try{
 			System.out.println("dispatcher started...");
 			Registry dispatcherRegistry=LocateRegistry.createRegistry(9999);
@@ -60,7 +63,7 @@ public class Dispatcher {
 	private static void createAppServer() {
 		appServers=new ArrayList<>();
 		appServers.add(new AppServer("localhost",5000,databankServers.get(0).getPoortnummer()));
-		appcounter++;
+		
 	}
 
 	private static void startDBservers() {
@@ -140,23 +143,16 @@ public class Dispatcher {
 
 
 
-	public List<AppServer> getAppServers() {
-		return appServers;
+	public static List<AppServer> getAppServers() {
+		return dispathcherImpl.getAppServers();
 	}
 
-	public List<DatabankServer> getDatabankServers() {
-		return databankServers;
+	public static List<DatabankServer> getDatabankServers() {
+		return dispathcherImpl.getDatabankServers();
 	}
 
-    public int getdBcounter() {
-        return dBcounter;
-    }
 
-    public int getAppcounter() {
-        return appcounter;
-    }
+	
+	
 
-    public List<AppServerInterface> getAsis() {
-        return asis;
-    }
 }
