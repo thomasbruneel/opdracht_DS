@@ -8,15 +8,13 @@ public class AppServer implements Serializable {
 	private String ipAdres;
 	private int poortnummer;
 	
-	private DatabankServer dbserver;
 	private int DBportnummer;
 	
 	
-	public AppServer(String ipAdres, int poortnummer, DatabankServer dbserver) {
+	public AppServer(String ipAdres, int poortnummer, int DBportnummer) {
 		this.ipAdres = ipAdres;
 		this.poortnummer = poortnummer;
-		this.dbserver=dbserver;
-		this.DBportnummer=dbserver.getPoortnummer();
+		this.DBportnummer=DBportnummer;
 	}
 
 
@@ -37,16 +35,6 @@ public class AppServer implements Serializable {
 
 	public void setPoortnummer(int poortnummer) {
 		this.poortnummer = poortnummer;
-	}
-
-
-	public DatabankServer getDbserver() {
-		return dbserver;
-	}
-
-
-	public void setDbserver(DatabankServer dbserver) {
-		this.dbserver = dbserver;
 	}
 
 
