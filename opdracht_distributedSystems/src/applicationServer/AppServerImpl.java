@@ -42,6 +42,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		Registry registry=LocateRegistry.getRegistry("localhost",DBportNumber);
 		try {
 			dsi=(DatabankServerInterface) registry.lookup("DataBankService");
+			dsi.aanmelden();
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}

@@ -45,4 +45,8 @@ public interface DatabankServerInterface extends Remote{
 	void clearQueues() throws RemoteException;
 
 	String getid() throws  RemoteException;
+
+	void aanmelden() throws  RemoteException;
+
+	int getCount() throws RemoteException;
 }
