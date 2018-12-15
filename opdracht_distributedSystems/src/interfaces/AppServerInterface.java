@@ -68,4 +68,5 @@ public interface AppServerInterface extends Remote{
 
 	void addActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException;
 
+    int getServerid() throws RemoteException;
 }

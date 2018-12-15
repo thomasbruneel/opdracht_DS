@@ -10,6 +10,7 @@ import applicationServer.ActiveGame;
 import applicationServer.ActiveGameInfo;
 import applicationServer.TokenGenerator;
 import client.Tasks.LobbyRefreshTask;
+import interfaces.AppServerInterface;
 import interfaces.LobbyControllerInterface;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -125,8 +126,16 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     
     public void Join(){
     	spectateMode=false;
-    	ActiveGameInfo activeGame=uiTabel.getSelectionModel().getSelectedItem();
-    	if(activeGame!=null&&activeGame.getNumberPlayers()<activeGame.getMaxPlayers()){
+    	ActiveGameInfo activeGame = uiTabel.getSelectionModel().getSelectedItem();
+
+        try {
+            asi = disImpl.requestAppserver(activeGame.getAppServerId());
+            System.out.println("Client verplaatst naar gameserver: " + activeGame.getAppServerId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    	if(activeGame.getNumberPlayers()<activeGame.getMaxPlayers()){
     		System.out.println(activeGame.getCreator());
     		gameId=activeGame.getCreator();
         	openUIScreen("gameUI.fxml");
@@ -142,6 +151,14 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     public void spectate(){
     	spectateMode=true;
     	ActiveGameInfo activeGame=uiTabel.getSelectionModel().getSelectedItem();
+
+        try {
+            asi = disImpl.requestAppserver(activeGame.getAppServerId());
+            System.out.println("Client verplaatst naar gameserver: " + activeGame.getAppServerId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     	gameId=activeGame.getCreator();
         openUIScreen("gameUI.fxml");
         uiLogoutButton.getScene().getWindow().hide();

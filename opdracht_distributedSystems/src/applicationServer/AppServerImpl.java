@@ -380,6 +380,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 
 	}
+
 	@Override
 	public ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException {
 
@@ -391,7 +392,10 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	}
 
-
+    @Override
+    public int getServerid() throws RemoteException {
+        return id;
+    }
 
 
 }

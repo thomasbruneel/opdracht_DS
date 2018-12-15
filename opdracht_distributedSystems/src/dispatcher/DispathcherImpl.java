@@ -79,8 +79,18 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 	public void addAsi(AppServerInterface asi) throws RemoteException {
 		asis.add(asi);
 	}
-	
-	public List<AppServer> getAppServers() {
+
+    @Override
+    public AppServerInterface requestAppserver(int appServerId) throws RemoteException {
+        for(AppServerInterface a : asis){
+            if(a.getServerid() == appServerId){
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public List<AppServer> getAppServers() {
 		return appServers;
 	}
 
