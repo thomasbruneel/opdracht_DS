@@ -194,10 +194,17 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	           pstmt.setString(7,sb2.toString());
 	         
 	           pstmt.executeUpdate();
-	        } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	        }
-	
+        } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	    }
+
+	    for(DatabankServerInterface d : databanken)
+            try {
+                d.persistActiveGame(activeGame);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
 
     }
 	
@@ -355,6 +362,36 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
     @Override
     public String getid() throws RemoteException {
         return String.valueOf(id);
+    }
+
+    @Override
+    public void persistActiveGame(ActiveGame activeGame) throws RemoteException {
+        String sql = "INSERT INTO ActiveGame(creator,numberPlayers,maxPlayers,size,theme,bord,omgedraaid) VALUES(?,?,?,?,?,?,?)";
+
+        StringBuffer sb1=new StringBuffer();
+        StringBuffer sb2=new StringBuffer();
+        Kaart[][]matrix=activeGame.getGame().getBord().getMatrix();
+        for(int i=0;i<activeGame.getSize();i++){
+            for(int j=0;j<activeGame.getSize();j++){
+                sb1.append(matrix[i][j].getWaarde()+" ");
+                sb2.append("0 ");
+            }
+        }
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, activeGame.getCreator());
+            pstmt.setInt(2, activeGame.getNumberPlayers());
+            pstmt.setInt(3, activeGame.getMaxPlayers());
+            pstmt.setInt(4,activeGame.getSize());
+            pstmt.setString(5,activeGame.getTheme());
+            pstmt.setString(6,sb1.toString());
+            pstmt.setString(7,sb2.toString());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

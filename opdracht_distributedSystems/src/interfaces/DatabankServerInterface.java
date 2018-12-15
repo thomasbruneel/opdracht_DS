@@ -45,4 +45,6 @@ public interface DatabankServerInterface extends Remote{
 	void clearQueues() throws RemoteException;
 
 	String getid() throws  RemoteException;
+
+    void persistActiveGame(ActiveGame activeGame) throws RemoteException;
 }
