@@ -1,7 +1,10 @@
 package databankServer;
 
 import java.io.*;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,9 +25,11 @@ import interfaces.DatabankServerInterface;
 
 public class DatabankServerImpl extends UnicastRemoteObject implements DatabankServerInterface {
 	BCrypt bcrypt;
-	
-	public DatabankServerImpl() throws RemoteException{
+	List<DatabankServerInterface> databanken = new ArrayList<>();
+	int id;
 
+	public DatabankServerImpl(int id) throws RemoteException{
+        this.id = id;
     }
 	
 	public Connection connect() {
@@ -271,8 +276,31 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	        return images;
 		
 	}
-	
 
-	
-	
+	@Override
+	public void registreerdb(String ip, int poortnummer) throws RemoteException{
+		try {
+			Registry reg = LocateRegistry.getRegistry(ip, poortnummer);
+			databanken.add((DatabankServerInterface) reg.lookup("DataBankService"));
+		} catch (RemoteException | NotBoundException e) {
+			e.printStackTrace();
+		}
+    }
+
+    @Override
+    public String pingAnderen() throws RemoteException{
+	    String result = " pingresult van anderen:\t";
+        for(DatabankServerInterface di: databanken){
+            result += di.pingResult();
+            result += "\t";
+        }
+        return result;
+    }
+
+    @Override
+    public String pingResult() throws RemoteException{
+        return String.valueOf(id);
+    }
+
+
 }

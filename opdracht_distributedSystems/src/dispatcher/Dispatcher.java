@@ -1,19 +1,23 @@
 package dispatcher;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
+import Constanten.Constanten;
 import applicationServer.AppServerImpl;
 import databankServer.DatabankServerImpl;
+import interfaces.DatabankServerInterface;
 import interfaces.DispatcherInterface;
 
 public class Dispatcher {
 	public static List<AppServer> appServers;
 	public static List<DatabankServer> databankServers;
-	
+	static int dBcounter = 0;
+	int appcounter = 0;
 	
 	
 	
@@ -43,7 +47,7 @@ public class Dispatcher {
 		for(int i=0;i<3;i++){
 			databankServers.add(new DatabankServer("localhost", 4000+i));
 		}
-		
+
 	}
 	
 	private static void createAppServer() {
@@ -57,7 +61,7 @@ public class Dispatcher {
 			try{
 				
 				Registry dataBankRegistry=LocateRegistry.createRegistry(ds.getPoortnummer());
-				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl());
+				dataBankRegistry.rebind("DataBankService", new DatabankServerImpl(dBcounter++));
 				System.out.println("dataserver started with portnumber "+ds.getPoortnummer());
 			}
 			catch(Exception e){
@@ -65,7 +69,33 @@ public class Dispatcher {
 			}
 			ds.setOnline(true);
 		}
-	
+
+        for(DatabankServer ds : databankServers){
+            try {
+                Registry reg = LocateRegistry.getRegistry(ds.getIpAdres(), ds.getPoortnummer());
+                DatabankServerInterface dsimpl = (DatabankServerInterface) reg.lookup("DataBankService");
+			    for(DatabankServer d: databankServers){
+    				if(ds != d) {
+				        dsimpl.registreerdb(d.getIpAdres(), d.getPoortnummer());
+                    }
+			    }
+            } catch (RemoteException | NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //connectie testen
+        for(DatabankServer ds : databankServers) {
+            Registry reg = null;
+            try {
+                reg = LocateRegistry.getRegistry(ds.getIpAdres(), ds.getPoortnummer());
+                DatabankServerInterface dsimpl = (DatabankServerInterface) reg.lookup("DataBankService");
+                System.out.println("Ping from " + dsimpl.pingResult() + ": " + dsimpl.pingAnderen());
+
+            } catch (RemoteException | NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
 		
 	}
 	

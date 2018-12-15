@@ -29,5 +29,9 @@ public interface DatabankServerInterface extends Remote{
 	
 	public List<byte[]> getImagesByTheme(String theme) throws RemoteException;
 
+    void registreerdb(String ip, int poortnummer)throws RemoteException;
 
+	String pingAnderen() throws RemoteException;
+
+	String pingResult() throws RemoteException;
 }
