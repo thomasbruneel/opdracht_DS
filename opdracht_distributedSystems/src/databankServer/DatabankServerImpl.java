@@ -22,13 +22,18 @@ import java.util.Map;
 
 import applicationServer.ActiveGame;
 import applicationServer.Leaderbord;
+import client.User;
 import interfaces.DatabankServerInterface;
+import memoryGame.Kaart;
 
 
 public class DatabankServerImpl extends UnicastRemoteObject implements DatabankServerInterface {
 	BCrypt bcrypt;
 	List<DatabankServerInterface> databanken = new ArrayList<>();
 	int id;
+
+	List<ActiveGame> activeGames_updateQueue = new ArrayList<>();
+	List<User> user_updateQueue = new ArrayList<>();
 
 	public DatabankServerImpl(int id) throws RemoteException{
         this.id = id;
@@ -164,8 +169,19 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	//---------------------Data Table ActiveGame---------------------
 
 	@Override
-	public void createActiveGame(ActiveGame activeGame,String bord,String omgedraaid){
+	public void createActiveGame(ActiveGame activeGame){
 		String sql = "INSERT INTO ActiveGame(creator,numberPlayers,maxPlayers,size,theme,bord,omgedraaid) VALUES(?,?,?,?,?,?,?)";
+
+        StringBuffer sb1=new StringBuffer();
+        StringBuffer sb2=new StringBuffer();
+        Kaart[][]matrix=activeGame.getGame().getBord().getMatrix();
+        for(int i=0;i<activeGame.getSize();i++){
+            for(int j=0;j<activeGame.getSize();j++){
+                sb1.append(matrix[i][j].getWaarde()+" ");
+                sb2.append("0 ");
+            }
+        }
+
 		try (Connection conn = this.connect();
 	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	           pstmt.setString(1, activeGame.getCreator());
@@ -173,8 +189,8 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	           pstmt.setInt(3, activeGame.getMaxPlayers());
 	           pstmt.setInt(4,activeGame.getSize());
 	           pstmt.setString(5,activeGame.getTheme());
-	           pstmt.setString(6,bord);
-	           pstmt.setString(7,omgedraaid);
+	           pstmt.setString(6,sb1.toString());
+	           pstmt.setString(7,sb2.toString());
 	         
 	           pstmt.executeUpdate();
 	        } catch (SQLException e) {

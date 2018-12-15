@@ -17,7 +17,7 @@ public interface DatabankServerInterface extends Remote{
 
 	void updateToken(String userName, String token) throws RemoteException;
 
-	void createActiveGame(ActiveGame activeGame, String string, String string2)throws RemoteException;
+	void createActiveGame(ActiveGame activeGame)throws RemoteException;
 
 	void removeActiveGame(String creator)throws RemoteException;
 
