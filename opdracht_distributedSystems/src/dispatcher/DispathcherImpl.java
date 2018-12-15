@@ -19,17 +19,58 @@ public class DispathcherImpl extends UnicastRemoteObject implements DispatcherIn
 	public static List<AppServer> appServers;
 	public static List<DatabankServer> databankServers;
 	
+	public static List<AppServerInterface> asis;
+	
 	
 	public DispathcherImpl(List<AppServer> appServers,List<DatabankServer> databankServers) throws RemoteException{
 		this.appServers=appServers;
 		this.databankServers=databankServers;
+		asis=new ArrayList<>();
 	
 	}
 	
 	@Override
 	public int getPortNumberAppServer() throws RemoteException {
+		for (AppServerInterface asi:asis){
+			System.out.println("aantal games op server "+asi.getActiveGames().size());
+		}
 		return appServers.get(appServers.size()-1).getPoortnummer();
+	}
+
+	
+	@Override
+	public void addAsi(AppServerInterface asi) throws RemoteException {
+		asis.add(asi);
 	} 
+	
+	
+	
+	
+	public static List<AppServer> getAppServers() {
+		return appServers;
+	}
+
+	public static void setAppServers(List<AppServer> appServers) {
+		DispathcherImpl.appServers = appServers;
+	}
+
+	public static List<DatabankServer> getDatabankServers() {
+		return databankServers;
+	}
+
+	public static void setDatabankServers(List<DatabankServer> databankServers) {
+		DispathcherImpl.databankServers = databankServers;
+	}
+
+	public static List<AppServerInterface> getAsis() {
+		return asis;
+	}
+
+	public static void setAsis(List<AppServerInterface> asis) {
+		DispathcherImpl.asis = asis;
+	}
+
+
 
 	
 
