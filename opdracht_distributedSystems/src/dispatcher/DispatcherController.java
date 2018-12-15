@@ -77,6 +77,11 @@ public class DispatcherController extends UnicastRemoteObject implements Seriali
         uiTabelAPPConnectDB.setCellValueFactory(new PropertyValueFactory<>("DBportnummer"));
 		
 	}
+	
+	
+	public void refreshen(){
+		updateTAbles();
+	}
    
 	
 	

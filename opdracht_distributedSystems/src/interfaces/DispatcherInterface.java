@@ -6,4 +6,7 @@ import java.rmi.RemoteException;
 public interface DispatcherInterface extends Remote{
 	
 
+	int getPortNumberAppServer() throws RemoteException;
+	
+
 }

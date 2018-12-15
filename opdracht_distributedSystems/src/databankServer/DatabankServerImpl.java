@@ -1,6 +1,8 @@
 package databankServer;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
@@ -22,8 +24,10 @@ import interfaces.DatabankServerInterface;
 
 public class DatabankServerImpl extends UnicastRemoteObject implements DatabankServerInterface {
 	BCrypt bcrypt;
+	int id;
 	
-	public DatabankServerImpl() throws RemoteException{
+	public DatabankServerImpl(int id ) throws RemoteException{
+		this.id=id;
 
     }
 	
@@ -32,8 +36,8 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 		File file = new File("databasepath.txt");
 		String url = null;
 		try {
-			 BufferedReader br = new BufferedReader(new FileReader(file));
-			url = br.readLine();
+			url=Files.readAllLines(Paths.get("databasepath.txt")).get(id);
+			System.out.println(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
