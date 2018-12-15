@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.ActiveGameInfo;
 import applicationServer.Leaderbord;
 import client.LobbyController;
 
@@ -43,9 +44,9 @@ public interface AppServerInterface extends Remote{
 
 	void endTurnTest(String Gameid) throws RemoteException;
 
-	void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException;
+	//void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException;
 
-	void updateLobby() throws RemoteException;
+	//void updateLobby() throws RemoteException;
 
 	void addSpectateController(String gameId, gameControllerInterface gameController) throws RemoteException;
 
@@ -57,10 +58,14 @@ public interface AppServerInterface extends Remote{
 
 	void leaveGame(String gameId) throws RemoteException;
 
-	void removeLobbyController(LobbyControllerInterface lobbyController)throws RemoteException;
+	//void removeLobbyController(LobbyControllerInterface lobbyController)throws RemoteException;
 	
-	void removeLobbyControllerByID(String id)throws RemoteException;
+	//void removeLobbyControllerByID(String id)throws RemoteException;
 
 	List<byte[]> getImagesByTheme(String theme) throws RemoteException;
+
+	ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException;
+
+	void addActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException;
 
 }

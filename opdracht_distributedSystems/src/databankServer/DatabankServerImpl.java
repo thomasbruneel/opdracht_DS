@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import applicationServer.ActiveGame;
+import applicationServer.ActiveGameInfo;
 import applicationServer.Leaderbord;
 import client.User;
 import interfaces.DatabankServerInterface;
@@ -216,6 +217,8 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 
     }
 	
+
+	
 	//---------------------Data Table LeaderBord---------------------
 	@Override
 	public void increaseWin(String userName){
@@ -365,6 +368,51 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	public int getCount() throws RemoteException {
 		return counter;
 	}
+
+	
+	
+	//-------------------- GAMEINFO-----------------------------
+	@Override
+	public void createActiveGameInfo(ActiveGameInfo activeGameInfo) {
+		String sql = "INSERT INTO ActiveGameInfo(creator,numberPlayers,maxPlayers,appServerId) VALUES(?,?,?,?)";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, activeGameInfo.getCreator());
+	           pstmt.setInt(2, activeGameInfo.getNumberPlayers());
+	           pstmt.setInt(3, activeGameInfo.getMaxPlayers());
+	           pstmt.setInt(4,activeGameInfo.getAppServerId());
+	        
+	         
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		
+	}
+	
+	@Override
+	public ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException {
+        String sql = "SELECT * FROM ActiveGameInfo";
+        ArrayList<ActiveGameInfo>activeGameInfos=new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            // loop through the result set
+            while (rs.next()) {
+            	String creator=rs.getString("creator");
+            	int numberPlayers=Integer.parseInt(rs.getString("numberPlayers"));
+            	int maxPlayers=Integer.parseInt(rs.getString("maxPlayers"));
+            	int appServerId=Integer.parseInt(rs.getString("appServerId"));
+            	ActiveGameInfo activeGameInfo=new ActiveGameInfo(creator, numberPlayers, maxPlayers, appServerId);
+            	activeGameInfos.add(activeGameInfo);                                      
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+		return activeGameInfos;
+    }
+
+
 	
 	
 

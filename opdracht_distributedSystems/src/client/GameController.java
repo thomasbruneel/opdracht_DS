@@ -140,7 +140,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         	asi.refreshScore(asi.getActiveGame(gameId));
         }
         
-    	asi.updateLobby();//refreshen lobby
+    	//asi.updateLobby();//refreshen lobby
     	
 
 
@@ -160,7 +160,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 		if(!spectateMode){
 	    	asi.leaveGame(gameId);
 			asi.removeActiveGame(activeGame);
-	    	asi.updateLobby();//refreshen lobby
+	    	//asi.updateLobby();//refreshen lobby
 
 		}
 		else{

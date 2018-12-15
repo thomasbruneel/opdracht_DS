@@ -62,10 +62,9 @@ public class ClientMain extends Application {
 		if(!spectateMode&&gameId!=null){
 	    	asi.leaveGame(gameId);
 			asi.removeactiveGameById(gameId);
-	    	asi.updateLobby();//refreshen lobby
 
 		}
-		asi.removeLobbyControllerByID(userName);
+
 		userName=token=null;
 	    System.out.println("Stage is closing");
 	}

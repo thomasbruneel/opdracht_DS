@@ -42,5 +42,6 @@
       <Label fx:id="uiErrorMessage" layoutX="286.0" layoutY="468.0" text="Label" textFill="RED" />
       <Button layoutX="186.0" layoutY="494.0" mnemonicParsing="false" onAction="#spectate" text="SPECTATE" />
       <Button layoutY="2.0" mnemonicParsing="false" onAction="#goToLeaderbord" text="LEADERBORDS" />
+      <Button layoutX="389.0" layoutY="494.0" mnemonicParsing="false" onAction="#refreshLobby" text="REFRESH LOBBY" />
    </children>
 </AnchorPane>

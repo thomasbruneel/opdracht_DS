@@ -21,11 +21,12 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	private DatabankServerInterface dsi;
 	
 	private ArrayList<ActiveGame>activeGames;
+	private ArrayList<ActiveGameInfo>activeGamesInfo;
 	
-	private ArrayList<LobbyControllerInterface> lobbyControllers;
+	//private ArrayList<LobbyControllerInterface> lobbyControllers;
 	
 	public AppServerImpl() throws RemoteException{
-		lobbyControllers=new ArrayList<LobbyControllerInterface>();
+		//lobbyControllers=new ArrayList<LobbyControllerInterface>();
 		activeGames=new ArrayList<ActiveGame>();
 		Registry registry=LocateRegistry.getRegistry("localhost",2222);
 		try {
@@ -37,7 +38,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	}
 	// nieuw..
 	public AppServerImpl(int DBportNumber) throws RemoteException{
-		lobbyControllers=new ArrayList<LobbyControllerInterface>();
+		//lobbyControllers=new ArrayList<LobbyControllerInterface>();
 		activeGames=new ArrayList<ActiveGame>();
 		Registry registry=LocateRegistry.getRegistry("localhost",DBportNumber);
 		try {
@@ -261,7 +262,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		activeGame.setBeurt(beurt);
 		activeGame.getGamecontrollers().get(beurt).giveTurn();
 	}
-
+/*
 	@Override
 	public void addLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.add(lobbyController);
@@ -277,6 +278,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		}
 		
 	}
+	*/
 
 	@Override
 	public void addSpectateController(String gameId, gameControllerInterface gci) throws RemoteException {
@@ -348,13 +350,14 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	}
 		
 	}
-
+/*
 	@Override
 	public void removeLobbyController(LobbyControllerInterface lobbyController) throws RemoteException {
 		lobbyControllers.remove(lobbyController);
 		
 	}
-
+*/
+	/*
 	@Override
 	public void removeLobbyControllerByID(String id) throws RemoteException {
 		LobbyControllerInterface lobbyControllerInterface=null;
@@ -368,6 +371,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		}
 		
 	}
+	*/
 	
 	@Override
 	public List<byte[]> getImagesByTheme(String theme) throws RemoteException {
@@ -375,6 +379,18 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		
 		
 	}
+	@Override
+	public ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException {
+		
+		return (ArrayList<ActiveGameInfo>) dsi.getAllActiveGamesInfo();
+	}
+	@Override
+	public void addActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException {
+		dsi.createActiveGameInfo(activeGameInfo);
+		
+	}
+	
+
 
 
 }

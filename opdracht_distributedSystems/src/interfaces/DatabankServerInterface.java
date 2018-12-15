@@ -2,9 +2,11 @@ package interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.ActiveGameInfo;
 import applicationServer.Leaderbord;
 import client.User;
 
@@ -49,4 +51,9 @@ public interface DatabankServerInterface extends Remote{
 	void aanmelden() throws  RemoteException;
 
 	int getCount() throws RemoteException;
+
+	ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException;
+
+	void createActiveGameInfo(ActiveGameInfo activeGameInfo) throws RemoteException;
+
 }

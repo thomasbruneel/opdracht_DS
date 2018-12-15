@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import applicationServer.ActiveGame;
+import applicationServer.ActiveGameInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -110,6 +111,9 @@ public class NewGameController {
     	Map <String,Integer> score=new HashMap<String,Integer>();
     	ActiveGame activeGame=new ActiveGame(userName,0,players,size,game,spelers,score,theme);  //(String creator, int numberPlayers,int maxPlayers, String size,Game game,ArrayList<String>spelers)
     	asi.addActiveGame(activeGame);
+    	
+    	asi.addActiveGameInfo(new ActiveGameInfo(userName, 0, players, 1220));
+    	
 
     	gameId=userName;
     	openUIScreen("gameUI.fxml");

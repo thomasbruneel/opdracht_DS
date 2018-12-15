@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applicationServer.ActiveGame;
+import applicationServer.ActiveGameInfo;
 import applicationServer.TokenGenerator;
 import client.Tasks.LobbyRefreshTask;
 import interfaces.LobbyControllerInterface;
@@ -42,19 +43,19 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     
 	//activegames tabel view
     @FXML
-    private TableView<ActiveGame> uiTabel;
+    private TableView<ActiveGameInfo> uiTabel;
     
     @FXML
-    private TableColumn<ActiveGame, String> uiTabelUser;
+    private TableColumn<ActiveGameInfo, String> uiTabelUser;
 
     @FXML
-    private TableColumn<ActiveGame, Integer> uiTabelPlayers;
+    private TableColumn<ActiveGameInfo, Integer> uiTabelPlayers;
     
     @FXML
-    private TableColumn<ActiveGame, Integer> uiTabelMaxPlayers;
+    private TableColumn<ActiveGameInfo, Integer> uiTabelMaxPlayers;
 
     @FXML
-    private TableColumn<ActiveGame, String> uiTabelSize;
+    private TableColumn<ActiveGameInfo, String> uiTabelSize;
     
     
     private ArrayList<ActiveGame> listActiveGames;
@@ -71,8 +72,10 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     	idController=userName;
     	uiErrorMessage.setVisible(false);
         uiWelcomeUser.setText(userName);
-        listActiveGames=asi.getActiveGames();
-        uiTabel.getItems().setAll(listActiveGames);
+        
+        ArrayList<ActiveGameInfo>allActiveGames=asi.getAllActiveGamesInfo();
+		uiTabel.getItems().setAll(allActiveGames);
+		
         uiTabelUser.setCellValueFactory(new PropertyValueFactory<>("creator"));
         uiTabelPlayers.setCellValueFactory(new PropertyValueFactory<>("numberPlayers"));
         uiTabelMaxPlayers.setCellValueFactory(new PropertyValueFactory<>("maxPlayers"));
@@ -80,9 +83,6 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
         //startCheckThread();
         //task=new LobbyRefreshTask(uiTabel,this);
         //new Thread(task).start();
-        
-        asi.addLobbyController(this);
-        asi.updateLobby();
     }
     /*
     private void startCheckThread() {
@@ -117,12 +117,7 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     }
     
     public void createNewGame(){
-    	try {
-			asi.removeLobbyController(this);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+  
     	openUIScreen("newGameUI.fxml");
     	uiLogoutButton.getScene().getWindow().hide();
     	//task.cancel();
@@ -130,18 +125,13 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     
     public void Join(){
     	spectateMode=false;
-    	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
+    	ActiveGameInfo activeGame=uiTabel.getSelectionModel().getSelectedItem();
     	if(activeGame!=null&&activeGame.getNumberPlayers()<activeGame.getMaxPlayers()){
     		System.out.println(activeGame.getCreator());
     		gameId=activeGame.getCreator();
         	openUIScreen("gameUI.fxml");
         	uiLogoutButton.getScene().getWindow().hide();
-        	try {
-				asi.removeLobbyController(this);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+       
     	}
     	else{
     		uiErrorMessage.setText("LOBBY ZIT VOL");
@@ -151,13 +141,13 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
     
     public void spectate(){
     	spectateMode=true;
-    	ActiveGame activeGame=uiTabel.getSelectionModel().getSelectedItem();
+    	ActiveGameInfo activeGame=uiTabel.getSelectionModel().getSelectedItem();
     	gameId=activeGame.getCreator();
         openUIScreen("gameUI.fxml");
         uiLogoutButton.getScene().getWindow().hide();
 
     }
-    
+    /*
 	public ArrayList<ActiveGame> getListActiveGames() {
 		return listActiveGames;
 	}
@@ -181,18 +171,26 @@ public class LobbyController extends UnicastRemoteObject implements LobbyControl
 		uiTabel.getItems().setAll(games);
 		
 	}
-	
+	*/
 	public void goToLeaderbord(){
 		openUIScreen("leaderbordUI.fxml");
 		uiLogoutButton.getScene().getWindow().hide();
 	}
+	/*
 	@Override
 	public String getIdController() throws RemoteException{
 		return idController;
 	}
+	*/
 
 	public void setIdController(String idController) {
 		this.idController = idController;
+	}
+	
+	public void refreshLobby() throws RemoteException{
+		ArrayList<ActiveGameInfo>allActiveGames=asi.getAllActiveGamesInfo();
+		uiTabel.getItems().setAll(allActiveGames);
+		
 	}
 	
 	
