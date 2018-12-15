@@ -38,7 +38,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	}
 	// nieuw..
 	public AppServerImpl(int DBportNumber, int id) throws RemoteException{
-		lobbyControllers=new ArrayList<LobbyControllerInterface>();
+		//lobbyControllers=new ArrayList<LobbyControllerInterface>();
 		activeGames=new ArrayList<ActiveGame>();
 		this.id = id;
 		Registry registry=LocateRegistry.getRegistry("localhost",DBportNumber);
@@ -380,6 +380,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 
 	}
+
 	@Override
 	public ArrayList<ActiveGameInfo> getAllActiveGamesInfo() throws RemoteException {
 
@@ -391,7 +392,10 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	}
 
-
+    @Override
+    public int getServerid() throws RemoteException {
+        return id;
+    }
 
 
 }

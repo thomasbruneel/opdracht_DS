@@ -30,7 +30,8 @@ import javafx.scene.layout.BorderPane;
 
 
 public class ClientMain extends Application {
-	
+
+	public static DispatcherInterface disImpl;
 	public static AppServerInterface asi;
 	public static String token;
 	public static String userName;
@@ -140,7 +141,7 @@ public class ClientMain extends Application {
 	public static void main(String[] args) throws Exception {
 		System.out.println("client started...");
 		Registry registry=LocateRegistry.getRegistry("localhost",9999);
-		DispatcherInterface disImpl=(DispatcherInterface) registry.lookup("DispathcerService");
+		disImpl = (DispatcherInterface) registry.lookup("DispathcerService");
 		
 		int appPortnumber=disImpl.getPortNumberAppServer();
 		
