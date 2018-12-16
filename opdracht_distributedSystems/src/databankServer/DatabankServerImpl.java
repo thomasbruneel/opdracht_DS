@@ -253,7 +253,7 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	        }
 		
 	}
-	@Override
+
 	public void createLeaderbord(String userName) {
 		String sql = "INSERT INTO Leaderbord(userName,wins) VALUES(?,?)";
 		try (Connection conn = this.connect();
@@ -298,19 +298,13 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	public List<byte[]> getImagesByTheme(String theme) throws RemoteException{
 		List<byte[]> images=new ArrayList<>();
 	      String sql = "SELECT image FROM images WHERE theme = ?";
-	        List<Leaderbord>leaderbordlist=new ArrayList<Leaderbord>();
 	        try (Connection conn = this.connect();
 	        		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		           	pstmt.setString(1, theme);
 		           	ResultSet rs=pstmt.executeQuery();
-
-	            
 	            // loop through the result set
 	            while (rs.next()) {
 	               images.add(rs.getBytes("image"));
-
-	                                   
-	                                   
 	            }
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());

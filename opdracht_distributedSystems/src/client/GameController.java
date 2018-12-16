@@ -436,16 +436,10 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     public void giveTurn() throws RemoteException {
         aanZet=!aanZet;
         System.out.println("Aanzet? : " + aanZet);
-        new Thread(new Runnable() {
-            @Override public void run() {
-                Platform.runLater(new Runnable() {
-                    @Override public void run() {
-                    	beurt.setVisible(true);
-                        beurt.setText("JOUW BEURT");
-                    }
-                });
-
-            }}).start();
+        new Thread(() -> Platform.runLater(() -> {
+            beurt.setVisible(true);
+            beurt.setText("JOUW BEURT");
+        })).start();
     }
 
 
@@ -461,7 +455,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
     }
     
     @Override
-    public void refreshBord2(int i,int j) throws RemoteException{
+    public void refreshBord(int i, int j) throws RemoteException{
     	System.out.println("refresh2");
     	Kaart[][]matrix=bord.getMatrix();
  

@@ -1,7 +1,6 @@
 package applicationServer;
 
 
-import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -10,10 +9,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.LobbyController;
 import interfaces.AppServerInterface;
 import interfaces.DatabankServerInterface;
-import interfaces.LobbyControllerInterface;
 import interfaces.gameControllerInterface;
 import memoryGame.Kaart;
 
@@ -79,9 +76,6 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	@Override
 	public void addActiveGame(ActiveGame activeGame) throws RemoteException {
 		activeGames.add(activeGame);
-
-		dsi.createActiveGame(activeGame);
-
 	}
 
 	@Override
@@ -161,12 +155,12 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
     	}
     	for(gameControllerInterface gci:activeGame.getGamecontrollers()){
     		System.out.println("interface");
-    		gci.refreshBord2(x, y);
+    		gci.refreshBord(x, y);
     	}
 
     	for(gameControllerInterface gci:activeGame.getSpectatecontrollers()){
     		System.out.println("interface");
-    		gci.refreshBord2(x, y);
+    		gci.refreshBord(x, y);
     	}
 
 		System.out.println(creator + ": " + x + ", " +y);
@@ -301,8 +295,8 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 			for(int i = 0; i<gamesize; i++){
 				for (int j = 0; j<gamesize; j++){
 					if (huidigspel[i][j].isOmgedraaid()) {
-					    gci.refreshBord2(i,j);
-					    gci.refreshBord2(i,j);
+					    gci.refreshBord(i,j);
+					    gci.refreshBord(i,j);
                     }
 				}
 			} //doet niet wat het moet

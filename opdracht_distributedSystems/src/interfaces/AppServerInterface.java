@@ -11,13 +11,41 @@ import applicationServer.Leaderbord;
 import client.LobbyController;
 
 public interface AppServerInterface extends Remote{
-	
+
+    /**
+     * Tussenmethode gebruikt bij registratie van een client.
+     * @param naam Naam van de client.
+     * @param pwd Wachtwoord van de client.
+     * @throws RemoteException
+     */
 	void register(String naam, String pwd) throws RemoteException;
-	
+
+    /**
+     * Methode gebruikt bij inloggen.
+     * <p>
+     *     Controleert of de gebruiker wel bestaat.
+     *     Vernieuwd vervolgens het Token van de gebruiker.
+     * </p>
+     * @param userName Gebruikersnaam van de client
+     * @param userPwd Wachtwoord van de client
+     * @return
+     * @throws RemoteException
+     */
 	String login(String userName,String userPwd) throws RemoteException;
-	
+
+    /**
+     * Tussenmethode voor het controleren van het uniek zijn van de gebruikersnaam
+     * @param naam te controleren naam
+     * @return
+     * @throws RemoteException
+     */
 	boolean controleerUniekeNaam(String naam) throws RemoteException;
-	
+
+    /**
+     * 
+     * @param activeGame
+     * @throws RemoteException
+     */
 	void addActiveGame(ActiveGame activeGame) throws RemoteException;
 	
 	ArrayList<ActiveGame> getActiveGames() throws RemoteException;
