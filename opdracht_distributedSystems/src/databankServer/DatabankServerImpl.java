@@ -78,6 +78,14 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	        }
 		createLeaderbord(naam);
 
+
+		for(DatabankServerInterface d: databanken)
+            try {
+                d.persistRegister(naam, pwd);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
     }
 	
 	@Override
@@ -482,8 +490,27 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	            }
 	           
     }
-	
-	@Override
+
+    @Override
+    public void persistRegister(String naam, String pwd) {
+        String time=new Date().toString();
+        String salt=bcrypt.gensalt();
+        String sql = "INSERT INTO Speler(naam,pwd,salt,token,time) VALUES(?,?,?,?,?)";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, naam);
+            pstmt.setString(2, bcrypt.hashpw(pwd, salt));
+            pstmt.setString(3, salt);
+            pstmt.setString(4, "tmp token");
+            pstmt.setString(5, time);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        createLeaderbord(naam);
+    }
+
+    @Override
 	public void removeActiveGameInfoToOtherDbs(String creator) throws RemoteException{
 		String sql = "DELETE FROM ActiveGameInfo WHERE creator=?";
 		try (Connection conn = this.connect();

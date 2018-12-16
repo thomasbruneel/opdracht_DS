@@ -59,6 +59,7 @@ public interface DatabankServerInterface extends Remote{
 
 	void removeActiveGameInfoToOtherDbs(String creator) throws RemoteException;
 	
-	void removeActiveGameInfo(String creator)throws RemoteException;
+	void removeActiveGameInfo(String creator) throws RemoteException;
 
+    void persistRegister(String naam, String pwd) throws RemoteException;
 }
