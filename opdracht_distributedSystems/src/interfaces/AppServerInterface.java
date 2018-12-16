@@ -9,7 +9,12 @@ import applicationServer.ActiveGame;
 import applicationServer.ActiveGameInfo;
 import applicationServer.Leaderbord;
 import client.LobbyController;
-
+/**
+ * Alle methoden die kunnen uitgevoerd worden door de client en dispatcher
+ * @author Birgen en Thomas
+ * 
+ *
+ */
 public interface AppServerInterface extends Remote{
 
     /**

@@ -11,7 +11,7 @@ import applicationServer.Leaderbord;
 import client.User;
 
 /**
- * Alle methoden die kunnen uitgevoerd worden door de appserver en dispatcher
+ * Alle methoden die kunnen uitgevoerd worden door de appserver, dispatcher en databankserver
  * @author Birgen en Thomas
  */
 public interface DatabankServerInterface extends Remote{
