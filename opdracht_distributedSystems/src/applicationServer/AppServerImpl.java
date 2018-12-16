@@ -117,12 +117,15 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 
 	@Override
 	public void increasePlayerCount(String gameId,boolean bit) throws RemoteException{
+		/*
 		ActiveGame activeGame=null;
     	for(ActiveGame ag:activeGames){
     		if(ag.getCreator().equals(gameId)){
     			ag.increasePlayerCount(bit);
     		}
     	}
+    	*/
+		dsi.increasePlayerCount(gameId, bit);
 
 	}
 

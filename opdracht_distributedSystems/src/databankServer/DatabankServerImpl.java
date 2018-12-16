@@ -499,6 +499,38 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	           
     }
 	
+	
+	@Override
+	public void increasePlayerCount(String gameId, boolean bit) throws RemoteException {
+		String sql="UPDATE ActiveGameInfo SET numberPlayers= numberPlayers+1 WHERE creator = ?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, gameId);
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		
+		for(DatabankServerInterface d : databanken)
+            try {
+                d.increasePlayerCountToOtherDBs(gameId, bit);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+		
+	}
+	@Override
+	public void increasePlayerCountToOtherDBs(String gameId, boolean bit) throws RemoteException{
+		String sql="UPDATE ActiveGameInfo SET numberPlayers= numberPlayers+1 WHERE creator = ?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, gameId);
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	}
+	
 
 
 	
