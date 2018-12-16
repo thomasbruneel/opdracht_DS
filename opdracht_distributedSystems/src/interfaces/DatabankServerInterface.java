@@ -185,7 +185,7 @@ public interface DatabankServerInterface extends Remote{
 
     /**
      * Schrijft de info over het nieuwe activegame weg naar de databank.
-     * @param activeGameInfo
+     * @param activeGameInfo info over de desbetreffende activeGame
      * @throws RemoteException
      * @see #createActiveGameInfo(ActiveGameInfo)
      */
@@ -193,7 +193,7 @@ public interface DatabankServerInterface extends Remote{
 
     /**
      * Verwijdert active game uit de databank waneer dat spel afgelopen is. persists vorvolgens naar de andere databanken.
-     * @param creator
+     * @param creator id van de game
      * @throws RemoteException
      * @see #removeActiveGameInfoToOtherDbs(String)
      */
@@ -201,7 +201,7 @@ public interface DatabankServerInterface extends Remote{
 
     /**
      * Verwijdert active game uit de databank waneer dat spel afgelopen is.
-     * @param creator
+     * @param creator id van de game
      * @throws RemoteException
      * @see #removeActiveGameInfo(String)
      */
@@ -235,7 +235,7 @@ public interface DatabankServerInterface extends Remote{
 
     /**
      * Updatet de totale score van een speler.
-     * @param userName
+     * @param userName naam van de speler
      * @throws RemoteException
      * @see #increasePlayerCount(String, boolean)
      */

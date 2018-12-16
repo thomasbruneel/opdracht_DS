@@ -88,10 +88,8 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 		}
 		dsi.removeActiveGameInfo(tmp.getCreator());
 		activeGames.remove(tmp);
-
-
-
 	}
+
 	@Override
 	public  ArrayList<ActiveGame> getActiveGames() throws RemoteException {
 		return activeGames;
@@ -182,25 +180,6 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	}
 
 	@Override
-	public void removePlayer(String gameID, String userName) throws RemoteException {
-		ActiveGame tmpActiveGame=null;
-    	for(ActiveGame ag:activeGames){
-    		if(ag.getCreator().equals(gameID)){
-    			tmpActiveGame=ag;
-    		}
-    	}
-    	System.out.println("spelers size voor remove "+tmpActiveGame.getSpelers().size()+ " --> "+tmpActiveGame.getSpelers());
-    	String tmp=null;
-    	for(String s:tmpActiveGame.getSpelers()){
-    		if(s.equals(userName)){
-    			tmp=s;
-    		}
-    	}
-    	tmpActiveGame.getSpelers().remove(tmp);
-    	System.out.println("spelers size na remove "+tmpActiveGame.getSpelers().size()+ " --> "+tmpActiveGame.getSpelers());
-    }
-
-	@Override
 	public ActiveGame getChangedActiveGame(String gameId) throws RemoteException{
 		ActiveGame activeGame=null;
 		for(ActiveGame ag:activeGames){
@@ -242,7 +221,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServerInter
 	}
 
 	@Override
-	public void endTurnTest(String Gameid) throws RemoteException {
+	public void endTurn(String Gameid) throws RemoteException {
 		ActiveGame activeGame=null;
 		for(ActiveGame ag:activeGames){
 			if(ag.getCreator().equals(Gameid)){

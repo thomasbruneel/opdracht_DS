@@ -3,32 +3,22 @@ package client;
 import interfaces.gameControllerInterface;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import applicationServer.ActiveGame;
 import client.Tasks.GameRefreshTask;
-import client.Tasks.ScoreRefreshTask;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -156,7 +146,6 @@ public class GameController extends UnicastRemoteObject implements gameControlle
 
 	public void leaveGame() throws RemoteException{
     	//als de creator het spel verlaat, wordt het spel beeindigd
-        //todo: Wanneer speler met de beurt spel verlaat, dan loopt het spel vast
 		if(!spectateMode){
 	    	asi.leaveGame(gameId);
 			asi.removeActiveGame(activeGame);
@@ -261,7 +250,7 @@ public class GameController extends UnicastRemoteObject implements gameControlle
                                 System.out.println("na");
                                 asi.flipCard(activeGame.getCreator(), i1, j1);
                                 asi.flipCard(activeGame.getCreator(), i2, j2);
-                                asi.endTurnTest(gameId);
+                                asi.endTurn(gameId);
                                 aanZet = false;
                             } catch (RemoteException | InterruptedException e) {
                                 e.printStackTrace();
