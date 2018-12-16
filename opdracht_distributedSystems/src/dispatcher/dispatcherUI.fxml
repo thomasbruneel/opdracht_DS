@@ -31,6 +31,5 @@
       </TableView>
       <Label layoutX="780.0" layoutY="133.0" text="APLICATIONSERVERS" />
       <Button layoutX="476.0" layoutY="271.0" mnemonicParsing="false" onAction="#refreshen" prefHeight="25.0" prefWidth="108.0" text="REFRESHEN" />
-      <Button layoutX="151.0" layoutY="617.0" mnemonicParsing="false" onAction="#putDBOffline" text="DATABASE OFFLINE" />
    </children>
 </AnchorPane>

@@ -224,6 +224,25 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	            System.out.println(e.getMessage());
 	        }
 		
+		for(DatabankServerInterface d : databanken)
+            try {
+                d.increaseWinToOtherDBs(userName);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+		
+		
+	}
+	@Override
+	public void increaseWinToOtherDBs(String userName) throws RemoteException{
+		String sql="UPDATE Leaderbord SET wins= wins+1 WHERE userName = ?";
+		try (Connection conn = this.connect();
+	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	           pstmt.setString(1, userName);
+	           pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
 		
 	}
 	@Override
