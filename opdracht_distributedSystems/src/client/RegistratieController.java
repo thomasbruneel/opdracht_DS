@@ -53,20 +53,20 @@ public class RegistratieController {
         boolean check=ClientMain.asi.controleerUniekeNaam(gebruikersNaam);
         if(check){
         	if(wachtwoord.equals(herhaalwachtwoord)){
-        		//String error = null;
-        		//error=isValid(wachtwoord,error);
-        		//if(error==null){
+        		String error = null;
+        		error=isValid(wachtwoord,error);
+        		if(error==null){
             		ClientMain.asi.register(gebruikersNaam, wachtwoord);
                     uiGebruikersnaam.clear();
                     uiWachtwoord.clear();
                     uiHerhaalWachtwoord.clear();
                     errorMessage.setText("registratie voltooid");
                     errorMessage.setVisible(true);
-        		//}
-        		//else{
-        			//errorMessage.setText(error);
-                    //errorMessage.setVisible(true);
-        		//}
+        		}
+        		else{
+        			errorMessage.setText(error);
+                    errorMessage.setVisible(true);
+        		}
 
         	}
         	
@@ -100,21 +100,21 @@ public class RegistratieController {
 
 
         if (password.length() < 8) {
-            error="Password lenght must have alleast 8 character !!";
+            error="wachtwoord moet minstens 8 karakters bevatten";
         }
      
         if (!specailCharPatten.matcher(password).find()) {
-            error="Password must have atleast one specail character !!";
+            error="Wachtwoord oet misntens één speciaal teken bevatten";
         }
       
         if (!UpperCasePatten.matcher(password).find()) {
-            error="Password must have atleast one uppercase character !!";
+            error="Wachtwoord moet minstens één hoofdletter bevatten";
         }
         if (!lowerCasePatten.matcher(password).find()) {
-            error="Password must have atleast one lowercase character !!";
+            error="Wachtwoord moet minstens één kleineletter bevatten";
         }
         if (!digitCasePatten.matcher(password).find()) {
-            error="Password must have atleast one digit character !!";
+            error="Wachtwoord moet minstens één getal bevatten";
         }
         System.out.println("error "+error);
         return error;
