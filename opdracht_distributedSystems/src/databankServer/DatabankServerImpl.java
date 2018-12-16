@@ -62,16 +62,14 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 	//---------------------Data Table Speler---------------------
 	@Override
 	public void register(String naam, String pwd) {
-		String time=new Date().toString();
 		String salt=bcrypt.gensalt();
-		String sql = "INSERT INTO Speler(naam,pwd,salt,token,time) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO Speler(naam,pwd,salt,token) VALUES(?,?,?,?)";
 		try (Connection conn = this.connect();
 	               PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	           pstmt.setString(1, naam);
 	           pstmt.setString(2, bcrypt.hashpw(pwd, salt));
 	           pstmt.setString(3, salt);
 	           pstmt.setString(4, "tmp token");
-	           pstmt.setString(5, time);
 	           pstmt.executeUpdate();
 	        } catch (SQLException e) {
 	            System.out.println(e.getMessage());
@@ -506,16 +504,14 @@ public class DatabankServerImpl extends UnicastRemoteObject implements DatabankS
 
     @Override
     public void persistRegister(String naam, String pwd) {
-        String time=new Date().toString();
         String salt=bcrypt.gensalt();
-        String sql = "INSERT INTO Speler(naam,pwd,salt,token,time) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Speler(naam,pwd,salt,token) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, naam);
             pstmt.setString(2, bcrypt.hashpw(pwd, salt));
             pstmt.setString(3, salt);
             pstmt.setString(4, "tmp token");
-            pstmt.setString(5, time);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
