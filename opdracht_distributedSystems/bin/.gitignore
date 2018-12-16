@@ -1,7 +1,7 @@
-/dispatcher/
-/client/
-/applicationServer/
-/memoryGame/
-/databankServer/
 /Constanten/
+/applicationServer/
+/client/
+/databankServer/
+/dispatcher/
 /interfaces/
+/memoryGame/

@@ -359,12 +359,17 @@ public class GameController extends UnicastRemoteObject implements gameControlle
         }
         int grootte=asi.getActiveGame(gameId).getGame().getBord().getGrootte();
         if(punten==((grootte*grootte)/2)){
-        	Map<String,Integer>scorelijst=ag.getScore();
+        	Map<String,Integer>map=ag.getScore();
         	int highScore=0;
         	ArrayList<String> winnaar=new ArrayList<String>();
-        	for (Map.Entry<String,Integer> entry : scorelijst.entrySet()){
+        	for (Map.Entry<String,Integer> entry : map.entrySet()){
         		if(highScore<=entry.getValue()){
         			highScore=entry.getValue();
+        		}
+
+        	}
+        	for (Map.Entry<String,Integer> entry : map.entrySet()){
+        		if(highScore==entry.getValue()){
         			winnaar.add(entry.getKey());
         		}
 
